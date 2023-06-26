@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import Link from "next/link";
-import Account from "../components/Account";
+import Account from "../components/Accounts";
 import ETHBalance from "../components/ETHBalance";
 import TokenBalance from "../components/TokenBalance";
 import useEagerConnect from "../hooks/useEagerConnect";
@@ -31,7 +31,7 @@ function Home() {
       </header>
 
       <main>
-        <h1>
+        <h1 className="">
           Welcome to{" "}
           <a href="https://github.com/mirshko/next-web3-boilerplate">
             next-web3-boilerplate
