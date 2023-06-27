@@ -19,6 +19,7 @@ module.exports = {
       green: "#2F7336",
       yellow: "#F0D697",
       white: "#ffffff",
+      cardGray: "#9CA3AF",
     },
     extend: {},
   },

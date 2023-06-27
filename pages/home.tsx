@@ -9,7 +9,10 @@ type Props = {}
 
 function home({}: Props) {
   return <>
-    <Testimonies />
+  <div className="mt-16">
+  <Testimonies />
+  </div>
+    
   </>
 
 }
