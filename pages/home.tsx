@@ -1,16 +1,12 @@
 import React from 'react'
-import styles from "../styles/modular/Home.module.css"
-import TestComponent from '../components/TestComponent'
-import carImage from "../assets/demo/car.jpg";
-import Link from 'next/link';
 import Testimonies from '../components/Testimonies';
 import Header from '../components/Header';
 import TopSellersHome from '../components/TopSellersHome';
 import Steps from '../components/Steps';
 import SubscribeComponent from '../components/SubscribeComponent';
+import CarouselComponent from '../components/CarouselComponent';
+
 import Footer from '../components/Footer';
-import './App.css';
-import CarouselComponent from './CarouselComponent';
 
 
 type Props = {}
@@ -18,13 +14,12 @@ type Props = {}
 function home({}: Props) {
   return <>
   <Header/>
+  <CarouselComponent />
   <TopSellersHome/>
   <Steps/>
   <SubscribeComponent/>
-   <Testimonies />
-    <CarouselComponent />
+   <Testimonies />   
   </>
-
 }
 /*
   <div className={styles.container}>
