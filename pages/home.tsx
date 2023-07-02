@@ -18,7 +18,7 @@ function home({}: Props) {
   <TopSellersHome/>
   <Steps/>
   <SubscribeComponent/>
-{/*   <Footer/> */}
+   <Testimonies />
   </>
 
 }
