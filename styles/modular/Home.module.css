@@ -1,3 +1,33 @@
 .home-title {
     font-size:2.5rem;
 }
+
+
+/* Home.module.css */
+
+.container {
+    position: relative;
+  }
+  
+  .left-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: rgba(221, 6, 6, 0.746); /* Adjust the color and opacity as desired */
+    z-index: -1;
+  }
+  
+  .right-circle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: rgba(0, 246, 95, 0.1); /* Adjust the color and opacity as desired */
+    z-index: -1;
+  }
+  
