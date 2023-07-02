@@ -1,0 +1,11 @@
+.button-style{
+    background: linear-gradient(107deg, rgba(234, 21, 21, 1) 0%, rgba(218, 51, 40, 1) 5%, rgba(0, 100, 0, 1) 100%);
+}
+.gradient-hover {
+    background: linear-gradient(107deg, rgba(234, 21, 21, 1) 0%, rgba(218, 51, 40, 1) 5%, rgba(0, 100, 0, 1) 100%);
+  }
+  
+  .gradient-hover:hover {
+    background: linear-gradient(107deg, rgba(234, 21, 21, 1) 0%, rgba(218, 51, 40, 0.6) 5%, rgba(0, 100, 0, 1) 100%);
+  }
+  
