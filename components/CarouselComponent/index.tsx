@@ -2,6 +2,7 @@ import React from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import ProductCard from './ProductCard';
+import styles from "../../styles/modular/Carousel.module.css"
 
 
 
@@ -42,8 +43,8 @@ const CarouselComponent: React.FC = () => {
 
   return (
     <div>
-      <h1 style={{ color: '#D3BC84' }}>Trending Sales</h1>
-      <h2 style={{ color: '#D3BC84' }}>Check out our weekly updated trending sales</h2>
+      <h1 className="text-3xl text-center font-semibold text-yellow" >Trending Sales</h1>
+      <h2 className={styles.subheader}>Check out our weekly updated trending sales</h2>
       <Carousel responsive={responsive}>
         {products.map((product, index) => (
           <ProductCard key={index} {...product} />

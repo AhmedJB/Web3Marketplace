@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, creatorName, creatorIm
 
 export default ProductCard;*/
 import React from 'react';
-import styles from './ProductCard.module.css';
+import styles from "../../../styles/modular/ProductCard.module.css"
 
 type ProductCardProps = {
   title: string;

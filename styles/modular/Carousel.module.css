@@ -1,0 +1,7 @@
+.subheader{
+    font-size: 14px;
+    color: var(--white);
+    opacity: 0.6;
+    text-align: center;
+    margin:5px 0px;
+}
