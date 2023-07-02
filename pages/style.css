@@ -1,0 +1,174 @@
+body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #0A0C0C;
+
+  /*background: linear-gradient(180 deg,rgb(236,213,232) 0%,rgb(50,112,118) 100% );*/
+}
+
+.category{
+ width: 100%;
+}
+
+.category-container{
+  align-items: center;
+  display: flex;
+  height: 400px;
+  width: auto;
+  margin: 0 auto;
+  display: flex;
+}
+
+
+.category-item{
+  height: 428px;
+  opacity:1;
+  position: absolute;
+  transition: all 0.3s ease-in-out;
+  width: 332px;
+  z-index: 0;
+  border-radius: 15px;
+  background-size: contain;
+}
+
+.category-item-1{
+  left:17.5%;
+  opacity: 1;
+  transform: translateX(-50%);
+  transform: translateY(10%);
+}
+
+.category-item-2, .category-item-4{
+  height: 536px;
+  opacity : 1;
+  width: 415px;
+  z-index: 1;
+}
+
+.category-item-2{
+    left: 35%;
+    transform: translateX(-50%);
+  }
+
+.category-item-3{
+  box-shadow: -2px 5px 33px 6px rgba(0,0,0,0.35);
+  height: 643px;
+  opacity: 1;
+  left: 35%;
+  transform: translateX(-50%);
+  transform: translateY(-10%);
+  width: 498px;
+  z-index: 2;
+}
+.category-item-4{
+  left: 58%;
+  transform: translateX(-50%);
+
+}
+.category-item-5{
+  left: 65%;
+  opacity: 1;
+  transform: translateX(-50%);
+  transform: translateY(10%);
+
+}
+
+
+.category-controls{
+  display: flex;
+  margin: 25px 0;
+
+}
+.category-controls button{
+  background-color: transparent;
+  border:0;
+  cursor:pointer;
+  margin: 0 50px;
+  padding: 0 12px;
+}
+
+.category-controls-button:focus{
+  outline: none;
+}
+.category-controls-previous{
+  border: solid #000;
+  height: 50px;
+  position: absolute;
+  right: 81.5%;
+  top: 46.5%;
+  transform: translateY(-50%);
+  width: 50px;
+}
+
+.category-controls-next{
+        width: 50px;
+        height: 50px;
+}
+.category-controls-next{
+  border: solid #000;
+  display: inline-block;
+  padding: 0px;
+  position: absolute;
+  right: 10%;
+  top: 46.5%;
+  transform: translateY(-50%);
+  transition: right 0.15s ease-in-out;
+}
+/*
+.product-name{
+  position: relative;
+  left: -10%;
+  transform: translateY(-300%);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+*/
+.product-name {
+  font-family: 'Barlow', sans-serif;
+  font-size: 30px;
+  color: #F0D697;
+  position: relative;
+  left: auto;
+  right: 200%;
+  transform: translateY(-300%);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.category-nav{
+  bottom: -15px;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.category-nav li{
+  background-color: #ccc;
+  border-radius: 50%;
+  height: 10px;
+  margin: 0 16px;
+  width: 10px;
+}
+
+.category-nav li.category-item-selected{
+  background-color: #555;
+}
+
+
+.page-title {
+  font-family: 'Barlow', sans-serif;
+  font-size: 43px;
+  color: #F0D697;
+  text-align: center;
+  margin-bottom: 450px;
+  
+}
