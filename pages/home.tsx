@@ -9,6 +9,9 @@ import TopSellersHome from '../components/TopSellersHome';
 import Steps from '../components/Steps';
 import SubscribeComponent from '../components/SubscribeComponent';
 import Footer from '../components/Footer';
+import './App.css';
+import CarouselComponent from './CarouselComponent';
+
 
 type Props = {}
 
@@ -19,6 +22,7 @@ function home({}: Props) {
   <Steps/>
   <SubscribeComponent/>
    <Testimonies />
+    <CarouselComponent />
   </>
 
 }
@@ -35,4 +39,4 @@ function home({}: Props) {
   <p className="text-headerColor">this is a paragraph</p>
 */
 
-export default home
+export default home;
