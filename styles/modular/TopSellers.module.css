@@ -1,0 +1,86 @@
+/* .card {
+    width: 100%;
+    max-width: 320px;
+    padding-top: 0.75rem;
+    background-color: #3B3B3B;
+    border: 1px solid #CCCCCC;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .number {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2B2B2B;
+    color: #858584;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    left: 10px;
+    top: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 2.5rem;
+  }
+  
+  .image {
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: 0.75rem;
+    border-radius: 50%;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .name {
+    margin-bottom: 0.25rem;
+    font-size: 22px;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-family: 'Barlow', sans-serif;
+  }
+  
+  .sales {
+    display: flex;
+    font-size: 16px;
+    color: #858584;
+    margin-top: 1rem;
+  }
+  
+  .sales span {
+    margin-left: 0.5rem;
+    font-size: 16px;
+    color: #FFFFFF;
+  }
+  
+  @media (max-width: 768px) {
+    .number {
+      font-size: 16px;
+      width: 24px;
+      height: 24px;
+    }
+    
+    .name {
+      font-size: 18px;
+    }
+    
+    .sales {
+      font-size: 14px;
+    }
+    
+    .image {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+   */
