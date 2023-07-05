@@ -56,7 +56,7 @@ const Footer: React.FC<Props> = () => {
               <h2 className="mb-6  font-semibold  text-[20px] barlow  text-white">BazArt</h2>
               <ul className="text-gray-600 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link href="" className=" text-[18px] barlow text-[#777E90] hover:underline">Shop</Link>
+                  <Link href="/productlist" className=" text-[18px] barlow text-[#777E90] hover:underline">Shop</Link>
                 </li>
                 <li className="mb-4">
                   <Link href="" className="text-[18px] barlow text-[#777E90] hover:underline">Categories</Link>
@@ -122,16 +122,16 @@ const Footer: React.FC<Props> = () => {
 
         <hr className="my-6  border-[#65676B] sm:mx-auto lg:my-8" />
         <div className="flex items-center gap-3 ">
-          <Link className='text-[20px] barlow  text-[#777E90] hover:underline' href="/">
+          <Link className='text-[19px] barlow  text-[#777E90] hover:underline' href="/">
           Terms
           </Link>
-          <Link className='text-[20px] barlow text-[#777E90] hover:underline' href="/">
+          <Link className='text-[19px] barlow text-[#777E90] hover:underline' href="/">
           Privacy Policy
           </Link>
       </div>
       <hr className="my-6 border-[#65676B] sm:mx-auto lg:my-8" />
       <div className="flex items-center justify-center ">
-        <span className="text-[22px] text-white hover:underline  barlow">© BazArt212 , Inc @ . All Rights Reserved.</span>
+        <span className="text-[20px] text-white hover:underline barlow">© BazArt212 , Inc @ . All Rights Reserved.</span>
       </div>
 
     </div>
