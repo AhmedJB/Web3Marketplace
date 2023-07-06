@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi';
+import PriceRangePicker from './PriceRangePicker';
 
 const ProductFiltersComponent = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -51,6 +52,7 @@ const ProductFiltersComponent = () => {
 
     <div className='container mx-auto mt-28'>
         <div className=' text-[60px] barlow font-semibold text-yellow'>Find something you love</div>
+        <PriceRangePicker/>
 
         <div className="flex justify-between  my-16">
 
