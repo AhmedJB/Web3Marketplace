@@ -10,6 +10,7 @@ import subscribe3 from '../assets/SubscribeHomePageImage/subscribe3.png';
 import Footer from '../components/Footer';
 import ProductFiltersComponent from '../components/ProductFiltersComponent';
 import CardsProductList from '../components/CardsProductList';
+import HeartCheckboxComponent from '../components/HeartCheckboxComponent';
 
 
 type Props = {}
@@ -20,6 +21,7 @@ function productlist({}: Props) {
 
   <ProductFiltersComponent/>
   <CardsProductList/>
+  <HeartCheckboxComponent/>
 
 
  
