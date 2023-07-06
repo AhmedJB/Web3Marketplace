@@ -11,6 +11,7 @@ import Footer from '../components/Footer';
 import ProductFiltersComponent from '../components/ProductFiltersComponent';
 import CardsProductList from '../components/CardsProductList';
 import HeartCheckboxComponent from '../components/HeartCheckboxComponent';
+import MenuToggle from '../components/Header/MenuToggle';
 
 
 type Props = {}
@@ -22,6 +23,7 @@ function productlist({}: Props) {
   <ProductFiltersComponent/>
   <CardsProductList/>
   <HeartCheckboxComponent/>
+  <MenuToggle/>
 
 
  

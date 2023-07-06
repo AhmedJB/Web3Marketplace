@@ -83,7 +83,7 @@ function CardsProductList({}: Props) {
   return (
     <>
       <div className='container mx-auto'>
-         <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-4'}  gap-7 my-4`}>
+         <div className={`grid ${isMobile ? 'grid-cols-2' : 'grid-cols-4'}  gap-7 my-4`}>
 
 
          {limitedProductData.map((product, index) => (
