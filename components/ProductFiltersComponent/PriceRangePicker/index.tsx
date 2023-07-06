@@ -14,7 +14,7 @@ const PriceRangePicker = () => {
       <input
         type="range"
         min="0"
-        max="10000"
+        max="100"
         value={priceRange}
         onChange={handlePriceChange}
         className="h-6 w-44 rounded-full appearance-none bg-gray-300"
