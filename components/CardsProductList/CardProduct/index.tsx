@@ -13,7 +13,7 @@ const CardProduct: React.FC<CardProductProps> = ({ title, creatorName, creatorIm
   return (
     <div className="relative  w-[340px] h-[440px]  barlow hover:scale-105 transform transition-all duration-700">
       <div className="absolute top-3 right-3 z-50"> 
-      <HeartCheckboxComponent  />
+      <HeartCheckboxComponent color="text-white" />
       </div>
       <div className=" relative w-full h-full  ">
         <img className=" w-full h-full rounded-2xl  object-cover" src={productImage} alt={creatorName} />

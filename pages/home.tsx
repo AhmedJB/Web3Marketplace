@@ -21,7 +21,7 @@ function home({}: Props) {
   <CarouselComponent /> 
   <TopSellersHome/>
   <Steps/>
-  <SubscribeComponent/>
+    <SubscribeComponent/>
    <Testimonies />
    <Footer/>   
   </>
