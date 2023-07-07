@@ -17,14 +17,14 @@ const Header: React.FC<Props> = () => {
     <header className="container mx-auto my-3">
       <nav className="flex items-center justify-between h-16 px-4 sm:px-8">
         <div className="flex items-center">
-          <Link  className="flex items-center  text-headerColor font-bold text-lg "href="/" passHref>
+          <Link  className="flex items-center  text-headerColor font-bold text-lg "href="/home" passHref>
               <img src={logo.src} alt="BazArt212" className="h-9 mr-2 text-[20px]" />
           </Link>
         </div>
         <div className="hidden sm:block">
           <ul className="flex space-x-10 text-white">
             <li>
-              <Link className="hover:text-headerColor text-[20px] barlow" href="/shop" passHref>
+              <Link className="hover:text-headerColor text-[20px] barlow" href="/productlist" passHref>
                Shop
               </Link>
             </li>
