@@ -14,13 +14,15 @@ type Props = {}
 
 function home({}: Props) {
   return <>
-  {/* <Header/> */}
+
+  <Header/>
   <Hero />
-  {/* <CarouselComponent />
+  <CarouselComponent /> 
   <TopSellersHome/>
   <Steps/>
   <SubscribeComponent/>
-   <Testimonies />   */} 
+   <Testimonies />
+   <Footer/>   
   </>
 }
 /*

@@ -74,7 +74,7 @@ function Testimonies({}: Props) {
 
 
     return <>
-    <div className="w-full relative">
+    <div className="w-full relative mb-64">
     <div className="w-full md:container mx-auto ">
                 <h1 className="text-3xl text-center font-semibold text-yellow">
                     Testimonies
