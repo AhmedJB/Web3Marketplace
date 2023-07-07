@@ -1,3 +1,4 @@
+//home.tsx
 import React from 'react'
 import Testimonies from '../components/Testimonies';
 import Header from '../components/Header';
