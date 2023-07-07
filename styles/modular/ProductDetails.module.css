@@ -2,13 +2,8 @@
 
 
 .app{
-  transform: translateX(25%);
-  max-width: 1200px;
   width: 100%;
-  margin: 100px auto;
   box-shadow: 0 0 5px #ccc;
-  display: inline-table;
-
 }
 .details{
   display: flex;
@@ -19,8 +14,8 @@
 .big-img{
   margin-top: 50px;
   margin-bottom: 20px;
-  max-width: 500px;
-  min-width: 290px;
+  width: 400px;
+  height:400px;
   overflow: hidden;
 }
 .big-img img{
@@ -64,7 +59,6 @@
 }
 
 .thumb{
-  margin-left: 55px;
   margin-bottom: 50px;
   max-width: fit-content;
   position: relative;

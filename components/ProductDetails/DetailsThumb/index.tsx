@@ -2,7 +2,7 @@
 
 import React, { Component, ReactNode, RefObject } from 'react';
 
-import styles from '../../styles/modular/Product.module.css';
+import styles from "../../../styles/modular/ProductDetails.module.css"
 
 interface DetailsThumbProps {
   images: string[];
@@ -10,7 +10,27 @@ interface DetailsThumbProps {
   myRef: RefObject<HTMLDivElement>;
 }
 
-class DetailsThumb extends Component<DetailsThumbProps> {
+
+
+
+const DetailsThumb = ({images,tab,myRef} : DetailsThumbProps ) => {
+  
+  return <>
+    <div className={styles.thumb} ref={myRef}>
+        {images.map((img, index) => (
+          <img
+            src={img}
+            alt=""
+            key={index}
+            onClick={() => tab(index)}
+          />
+        ))}
+  </div>
+  </>
+  
+}
+
+/* class DetailsThumb extends Component<DetailsThumbProps> {
   render(): ReactNode {
     const { images, tab, myRef } = this.props;
     return (
@@ -26,6 +46,6 @@ class DetailsThumb extends Component<DetailsThumbProps> {
       </div>
     );
   }
-}
+} */
 
 export default DetailsThumb;

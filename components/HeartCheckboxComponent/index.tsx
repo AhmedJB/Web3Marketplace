@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import styles from '../../styles/modular/HeartCheckBox.module.css';
+import {AiOutlineHeart,AiFillHeart} from "react-icons/ai"
+import {FaHeart , FaRegHeart} from "react-icons/fa"
 
-const HeartCheckboxComponent = () => {
+type Props = {
+  size ?: string,
+  color ?: string
+}
+
+const HeartCheckboxComponent = ({size,color} : Props) => {
 
   const [checked, setChecked] = useState(false);
 
@@ -17,17 +24,10 @@ const HeartCheckboxComponent = () => {
           type="checkbox"
           onChange={handleCheckboxChange}
         />
-        <div className={styles.checkmark}>
-          <svg viewBox="0 0 256 256">
-            <rect fill="none" height="230" width="230"></rect>
-            <path
-              d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
-              strokeWidth="20px"
-              stroke="#FFF"
-              fill={checked ? '#FF5353' : 'none'}
-            ></path>
-          </svg>
-        </div>
+        {
+          checked ? <FaHeart className={styles.checkmark + " "  +size + " text-red"} /> : <FaRegHeart className={styles.checkmark + " " + size +  (color ? (" " + color) : " text-black" )} />
+
+        }
       </label>
     </div>
     

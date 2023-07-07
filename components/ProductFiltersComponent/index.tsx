@@ -14,6 +14,8 @@ const ProductFiltersComponent = () => {
   /* To close the dropdown when clicking outside the component */
   useEffect(() => {
     const handleOutsideClick = (event) => {
+      console.log(event.target)
+      console.log(dropdownRef1.current)
       if (
         dropdownRef1.current &&
         !dropdownRef1.current.contains(event.target) &&
@@ -38,20 +40,26 @@ const ProductFiltersComponent = () => {
 
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
+    setIsOpen2(false);
+    setIsOpen3(false);
   };
 
   const toggleDropdown2 = () => {
     setIsOpen2(!isOpen2);
+    setIsOpen1(false);
+    setIsOpen3(false);
   };
 
   const toggleDropdown3 = () => {
     setIsOpen3(!isOpen3);
+    setIsOpen2(false);
+    setIsOpen1(false);
   };
 
   return (
 
     <div className='container mx-auto mt-28'>
-        <div className=' text-[60px]  barlow font-semibold text-yellow'>Find something you love</div>
+        <div className=' text-[60px]    barlow font-semibold text-yellow'>Find something you love</div>
         <PriceRangePicker/>
 
         <div className="flex justify-between my-16 md:my-10">

@@ -18,9 +18,11 @@ module.exports = {
       red: "#AA3A38",
       green: "#2F7336",
       yellow: "#F0D697",
+      starYellow: "#F4B30C",
       white: "#ffffff",
       cardGray: "#9CA3AF",
-       black: "#000000"
+      black: "#000000",
+      orange: "#D0532B",
     },
     extend: {},
   },
