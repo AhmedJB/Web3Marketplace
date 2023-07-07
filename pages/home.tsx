@@ -7,13 +7,16 @@ import SubscribeComponent from '../components/SubscribeComponent';
 import CarouselComponent from '../components/CarouselComponent';
 
 import Footer from '../components/Footer';
+import Hero from '../components/Hero';
 
 
 type Props = {}
 
 function home({}: Props) {
   return <>
+
   <Header/>
+  <Hero />
   <CarouselComponent /> 
   <TopSellersHome/>
   <Steps/>
