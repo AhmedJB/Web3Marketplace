@@ -23,6 +23,8 @@ module.exports = {
       cardGray: "#9CA3AF",
       black: "#000000",
       orange: "#D0532B",
+      subgray: "#777E90",
+      inputBg : "#333333"
     },
     extend: {},
   },
