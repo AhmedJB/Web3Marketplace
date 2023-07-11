@@ -13,9 +13,9 @@ function dashboard({}: Props) {
   return <>
 
   <Header/>
-  <MenuLayout activeMenuItem="dashboard">
+  {/* <MenuLayout activeMenuItem="dashboard">
      <h1 className='text-white font-semibold'>dashboard Page</h1>
-  </MenuLayout>
+  </MenuLayout> */}
 
   <Footer/>
   
