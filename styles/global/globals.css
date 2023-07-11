@@ -7,20 +7,22 @@
 /*globals.css */
 
 :root {
-  --mainDark : #0A0A0A;
-  --dark:#000000;
-  --greenOrb : #0D342E;
-  --redOrb : #61322D;
-  --headerColor : #D3CBB8;
-  --blue : #188CB7;
-  --red : #AA3A38;
-  --green : #2F7336;
-  --yellow : #F0D697;
-  --cardGray : #9CA3AF;
-  --white : #fff;
-  --gray2:#777E90;
-  --orange : #D0532B;
-  --starYellow : #F4B30C;
+   --mainDark: #0A0A0A;
+  --dark: #000000;
+  --greenOrb: #0D342E;
+  --redOrb: #61322D;
+  --headerColor: #D3CBB8;
+  --blue: #188CB7;
+  --red: #AA3A38;
+  --green: #2F7336;
+  --yellow: #F0D697;
+  --cardGray: #9CA3AF;
+  --white: #fff;
+  --gray2: #777E90;
+  --orange: #D0532B;
+  --starYellow: #F4B30C;
+  --subgray: #777E90;
+  --inputBg: #333333;
   --gray3:#7B7B7B;
 }
 
@@ -30,8 +32,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  font-size:16px;
-  background-color:var(--mainDark);
+  font-size: 16px;
+  background-color: var(--mainDark);
 }
 
 /* scrollbar styles */
@@ -77,17 +79,17 @@ a {
 }
 
 .header-gradient {
-  background: linear-gradient(107deg, rgba(234,21,21,1) 0%, rgba(218,51,40,1) 5%, rgba(0,100,0,1) 100%);
+  background: linear-gradient(107deg, rgba(234, 21, 21, 1) 0%, rgba(218, 51, 40, 1) 5%, rgba(0, 100, 0, 1) 100%);
 }
 
 .gradient-bg {
-  background: rgb(170,58,56);
-  background: linear-gradient(90deg, rgba(170,58,56,1) 8%, rgba(47,115,54,1) 100%);
+  background: rgb(170, 58, 56);
+  background: linear-gradient(90deg, rgba(170, 58, 56, 1) 8%, rgba(47, 115, 54, 1) 100%);
 }
 
 .faded-bg {
-  background: rgb(10,10,10);
-  background: linear-gradient(to top, rgba(10,10,10,1) 15%, rgb(10 10 10 / 4%) 100%);
+  background: rgb(10, 10, 10);
+  background: linear-gradient(to top, rgba(10, 10, 10, 1) 15%, rgb(10 10 10 / 4%) 100%);
 }
 
 /* */
