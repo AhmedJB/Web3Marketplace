@@ -1,5 +1,5 @@
 export enum InputTypeEnum {
-    input,
-    textarea,
-    switch
+input,
+textarea,
+switch
 }
