@@ -64,26 +64,13 @@ function CardsProductList({}: Props) {
 
       const limitedProductData = products.slice(0,24); // Limit to maximum of 30 items
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Update the state based on the screen size
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1100);
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
 
 
   return (
     <>
       <div className='container mx-auto'>
-         <div className={`grid ${isMobile ? 'grid-cols-2' : 'grid-cols-4'}  gap-7 my-4`}>
+         <div className={`flex flex-wrap  gap-7 my-4`}>
          {limitedProductData.map((product, index) => (
               <CardProduct key={index} {...product}/>
             ))}

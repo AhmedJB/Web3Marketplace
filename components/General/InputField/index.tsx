@@ -111,7 +111,7 @@ function InputField({ label, required, sublabel, type, inputType, placeholder, c
                     <select
                         name={name}
                         onChange={changeFunc}
-                        className="w-full my-3 rounded-xl p-3 bg-inputBg placeholder:text-subgray text-white font-normal placeholder:text-[0.65rem] placeholder:font-light">
+                        className="w-full my-3 rounded-xl p-3  bg-inputBg placeholder:text-subgray text-white font-normal placeholder:text-[0.65rem] placeholder:font-light">
                         {
                             options.map((e, i) => {
                                 return <option key={e.value + "_" + i} value={e.value}>{e.name}</option>

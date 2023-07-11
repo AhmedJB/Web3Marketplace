@@ -5,6 +5,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { InputTypeEnum } from '../../types/enums';
 import { countries } from '../../constants/countries';
 import InputField from '../General/InputField';
+import ETH from '../../assets/ProfileImages/ETH.png';
 
 interface User {
   firstName: string;
@@ -104,7 +105,12 @@ const ProfileComponent: React.FC = () => {
       </div>
 
       <h1 className={styles.userName}>{userData.firstName} {userData.lastName}</h1>
+      <div className='flex gap-2 items-center'>
+        <img className="w-5 h-5"  src={ETH.src} alt="ETH" />
+        <h3 className="text-white">0xeaa9...7F63 </h3>
+      </div>
       <h2 className={`${styles.editProfileTitle}  `}>Edit Profile</h2>
+     
 
       <form className={"p-3 w-fit"}>
 
