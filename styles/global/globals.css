@@ -7,7 +7,7 @@
 /*globals.css */
 
 :root {
-  --mainDark: #0A0A0A;
+   --mainDark: #0A0A0A;
   --dark: #000000;
   --greenOrb: #0D342E;
   --redOrb: #61322D;
@@ -23,6 +23,7 @@
   --starYellow: #F4B30C;
   --subgray: #777E90;
   --inputBg: #333333;
+  --gray3:#7B7B7B;
 }
 
 
