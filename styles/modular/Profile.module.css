@@ -58,16 +58,16 @@
 }
 
 .formSection {
-    display: grid;
-    grid-template: 50px 80px / 1fr 1fr;
-    gap: 17px;
-    border-width: 2px;
-    border-color: white;
-    align-items: center;
-    justify-content: center;
+  display: grid;
+  grid-template: 50px 80px / 1fr 1fr;
+  gap: 17px;
+  border-width: 2px;
+  border-color: white;
+  align-items: center;
+  justify-content: center;
 }
 
-.country{
+.country {
   margin-left: 0px;
   width: 410px;
   height: 120px;
@@ -76,7 +76,8 @@
   display: flex;
   flex-direction: column;
 }
- .first{
+
+.first {
   display: flex;
   flex-direction: column;
   width: 410px;
@@ -85,7 +86,7 @@
   margin-top: 30%;
 }
 
-.inputs{
+.inputs {
   width: 200px;
   height: 30px;
   background-color: white;
@@ -96,7 +97,8 @@
   padding-right: 260px;
 
 }
-.select{
+
+.select {
   width: 200px;
   height: 30px;
   background-color: white;
@@ -107,7 +109,7 @@
   color: gray;
 }
 
-.last{
+.last {
   display: flex;
   flex-direction: column;
   width: 410px;
@@ -115,7 +117,8 @@
   margin-left: 20%;
   margin-top: 32%;
 }
-.city{
+
+.city {
   display: flex;
   flex-direction: column;
   width: 410px;
@@ -126,18 +129,18 @@
 
 .buttonsSection {
   display: flex;
+  align-items: center;
+  width: 100%;
   justify-content: flex-end;
-  margin-top: 20%;
-  margin-right: 15%;
   color: white;
+  margin: 1rem 0px;
 }
 
 .buttonsSection button {
   margin-left: 10px;
   width: 100px;
   height: 30px;
-  background: linear-gradient(90deg, #AA3A38 0%, #337152
-  100%);
+  background: linear-gradient(90deg, #AA3A38 0%, #337152 100%);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -150,15 +153,15 @@
 
 
 
-.labels{
+.labels {
   color: white;
 }
 
-.input{
+.input {
   color: black;
 }
 
-.span{
+.span {
   color: red;
   font-size: 20px;
   margin-left: 10px;
