@@ -4,18 +4,26 @@ import Switch from '@mui/material/Switch';
 import { alpha, styled } from '@mui/material/styles';
 
 
+interface SelectOptionsT {
+    name: string;
+    value: string;
+}
 
+type onChangeType = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
 type Props = {
     label?: string;
     required?: boolean;
     sublabel?: string;
+    name?: string;
     type?: string;
     inputType: InputTypeEnum;
     placeholder?: string;
     checked?: boolean;
     setChecked?: Dispatch<SetStateAction<boolean>>;
     switchLabel?: string;
+    options?: SelectOptionsT[];
+    changeFunc?: (event: React.ChangeEvent<onChangeType>) => any
 
 
 }
@@ -32,7 +40,7 @@ const CustomSwitch = styled(Switch)(({ theme }) => ({
     },
 }));
 
-function InputField({ label, required, sublabel, type, inputType, placeholder, checked, setChecked, switchLabel }: Props) {
+function InputField({ label, required, sublabel, type, inputType, placeholder, checked, setChecked, switchLabel, options, name, changeFunc }: Props) {
 
     const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -59,6 +67,8 @@ function InputField({ label, required, sublabel, type, inputType, placeholder, c
             {
                 inputType === InputTypeEnum.input && <>
                     <input
+                        name={name}
+                        onChange={changeFunc}
                         className="w-full my-3 rounded-xl p-3 bg-inputBg placeholder:text-subgray text-white font-normal placeholder:text-[0.65rem] placeholder:font-light"
                         placeholder={placeholder}
                         type={type}
@@ -69,6 +79,8 @@ function InputField({ label, required, sublabel, type, inputType, placeholder, c
             {
                 inputType === InputTypeEnum.textarea && <>
                     <textarea
+                        name={name}
+                        onChange={changeFunc}
                         className="w-full my-3 rounded-xl p-3 bg-inputBg placeholder:text-subgray text-white font-normal min-h-[300px] placeholder:text-[0.8rem] placeholder:font-light"
                         placeholder={placeholder}
 
@@ -91,6 +103,24 @@ function InputField({ label, required, sublabel, type, inputType, placeholder, c
                         />
 
                     </div>
+                </>
+            }
+
+            {
+                inputType === InputTypeEnum.select && <>
+                    <select
+                        name={name}
+                        onChange={changeFunc}
+                        className="w-full my-3 rounded-xl p-3 bg-inputBg placeholder:text-subgray text-white font-normal placeholder:text-[0.65rem] placeholder:font-light">
+                        {
+                            options.map((e, i) => {
+                                return <option key={e.value + "_" + i} value={e.value}>{e.name}</option>
+                            })
+                        }
+
+
+                    </select>
+
                 </>
             }
 
