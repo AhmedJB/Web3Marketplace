@@ -7,12 +7,7 @@ import ProfileComponent from '../components/ProfileComponent';
 import FavoritesComponent from '../components/FavoritesComponent';
 import DashboardComponent from '../components/DashboardComponent';
 import PaymentSuccess from '../components/PaymentSuccess';
-import ChartComponent from '../components/ChartComponent';
 
-const DynamicChartComponent = dynamic(
-  () => import('../components/ChartComponent/ChartComponentOnly'),
-  { ssr: false } // Disable server-side rendering
-);
 
 const pageholder = () => {
   const [activeMenuItem, setActiveMenuItem] = useState('profile');
@@ -49,9 +44,7 @@ const pageholder = () => {
           </div>
 
 
-          <div>
-          <ChartComponent/>
-          </div>
+          
 
          
 

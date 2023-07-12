@@ -53,12 +53,7 @@ const ChartComponentOnly = () => {
               display: false,
             },
             title: {
-              display: true,
-              text: 'Overall Sales', // Customize chart title
-              font: {
-                size: 60,
-                weight: 'semibold',
-              },
+              display: false,
             },
           },
           // Specify additional chart options and configurations here

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import styles from "../../styles/modular/Carousel.module.css"
+import DropDownDashboard from '../DashboardComponent/DropDownDashboard';
 
 type Props = {};
 const DynamicChartComponent = dynamic(
@@ -18,7 +17,7 @@ function ChartComponent({}: Props) {
     <>
      
 {/*  */}
-         <div className="flex flex-col border border-[#EFEEEB] p-6 rounded-2xl">
+         <div className="w-full h-full flex flex-col border border-[#EFEEEB] p-6 rounded-2xl">
             <div>
               <div className="flex justify-between">
                 <div>
@@ -26,7 +25,7 @@ function ChartComponent({}: Props) {
                   <h2 className="inter text-[26px] font-semibold text-white">$238,560.93</h2>
                 </div>
                 <div>
-                  <button className='bg-white '>test</button>
+                  <DropDownDashboard/>
                 </div>
               </div>
               <div className="flex gap-3 items-center pt-3">
