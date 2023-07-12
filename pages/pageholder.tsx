@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import ProfileComponent from '../components/ProfileComponent';
 import FavoritesComponent from '../components/FavoritesComponent';
 import DashboardComponent from '../components/DashboardComponent';
+import PaymentSuccess from '../components/PaymentSuccess';
 
 
 const pageholder = () => {
@@ -32,10 +33,14 @@ const pageholder = () => {
       <Header />
       <div className="w-full relative mb-64 mt-20">
         <div className="w-full md:container mx-auto">
-            <div className='flex  gap-8'> 
+            <div className='flex  gap-8 pb-11'> 
                 <MenuLayout activeMenuItem={activeMenuItem} handleMenuClick={handleMenuClick} />
                 {getPageComponent()}
-            </div>  
+            </div> 
+
+            <div className="flex items-center justify-center py-10">
+              <PaymentSuccess />
+            </div> 
         </div>
       </div>
       <Footer />
