@@ -1,33 +1,25 @@
 import React from 'react'
-import Testimonies from '../components/Testimonies';
-import Header from '../components/Header';
-import TopSellersHome from '../components/TopSellersHome';
-import Steps from '../components/Steps';
-import SubscribeComponent from '../components/SubscribeComponent';
-import CarouselComponent from '../components/CarouselComponent';
-import subscribe3 from '../assets/SubscribeHomePageImage/subscribe3.png';
-
-import Footer from '../components/Footer';
-import ProductFiltersComponent from '../components/ProductFiltersComponent';
+import Header from '../components/General/Header';
+import Footer from '../components/General/Footer';
+import ProductFiltersComponent from '../components/Utils/ProductFiltersComponent';
 import CardsProductList from '../components/CardsProductList';
-import HeartCheckboxComponent from '../components/HeartCheckboxComponent';
-import MenuToggle from '../components/Header/MenuToggle';
+
 
 
 type Props = {}
 
-function productlist({}: Props) {
+function productlist({ }: Props) {
   return <>
-  <Header/>
+    <Header />
 
-  <ProductFiltersComponent/>
-  <CardsProductList/>
-  <HeartCheckboxComponent/>
-  <MenuToggle/>
+    <ProductFiltersComponent />
+    <CardsProductList />
+    {/* <HeartCheckboxComponent/> */}
+    {/* <MenuToggle/> */}
 
 
- 
-   <Footer/>   
+
+    <Footer />
   </>
 }
 

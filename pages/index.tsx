@@ -1,64 +1,42 @@
-import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
-import Link from "next/link";
-import Account from "../components/Accounts";
-import ETHBalance from "../components/ETHBalance";
-import TokenBalance from "../components/TokenBalance";
-import useEagerConnect from "../hooks/useEagerConnect";
+//home.tsx
+import React from 'react'
+import Testimonies from '../components/General/Testimonies';
+import Header from '../components/General/Header';
+import TopSellersHome from '../components/HomePage/TopSellersHome';
+import Steps from '../components/HomePage/Steps';
+import SubscribeComponent from '../components/HomePage/SubscribeComponent';
+import CarouselComponent from '../components/General/CarouselComponent';
 
-const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
+import Footer from '../components/General/Footer';
+import Hero from '../components/HomePage/Hero';
 
-function Home() {
-  const { account, library } = useWeb3React();
 
-  const triedToEagerConnect = useEagerConnect();
+type Props = {}
 
-  const isConnected = typeof account === "string" && !!library;
+function home({ }: Props) {
+    return <>
 
-  return (
-    <div>
-      <Head>
-        <title>next-web3-boilerplate</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <header>
-        <nav>
-          <Link href="/">next-web3-boilerplate</Link>
-
-          <Account triedToEagerConnect={triedToEagerConnect} />
-        </nav>
-      </header>
-
-      <main>
-        <h1 className="">
-          Welcome to{" "}
-          <a href="https://github.com/mirshko/next-web3-boilerplate">
-            next-web3-boilerplate
-          </a>
-        </h1>
-
-        {isConnected && (
-          <section>
-            <ETHBalance />
-
-            <TokenBalance tokenAddress={DAI_TOKEN_ADDRESS} symbol="DAI" />
-          </section>
-        )}
-      </main>
-
-      <style jsx>{`
-        nav {
-          display: flex;
-          justify-content: space-between;
-        }
-
-        main {
-          text-align: center;
-        }
-      `}</style>
-    </div>
-  );
+        <Header />
+        <Hero />
+        <CarouselComponent />
+        <TopSellersHome />
+        <Steps />
+        <SubscribeComponent />
+        <Testimonies />
+        <Footer />
+    </>
 }
+/*
+  <div className={styles.container}>
+      <div className={styles.leftCircle}></div>
+      <div className={styles.rightCircle}></div>
+      <Header />
+      <TopSellersHome />
+      <Steps />
+  </div>
+  <h1 className={`${styles.test} inter text-headerColor`}>Hello</h1>
+  <h3 className="barlow text-headerColor">hello 2</h3>
+  <p className="text-headerColor">this is a paragraph</p>
+*/
 
-export default Home;
+export default home;

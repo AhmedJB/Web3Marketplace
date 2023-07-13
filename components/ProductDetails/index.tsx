@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import DetailsThumb from "./DetailsThumb";
 import styles from "../../styles/modular/ProductDetails.module.css";
-import Container from "../Container";
+import Container from "../Utils/Container";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BsCartPlus, BsArrowReturnRight } from "react-icons/bs";
 import { FaCartPlus } from "react-icons/fa";
@@ -17,7 +17,7 @@ import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import { GiReturnArrow } from 'react-icons/gi';
 import QuantityInput from "./QuantityInput";
 import StarReview from "./StarReview";
-import HeartCheckboxComponent from "../HeartCheckboxComponent";
+import HeartCheckboxComponent from "../Utils/HeartCheckboxComponent";
 
 interface Product {
   _id: string;
@@ -42,14 +42,14 @@ interface ProductDetailsT {
   description: string;
   price: number;
   colors: string[];
-  rating : number;
+  rating: number;
   minDays: number;
   maxDays: number;
 }
 
 type Props = {};
 
-const ProductDetails = ({}: Props) => {
+const ProductDetails = ({ }: Props) => {
   const [product, setProduct]: [ProductDetailsT, any] = useState({
     id: 1,
     title: "Turkish Moroccan Mosaic Table Lamp, 3 Globes Bohemian Bedside lamp",
@@ -91,21 +91,21 @@ const ProductDetails = ({}: Props) => {
     return `${minDays} - ${maxDays} business days`;
   };
 
-  const handleStep = (step : number) => {
-      let newQuantity = quantity + step;
-      if (step < 0  ) {
-        if (newQuantity <= 0) {
-          setQuantity(1);
-        }else {
-          setQuantity(newQuantity)
-        }
-      }else{
-        if (newQuantity > 10){
-          setQuantity(10);
-        }else{
-          setQuantity(newQuantity)
-        }
+  const handleStep = (step: number) => {
+    let newQuantity = quantity + step;
+    if (step < 0) {
+      if (newQuantity <= 0) {
+        setQuantity(1);
+      } else {
+        setQuantity(newQuantity)
       }
+    } else {
+      if (newQuantity > 10) {
+        setQuantity(10);
+      } else {
+        setQuantity(newQuantity)
+      }
+    }
   }
 
   return (
@@ -114,10 +114,10 @@ const ProductDetails = ({}: Props) => {
         <div className={`mx-auto ${styles.app} max-w-[1100px] my-16`}>
           <div className={"flex gap-11 "}>
             <div className={"flex flex-col items-center ml-4"} key={product.id}>
-              <div className={styles["big-img"]+ " relative"}>
+              <div className={styles["big-img"] + " relative"}>
                 <img src={product.src[index]} alt="" />
                 <div className="absolute top-3 right-3 rounded-full p-1 bg-white">
-                  <HeartCheckboxComponent  size="text-sm" />
+                  <HeartCheckboxComponent size="text-sm" />
                 </div>
               </div>
               <DetailsThumb
@@ -164,7 +164,7 @@ const ProductDetails = ({}: Props) => {
               {openDescription && (
                 <p className="text-white md:w-[550px] w-full mx-2 text-sm font-normal p-1 opacity-80 mb-5 max-h-[200px] overflow-y-auto">
                   {product.description} Pourquoi l'utiliser?
-On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).
+                  On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).
 
 
 
@@ -181,12 +181,12 @@ On sait depuis longtemps que travailler avec du texte lisible et contenant du se
                 </span>
               </div>
               <div className={"flex items-center mb-4"}>
-              <GiReturnArrow className="text-5xl text-white scale-x-[-1] " />
+                <GiReturnArrow className="text-5xl text-white scale-x-[-1] " />
                 <p className="text-lg text-white font-medium mx-2 w-[300px]">Product Exchange and Return  </p>
                 <span className={"text-lg font-medium text-orange"}>
-                Terms & Conditions
+                  Terms & Conditions
                 </span>
-                
+
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../components/Header'
-import Container from '../components/Container'
-import UploadForm from '../components/UploadForm'
+import Header from '../components/General/Header'
+import Container from '../components/Utils/Container'
+import UploadForm from '../components/ProductCreation/UploadForm'
 
 type Props = {}
 
