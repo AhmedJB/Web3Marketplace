@@ -1,0 +1,39 @@
+
+.image{
+ height: 50px;
+ width: 50px;
+ /* overflow: cover; */
+ object-fit: fill;
+ padding: 0px 0px;
+ border-radius: 25%;
+ 
+ text-align: left;
+}
+.imageRow{
+    height: 100px;
+    text-align: left;
+}
+
+.name{
+    padding: 0px 0px;
+    text-align: left;
+    transform: translateX(-55%);
+    
+}
+
+.price{
+    margin-right: 50px;
+    padding: 0px 0px;
+    text-align: left;
+}
+
+.sold{
+    padding: 0px 0px;
+    text-align: left;
+}
+
+.status{
+    padding: 0px 0px;
+    text-align: left;
+}
+
