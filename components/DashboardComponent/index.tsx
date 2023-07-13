@@ -1,41 +1,50 @@
-import React from 'react';
-import ChartComponent from '../ChartComponent';
-import CapsuleComponent from './CapsuleComponent';
-import capsule from'../../assets/PayementImages/capsule.svg';
-import capsule1 from'../../assets/PayementImages/capsule2.svg';
+import React, { useState } from 'react';
+import SellerDashboard from './SellerDashboard';
+import BuyerDashboard from './BuyerDashboard';
 
-const DashboardComponent= () => {
+const DashboardComponent = () => {
+
+  const [activeTab, setActiveTab] = useState("seller")
+
   return (
     <>
-    
-      <div>
-         
-      <CapsuleComponent
-        icon={<img src={capsule.src} alt="UP Icon" className="h-6 w-6" />} // Use the imported SVG icon
-        value="$108,560.93"
-        percentage="13.02%"
-      />
+      <div className="flex flex-col w-full" >
+        <div className="flex gap-3 items-center w-full mb-8">
+          <div onClick={() => setActiveTab("seller")} className="relative px-3 py-2 cursor-pointer ">
+            <h1 className={` text-xl font-semibold ${activeTab === "seller" ? "text-white" : "text-inputBg transition-colors hover:text-white"}`}>
+              Seller
+            </h1>
+            <hr className={`absolute bottom-0 left-0  border-2 ${activeTab === "seller" ? " border-yellow w-full " : "w-0"} `} />
+          </div>
+          <div onClick={() => setActiveTab("buyer")} className="relative px-3 py-2 cursor-pointer ">
+            <h1 className={` text-xl font-semibold ${activeTab === "buyer" ? "text-white" : "text-inputBg transition-colors hover:text-white"} `}>
+              Buyer
+            </h1>
+            <hr className={`absolute bottom-0 left-0  border-2 ${activeTab === "buyer" ? " border-yellow w-full " : "w-0"} `} />
+          </div>
 
-      <CapsuleComponent
-        icon={<img src={capsule1.src} alt="UP Icon" className="h-9 w-9" />} // Use the imported SVG icon
-        value="$108,560.93"
-        percentage="13.02%"
-      />
-     
-      
-      
-      
-      <h1 className="text-white font-semibold">Dashboard Page</h1>
+        </div>
+
+        {
+          activeTab === "seller" && <>
+            <SellerDashboard />
+          </>
+        }
+
+        {
+          activeTab === "buyer" && <>
+            <BuyerDashboard />
+          </>
+        }
+
 
       </div>
-      <div className='w-full h-full'>
-        <ChartComponent/>
-      </div>
 
-    
-     
+
+
+
     </>
   );
 };
 
-export default DashboardComponent ;
+export default DashboardComponent;

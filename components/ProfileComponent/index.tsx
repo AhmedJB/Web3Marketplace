@@ -85,17 +85,19 @@ const ProfileComponent: React.FC = () => {
     setCityInput('');
   };
 
+  const inputWidth = 400
+
   // Rest of your component...
   return (
     <div className={styles.profileContainer}>
-      <div className="w-[1300] h-[220px] bg-cover relative"  style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div className="max-w-[1300px] w-full h-[220px] bg-cover relative" style={{ backgroundImage: `url(${backgroundImage})` }}>
         <input type="file" accept="image/*" onChange={handleBackgroundImageUpload} style={{ display: 'none' }} id="backgroundImageUpload" />
         <label htmlFor="backgroundImageUpload">
           <button className="absolute top-5 right-10 bg-transparent border-none text-white cursor-pointer text-2xl">
             <AiOutlineEdit />
           </button>
         </label>
-        <img className="absolute bottom-[-30px] left-3 w-24 h-24 rounded-full"  src={profileImage} alt="Profile" />
+        <img className="absolute bottom-[-30px] left-3 w-24 h-24 rounded-full" src={profileImage} alt="Profile" />
         <input type="file" accept="image/*" onChange={handleProfileImageUpload} style={{ display: 'none' }} id="profileImageUpload" />
         <label htmlFor="profileImageUpload">
           <button className="absolute top-10 right-10 bg-transparent border-none text-white cursor-pointer text-2xl" style={{ bottom: '60px', right: '10px' }}>
@@ -106,17 +108,17 @@ const ProfileComponent: React.FC = () => {
 
       <h1 className={styles.userName}>{userData.firstName} {userData.lastName}</h1>
       <div className='flex gap-2 items-center'>
-        <img className="w-5 h-5"  src={ETH.src} alt="ETH" />
+        <img className="w-5 h-5" src={ETH.src} alt="ETH" />
         <h3 className="text-white">0xeaa9...7F63 </h3>
       </div>
       <h2 className={`${styles.editProfileTitle}  `}>Edit Profile</h2>
-     
-
-      <form className={"p-3 w-fit"}>
 
 
-        <div className="flex items-center gap-4">
-          <div className="w-[300px]">
+      <form className={"p-3 lg:w-fit w-full"}>
+
+
+        <div className="flex xl:flex-row flex-col  xl:items-center gap-4 w-full">
+          <div className={`xl:w-[400px] lg:w-[600px]    w-full`}>
             <InputField label={"First Name"} required={true}
               changeFunc={(e: React.ChangeEvent<HTMLInputElement>) => {
                 let v = e.target.value;
@@ -129,7 +131,7 @@ const ProfileComponent: React.FC = () => {
               inputType={InputTypeEnum.input} type={"text"} placeholder='eg: jhon' />
           </div>
 
-          <div className="w-[300px]">
+          <div className={`xl:w-[400px] lg:w-[600px]    w-full   `}>
             <InputField
               name="country"
               label={"Country (optional)"}
@@ -147,8 +149,8 @@ const ProfileComponent: React.FC = () => {
         </div>
 
 
-        <div className="flex items-center gap-4">
-          <div className="w-[300px]">
+        <div className="flex xl:flex-row flex-col  xl:items-center gap-4 w-full">
+          <div className={`xl:w-[400px] lg:w-[600px]    w-full`}>
             <InputField
               name="lastName"
               changeFunc={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,7 +163,7 @@ const ProfileComponent: React.FC = () => {
               label={"Last Name"} required={true} inputType={InputTypeEnum.input} type={"text"} placeholder='eg: smith' />
           </div>
 
-          <div className="w-[300px]">
+          <div className={`xl:w-[400px] lg:w-[600px]    w-full`}>
             <InputField
               changeFunc={(e: React.ChangeEvent<HTMLInputElement>) => {
                 let v = e.target.value;

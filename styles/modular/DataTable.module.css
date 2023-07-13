@@ -2,21 +2,19 @@
 
 
 
-.tableContainer{
-  margin: 200px;
+.tableContainer {
+  margin: 10px;
   border-width: 2px;
   border-radius: 10px;
   border-style: solid;
   border-color: #EFEEEB;
   padding: 20px;
   color: white;
-  width: 1200px;
-  height: 500px;
-
+  height: fit-content
 }
 
-.tableTitle{
-  
+.tableTitle {
+
   /* border-width: 2px;
   border-style: solid; */
   font-size: 20px;
@@ -26,32 +24,28 @@
   text-align: left;
 }
 
-.table{
+.table {
   border-collapse: collapse;
   width: 100%;
   margin: 25px 0;
 }
 
-.tableHead{
+.tableHead {
   text-align: left;
- 
+
 }
 
-.header{
+.header {
   text-align: left;
   color: #606060;
-  
+
 }
 
-.tableHeadRow{
+.tableHeadRow {
   border-bottom: 1px solid #EFEFEF;
-  
+
 }
 
-.tableBody{
-  
-}
+.tableBody {}
 
-.tableBodyRow{
-  
-}
+.tableBodyRow {}

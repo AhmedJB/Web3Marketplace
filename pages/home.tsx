@@ -1,29 +1,29 @@
 //home.tsx
 import React from 'react'
-import Testimonies from '../components/Testimonies';
-import Header from '../components/Header';
-import TopSellersHome from '../components/TopSellersHome';
-import Steps from '../components/Steps';
-import SubscribeComponent from '../components/SubscribeComponent';
-import CarouselComponent from '../components/CarouselComponent';
+import Testimonies from '../components/General/Testimonies';
+import Header from '../components/General/Header';
+import TopSellersHome from '../components/HomePage/TopSellersHome';
+import Steps from '../components/HomePage/Steps';
+import SubscribeComponent from '../components/HomePage/SubscribeComponent';
+import CarouselComponent from '../components/General/CarouselComponent';
 
-import Footer from '../components/Footer';
-import Hero from '../components/Hero';
+import Footer from '../components/General/Footer';
+import Hero from '../components/HomePage/Hero';
 
 
 type Props = {}
 
-function home({}: Props) {
+function home({ }: Props) {
   return <>
 
-  <Header/>
-  <Hero />
-  <CarouselComponent /> 
-  <TopSellersHome/>
-  <Steps/>
-    <SubscribeComponent/>
-   <Testimonies />
-   <Footer/>   
+    <Header />
+    <Hero />
+    <CarouselComponent />
+    <TopSellersHome />
+    <Steps />
+    <SubscribeComponent />
+    <Testimonies />
+    <Footer />
   </>
 }
 /*
