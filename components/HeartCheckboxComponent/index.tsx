@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from '../../styles/modular/HeartCheckBox.module.css';
-import {AiOutlineHeart,AiFillHeart} from "react-icons/ai"
 import {FaHeart , FaRegHeart} from "react-icons/fa"
 
 type Props = {
@@ -24,10 +23,15 @@ const HeartCheckboxComponent = ({size,color} : Props) => {
           type="checkbox"
           onChange={handleCheckboxChange}
         />
-        {
-          checked ? <FaHeart className={styles.checkmark + " "  +size + " text-red"} /> : <FaRegHeart className={styles.checkmark + " " + size +  (color ? (" " + color) : " text-black" )} />
-
-        }
+        {checked ? (
+          <FaHeart
+            className={`${styles.checkmark} ${size} ${color ? color : 'text-red'}`}
+          />
+        ) : (
+          <FaRegHeart
+            className={`${styles.checkmark} ${size} ${color ? color : 'text-black'}`}
+          />
+        )}
       </label>
     </div>
     

@@ -21,14 +21,14 @@ function favorites({}: Props) {
       const limitedProductData = products.slice(0,6);
   return <>
   <Header/>
-  <MenuLayout activeMenuItem="favorites">
+ {/*  <MenuLayout activeMenuItem="favorites">
     <h1 className='text-white font-semibold'>favorites Page</h1>
     <div className='grid grid-cols-4 gap-7 my-4'>
     {limitedProductData.map((product, index) => (
         <CardProduct key={index} {...product}/>
     ))}
     </div>
-  </MenuLayout>
+  </MenuLayout> */}
   <Footer/>
 
   </>

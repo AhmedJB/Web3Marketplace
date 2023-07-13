@@ -14,7 +14,6 @@ const Footer: React.FC<Props> = () => {
     <footer className="bg-mainDark  container mx-auto ">
       <div className="mx-auto w-full p-12 ">
         <div className="flex mb-16">
-
           {/* logo +input email + social media  */}
           <div className="">
               <Link  className="flex items-center  text-headerColor font-bold text-lg "href="/" passHref>
@@ -72,7 +71,7 @@ const Footer: React.FC<Props> = () => {
               <h2 className="mb-6  font-semibold  text-[20px] barlow  text-white">My Account</h2>
               <ul className="text-gray-600 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link href="/profile" className="text-[18px] barlow  text-[#777E90] hover:underline">Profile</Link>
+                  <Link href="/pageholder" className="text-[18px] barlow  text-[#777E90] hover:underline">Profile</Link>
                 </li>
                 <li className="mb-4">
                   <Link href="/profile" className="text-[18px] barlow  text-[#777E90] hover:underline">Favorites</Link>

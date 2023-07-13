@@ -5,6 +5,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { InputTypeEnum } from '../../types/enums';
 import { countries } from '../../constants/countries';
 import InputField from '../General/InputField';
+import ETH from '../../assets/ProfileImages/ETH.png';
 
 interface User {
   firstName: string;
@@ -15,7 +16,7 @@ interface User {
 
 
 
-const Profile: React.FC = () => {
+const ProfileComponent: React.FC = () => {
   const [userData, setUserData] = useState<User>({ firstName: 'User', lastName: 'Name', country: '', city: '' });
   const [backgroundImage, setBackgroundImage] = useState('./background.jpg');
   const [profileImage, setProfileImage] = useState('./avatar.jpg');
@@ -87,27 +88,29 @@ const Profile: React.FC = () => {
   // Rest of your component...
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.backgroundPhoto} style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div className="w-[1300] h-[220px] bg-cover relative"  style={{ backgroundImage: `url(${backgroundImage})` }}>
         <input type="file" accept="image/*" onChange={handleBackgroundImageUpload} style={{ display: 'none' }} id="backgroundImageUpload" />
         <label htmlFor="backgroundImageUpload">
-          <button className="absolute top-10 right-10 bg-transparent border-none text-white cursor-pointer text-2xl">
+          <button className="absolute top-5 right-10 bg-transparent border-none text-white cursor-pointer text-2xl">
             <AiOutlineEdit />
           </button>
-          {/* <button className={styles.editButton}>
-          <AiOutlineEdit />
-        </button> */}
         </label>
-        <img className={styles.profilePhoto} src={profileImage} alt="Profile" />
+        <img className="absolute bottom-[-30px] left-3 w-24 h-24 rounded-full"  src={profileImage} alt="Profile" />
         <input type="file" accept="image/*" onChange={handleProfileImageUpload} style={{ display: 'none' }} id="profileImageUpload" />
         <label htmlFor="profileImageUpload">
-          <button className={styles.editButton} style={{ bottom: '60px', right: '10px' }}>
+          <button className="absolute top-10 right-10 bg-transparent border-none text-white cursor-pointer text-2xl" style={{ bottom: '60px', right: '10px' }}>
             <AiOutlineEdit />
           </button>
         </label>
       </div>
 
       <h1 className={styles.userName}>{userData.firstName} {userData.lastName}</h1>
+      <div className='flex gap-2 items-center'>
+        <img className="w-5 h-5"  src={ETH.src} alt="ETH" />
+        <h3 className="text-white">0xeaa9...7F63 </h3>
+      </div>
       <h2 className={`${styles.editProfileTitle}  `}>Edit Profile</h2>
+     
 
       <form className={"p-3 w-fit"}>
 
@@ -186,4 +189,4 @@ const Profile: React.FC = () => {
   );
 }
 
-export default Profile;
+export default ProfileComponent;

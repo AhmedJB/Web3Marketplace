@@ -1,6 +1,6 @@
 
 import Header from '../components/Header';
-import Profile from '../components/Profile';
+import Profile from '../components/ProfileComponent';
 import Footer from '../components/Footer';
 
 function editprofile() {
