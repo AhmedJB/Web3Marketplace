@@ -1,4 +1,13 @@
-backend/node_modules
+# bazart
 bazart/.next
 bazart/node_modules
+
+# contracts
 contracts/node_modules
+
+
+
+# backend
+backend/node_modules
+backend/database/dev.db
+
