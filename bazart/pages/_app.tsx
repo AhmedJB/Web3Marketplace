@@ -3,11 +3,23 @@ import type { AppProps } from "next/app";
 import getLibrary from "../getLibrary";
 import "../styles/global/globals.css";
 import 'react-multi-carousel/lib/styles.css';
+import { SignProvider } from "../contexts/SignContext";
+import Reminder from "../components/Utils/Reminder";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function NextWeb3App({ Component, pageProps }: AppProps) {
+
+  const queryClient = new QueryClient()
+
+
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <SignProvider>
+          <Reminder />
+          <Component {...pageProps} />
+        </SignProvider>
+      </QueryClientProvider>
     </Web3ReactProvider>
   );
 }

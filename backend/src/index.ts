@@ -5,6 +5,7 @@ import { TestController } from '~~/controllers/Test/test.controller'
 import { PrismaClient } from '@prisma/client';
 import { ExceptionsHandler } from '~~/middlewares/exceptions.handler';
 import { UserController } from '~~/controllers/User/user.controller';
+import { VerificationController } from '~~/controllers/Verification/Verification.controller';
 
 
 
@@ -28,6 +29,13 @@ app.use("/user", UserController)
  * and async error handling
  */
 app.use("/tests", TestController)
+
+
+/**
+ * Verification Controller
+ * verify user generated signature
+ */
+app.use("/verify", VerificationController)
 
 
 

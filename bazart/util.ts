@@ -13,6 +13,7 @@ const ETHERSCAN_PREFIXES = {
   4: "rinkeby.",
   5: "goerli.",
   42: "kovan.",
+  11155111: "sepolia."
 };
 
 export function formatEtherscanLink(
