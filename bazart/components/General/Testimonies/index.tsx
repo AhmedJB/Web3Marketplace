@@ -4,6 +4,8 @@ import TestimonyCard from './TestimonyCard'
 import { testimonyDemoData } from '../../../demoData/testimonies';
 import { TestimonyData } from '../../../types/Testimonies';
 import useWindowSize from '../../../hooks/useWindowSize';
+import Account from '../../Utils/Accounts';
+import useEagerConnect from '../../../hooks/useEagerConnect';
 
 type Props = {}
 
@@ -17,6 +19,7 @@ function Testimonies({ }: Props) {
     const mediumLimit = 770;
 
     const windowSize = useWindowSize();
+    const triedToEagerConnect = useEagerConnect();
 
     function separateArrayByWidth(arr: TestimonyData[]) {
         if (windowSize.width >= bigLargeLimit) {
@@ -76,6 +79,7 @@ function Testimonies({ }: Props) {
     return <>
         <div className="w-full relative mb-64">
             <div className="w-full md:container mx-auto ">
+                <Account triedToEagerConnect={triedToEagerConnect} />
                 <h1 className="text-3xl text-center font-semibold text-yellow">
                     Testimonies
                 </h1>

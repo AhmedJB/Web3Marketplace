@@ -24,7 +24,9 @@ module.exports = {
       black: "#000000",
       orange: "#D0532B",
       subgray: "#777E90",
-      inputBg : "#333333"
+      inputBg : "#333333",
+      sellerCardBg : "#3B3B3B",
+      modalBg : "#1b1b1b"
     },
     extend: {},
   },

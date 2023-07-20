@@ -2,15 +2,19 @@ import { useWeb3React } from "@web3-react/core";
 import { UserRejectedRequestError } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
 import { injected } from "../../../connectors";
-import useENSName from "../../../hooks/useENSName";
 import useMetaMaskOnboarding from "../../../hooks/useMetaMaskOnboarding";
-import { formatEtherscanLink, shortenHex } from "../../../util";
+import { AbstractConnector } from '@web3-react/abstract-connector';
 
 type AccountProps = {
   triedToEagerConnect: boolean;
-};
+  connector: AbstractConnector;
+  isMetamask?: boolean;
+  walletName?: string;
+  close: () => void;
+}
 
-const Account = ({ triedToEagerConnect }: AccountProps) => {
+
+const CustomAccount = ({ triedToEagerConnect, connector, isMetamask, walletName, close }: AccountProps) => {
   const { active, error, activate, chainId, account, setError, deactivate } =
     useWeb3React();
 
@@ -26,13 +30,17 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
   useEffect(() => {
     if (active || error) {
       setConnecting(false);
-      stopOnboarding();
+      if (isMetamask) {
+        stopOnboarding();
+      }
+
     }
   }, [active, error, stopOnboarding]);
 
-  const ENSName = useENSName(account);
+
 
   if (error) {
+    console.log("error")
     return null;
   }
 
@@ -49,8 +57,8 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
             disabled={connecting}
             onClick={() => {
               setConnecting(true);
-
-              activate(injected, undefined, true).catch((error) => {
+              close()
+              activate(connector, undefined, true).catch((error) => {
                 // ignore the error if it's a user rejected request
                 if (error instanceof UserRejectedRequestError) {
                   setConnecting(false);
@@ -60,43 +68,23 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
               });
             }}
           >
-            {isMetaMaskInstalled ? "Connect to MetaMask" : "Connect to Wallet"}
+            {isMetaMaskInstalled && isMetamask ? "Connect to MetaMask" : `Connect to ${walletName}`}
           </button>
         ) : (
-          <button onClick={startOnboarding}>Install Metamask</button>
+          <>
+            {
+              isMetamask && <button onClick={startOnboarding}>Install Metamask</button>
+            }
+          </>
         )}
       </div>
     );
+  } else {
+    <h1>Account null</h1>
   }
 
-  if (false) {
-    return (
-      <>
-        <div className="flex items-center">
-          <a
-            className="text-white"
-            {...{
-              href: formatEtherscanLink("Account", [chainId, account]),
-              target: "_blank",
-              rel: "noopener noreferrer",
-            }}
-          >
-            {ENSName || `${shortenHex(account, 4)}`}
-          </a>
-          <button
-            className="p-3 bg-mainDark text-white"
-            onClick={() => deactivate()}
-          >
-            Logout
-          </button>
-        </div>
 
-
-      </>
-
-    );
-  }
 
 };
 
-export default Account;
+export default CustomAccount;

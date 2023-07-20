@@ -1,19 +1,95 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import logo from '../../../assets/demo/logo.png';
 import ConnectButton from "./ConnectButton";
 import DropDownButton from './DropDownButton';
+import { useWeb3React } from '@web3-react/core';
+import { SignContext } from '../../../contexts/SignContext';
+import Modal from '../../Utils/Modal';
+import ConnectRows from './ConnectRows';
+import useEagerConnect from '../../../hooks/useEagerConnect';
+import { useMutation } from 'react-query';
+import { verify } from '../../../api/verification';
 
 type Props = {};
 
 const Header: React.FC<Props> = () => {
+  const [signed, setSigned] = useContext(SignContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(true);
+  const triedToEagerConnect = useEagerConnect();
+  const { active, error, activate, chainId, account, setError, library, deactivate } =
+    useWeb3React();
+
+  const verificationMutation = useMutation(verify, {
+    onSuccess: (data, variables, context) => {
+      console.log("success");
+      console.log(variables);
+      localStorage.setItem("signature", variables.signature);
+      setSigned(true);
+
+    },
+    onError: (error, variables, context) => {
+      // I will fire first
+      console.log("failed verification");
+      setSigned(false);
+      deactivate();
+    }
+  })
+
+
+
+
+  const handleSignature = async () => {
+    console.log("using account ", account);
+    let signer = library.getSigner();
+    console.log("signer ", signer);
+    try {
+      const signature = await signer.signMessage(account);
+      console.log("signature ", signature);
+      let body = {
+        address: account,
+        signature
+      }
+
+      verificationMutation.mutate(body);
+
+
+    } catch (e) {
+      console.log("failed signature");
+      deactivate();
+    }
+
+  }
+
+  useEffect(() => {
+    if (active) {
+      if (!signed) {
+        handleSignature();
+      }
+
+    }
+
+  }, [active])
+
+  useEffect(() => {
+    // reset sign state
+  }, [account])
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  return (
+  return <>
+    <Modal
+      open={openModal}
+      close={() => setOpenModal(false)}
+      title={"Connect"}
+    >
+      <ConnectRows close={() => setOpenModal(false)} />
+
+    </Modal>
+
     <header className="container mx-auto my-3">
       <nav className="flex items-center justify-between h-16 px-4 sm:px-8">
         <div className="flex items-center">
@@ -52,7 +128,7 @@ const Header: React.FC<Props> = () => {
         </div>
 
         <div className="hidden sm:block relative">
-          <ConnectButton toggleDropdown={toggleDropdown} />
+          <ConnectButton toggleDropdown={toggleDropdown} toggleModal={() => setOpenModal(true)} />
 
           {isDropdownOpen && (
             <DropDownButton />
@@ -61,7 +137,9 @@ const Header: React.FC<Props> = () => {
         </div>
       </nav>
     </header>
-  );
+  </>
+
+    ;
 };
 
 export default Header;
