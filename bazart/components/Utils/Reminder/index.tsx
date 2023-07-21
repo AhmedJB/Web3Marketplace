@@ -6,11 +6,13 @@ type Props = {}
 
 function Reminder({ }: Props) {
     const [signed, setSigned] = useContext(SignContext);
-    const { active } = useWeb3React();
+    const { active, account } = useWeb3React();
+
+    const stateValidation = active && !signed && (account !== sessionStorage.getItem("address"))
 
     return <>
         {
-            active && !signed && <div className="fixed top-0 w-full h-[30px] z-[1000] bg-[#ff0000] text-white flex items-center justify-center font-semibold text-xl">
+            stateValidation && <div className="fixed top-0 w-full h-[30px] z-[1000] bg-[#ff0000] text-white flex items-center justify-center font-semibold text-xl">
                 Please Sign Message
             </div>
         }

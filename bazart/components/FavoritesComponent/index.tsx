@@ -1,6 +1,7 @@
 import React from 'react'
 
 import CardProduct from '../General/CardProduct';
+import Validator from '../HOC/Validator';
 
 
 type Props = {}

@@ -21,7 +21,7 @@ app.use(cors())
  * User Controller
  * a controller used to modify / get user information based on wallet address
  */
-app.use("/user", UserController)
+app.use("/api/user", UserController)
 
 /**
  * Test Controller 
@@ -47,6 +47,5 @@ app.use("/verify", VerificationController)
 app.use(ExceptionsHandler)
 
 app.listen(config.API_PORT, () => {
-    console.log(`Server running on http://localhost:${config.API_PORT}`);
-  });
-  
+  console.log(`Server running on http://localhost:${config.API_PORT}`);
+});

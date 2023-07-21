@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { verifcationT } from '~~/types/Verification';
 import { ServerRequestException } from '~~/utils/exceptions'
 import { ethers } from 'ethers';
+import { verifySignature } from '~~/utils/helper';
 
 
 const VerificationController = Router();
@@ -11,8 +12,8 @@ VerificationController.post("/", (req, res, next) => {
     let data: verifcationT = req.body;
     console.log("verification data ", data)
     try {
-        const signerAddr = ethers.verifyMessage(data.address, data.signature);
-        if (signerAddr !== data.address) {
+        let res_sig = verifySignature(data.address, data.signature)
+        if (!res_sig) {
             throw new ServerRequestException("Signature Verification Failed")
         }
         return res.

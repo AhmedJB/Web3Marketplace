@@ -16,8 +16,8 @@ type Props = {};
 const Header: React.FC<Props> = () => {
   const [signed, setSigned] = useContext(SignContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(true);
-  const triedToEagerConnect = useEagerConnect();
+  const [openModal, setOpenModal] = useState(false);
+  //const triedToEagerConnect = useEagerConnect();
   const { active, error, activate, chainId, account, setError, library, deactivate } =
     useWeb3React();
 
@@ -25,7 +25,8 @@ const Header: React.FC<Props> = () => {
     onSuccess: (data, variables, context) => {
       console.log("success");
       console.log(variables);
-      localStorage.setItem("signature", variables.signature);
+      sessionStorage.setItem("signature", variables.signature);
+      sessionStorage.setItem("address", variables.address);
       setSigned(true);
 
     },
@@ -64,17 +65,29 @@ const Header: React.FC<Props> = () => {
 
   useEffect(() => {
     if (active) {
-      if (!signed) {
+      console.log("running active")
+      if ((!signed || !sessionStorage.getItem("signature")) || (account !== sessionStorage.getItem("address"))) {
+        setSigned(false);
         handleSignature();
       }
-
     }
 
-  }, [active])
+  }, [active, account])
 
-  useEffect(() => {
+  /* useEffect(() => {
     // reset sign state
-  }, [account])
+    if (active) {
+      if (account !== sessionStorage.getItem("address") && signed) {
+        console.log("running account")
+        setSigned(false);
+        sessionStorage.removeItem("signature");
+        sessionStorage.removeItem("address")
+        handleSignature();
+      }
+    }
+
+
+  }, [account]) */
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -119,11 +132,14 @@ const Header: React.FC<Props> = () => {
                 Contact
               </Link>
             </li>
-            <li>
-              <Link className="hover:text-headerColor text-[20px] barlow" href="/partners" passHref>
-                Partners
-              </Link>
-            </li>
+            {
+              active && <li>
+                <Link className="hover:text-headerColor text-[20px] barlow" href="/dashboard" passHref>
+                  Dashboard
+                </Link>
+              </li>
+            }
+
           </ul>
         </div>
 
