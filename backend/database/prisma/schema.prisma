@@ -19,3 +19,12 @@ model TestModel {
   surname String
   date    DateTime @default(now())
 }
+
+model UserModel {
+  id        Int     @id @default(autoincrement())
+  //signature ?
+  firstName String
+  lastName  String
+  country   String?
+  city      String?
+}

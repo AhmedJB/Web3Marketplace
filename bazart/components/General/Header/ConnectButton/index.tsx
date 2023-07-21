@@ -27,9 +27,9 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
         }
 
         {
-            active && <div className="flex items-center">
+            active && <div className="flex items-center gap-2 ">
                 <a
-                    className="text-white"
+                    className="text-white font-semibold  py-2"
                     {...{
                         href: formatEtherscanLink("Account", [chainId, account]),
                         target: "_blank",
@@ -39,7 +39,7 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
                     {ENSName || `${shortenHex(account, 4)}`}
                 </a>
                 <button
-                    className="p-3 bg-mainDark text-white"
+                    className="py-3 px-5 header-gradient rounded-xl  text-white "
                     onClick={() => {
                         setSigned(false);
                         deactivate();

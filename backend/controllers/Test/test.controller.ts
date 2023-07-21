@@ -5,11 +5,6 @@ import { TestModel } from '@prisma/client';
 import { PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { handleCreateMissingError } from '~~/utils/prismaHandler';
 
-
-
-
-
-
 const TestController = Router();
 
 
