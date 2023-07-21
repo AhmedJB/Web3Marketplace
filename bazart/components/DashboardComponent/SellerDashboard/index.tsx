@@ -6,6 +6,7 @@ import capsule1 from '../../../assets/PayementImages/capsule2.svg';
 import DataTable from '../../Utils/Table/DataTable';
 import { demoProducts, demoTransactions } from '../../../demoData/tabledata';
 import { productsHeader, transactionsHeader } from '../../../constants/headers';
+import Validator from '../../HOC/Validator';
 
 type Props = {}
 
@@ -56,4 +57,4 @@ function SellerDashboard({ }: Props) {
 
 }
 
-export default SellerDashboard
+export default Validator(SellerDashboard)

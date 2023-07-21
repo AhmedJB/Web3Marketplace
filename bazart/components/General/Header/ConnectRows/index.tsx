@@ -12,14 +12,14 @@ type Props = {
 
 
 function ConnectRows({ close }: Props) {
-    const triedToEagerConnect = useEagerConnect();
+    //const triedToEagerConnect = useEagerConnect();
     const { active } = useWeb3React();
     const wallets: WalletT[] = [
         {
             name: "MetaMask",
             connector: injected,
             isMetaMask: true,
-            eager: triedToEagerConnect
+            eager: true
         },
         /* 
         other connectors

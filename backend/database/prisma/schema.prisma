@@ -23,8 +23,9 @@ model TestModel {
 model UserModel {
   id        Int     @id @default(autoincrement())
   //signature ?
-  firstName String
-  lastName  String
-  country   String?
-  city      String?
+  address   String  @unique @default("")
+  firstName String  @default("")
+  lastName  String  @default("")
+  country   String? @default("")
+  city      String? @default("")
 }
