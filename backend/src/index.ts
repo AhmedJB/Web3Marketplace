@@ -46,4 +46,7 @@ app.use("/verify", VerificationController)
  */
 app.use(ExceptionsHandler)
 
-app.listen(config.API_PORT, () => console.log('Server Running'))
+app.listen(config.API_PORT, () => {
+    console.log(`Server running on http://localhost:${config.API_PORT}`);
+  });
+  

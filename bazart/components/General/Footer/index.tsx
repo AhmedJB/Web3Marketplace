@@ -70,7 +70,7 @@ const Footer: React.FC<Props> = () => {
               <h2 className="mb-6  font-semibold  text-[20px] barlow  text-white">My Account</h2>
               <ul className="text-gray-600 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link href="/pageholder" className="text-[18px] barlow  text-[#777E90] hover:underline">Profile</Link>
+                  <Link href="/dashboard" className="text-[18px] barlow  text-[#777E90] hover:underline">Profile</Link>
                 </li>
                 <li className="mb-4">
                   <Link href="/profile" className="text-[18px] barlow  text-[#777E90] hover:underline">Favorites</Link>
