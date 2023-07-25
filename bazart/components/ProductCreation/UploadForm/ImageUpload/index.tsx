@@ -27,7 +27,7 @@ function ImageUpload({ images, setImages }: Props) {
 
     const handleFileInputChange = (v) => {
         console.log(images)
-        if (images.length < 3) {
+        if (images.length < 4) {
             let temp = [...images]
             temp.push(inputRef.current.files[0]);
             console.log(temp)
@@ -53,10 +53,10 @@ function ImageUpload({ images, setImages }: Props) {
                 <div className="flex flex-col items-center gap-4">
                     <MdUploadFile className="text-white text-4xl" />
                     <p className="text-white text-md font-normal">
-                        PNG, GIF, WEBP. Max size: 2MB (Max : 3)
+                        PNG, GIF, WEBP. Max size: 2MB (Max : 4)
                     </p>
                     {
-                        images.length < 3 && <button className="px-7 py-2 rounded-[3rem] text-green border-2 border-green text-sm" onClick={() => { startUpload() }}>Upload</button>
+                        images.length < 4 && <button className="px-7 py-2 rounded-[3rem] text-green border-2 border-green text-sm" onClick={() => { startUpload() }}>Upload</button>
                     }
 
 
@@ -77,7 +77,7 @@ function ImageUpload({ images, setImages }: Props) {
                     ))
                 }
                 {
-                    (new Array(3 - images.length).fill(0).map((e, i) => (
+                    (new Array(4 - images.length).fill(0).map((e, i) => (
                         <div key={`placeholder-${i}`} className="w-[150px] h-[150px] border-2 border-cardGray rounded-lg"></div>
                     )))
                 }

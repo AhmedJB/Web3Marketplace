@@ -2,6 +2,7 @@ import React from 'react'
 import { WalletT } from '../../../../../types/WalletTypes'
 import CustomAccount from '../../../../Utils/CustomAccount'
 
+
 type Props = {
     walletOptions: WalletT,
     close: () => void,
@@ -10,7 +11,7 @@ type Props = {
 function ConnectRow({ walletOptions, close }: Props) {
 
     return <>
-        <div className="w-full p-1 bg-mainDark rounded-xl">
+        <div className="w-full p-1 flex items-center justify-center bg-mainDark rounded-xl">
             <CustomAccount
                 connector={walletOptions.connector}
                 triedToEagerConnect={walletOptions.eager}
