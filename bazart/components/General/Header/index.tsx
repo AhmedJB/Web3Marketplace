@@ -10,11 +10,13 @@ import ConnectRows from './ConnectRows';
 import useEagerConnect from '../../../hooks/useEagerConnect';
 import { useMutation } from 'react-query';
 import { verify } from '../../../api/verification';
+import { AccountContext } from '../../../contexts/AccountContext';
 
 type Props = {};
 
 const Header: React.FC<Props> = () => {
   const [signed, setSigned] = useContext(SignContext);
+  const { accountData, setAccountData } = useContext(AccountContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   //const triedToEagerConnect = useEagerConnect();
@@ -25,8 +27,11 @@ const Header: React.FC<Props> = () => {
     onSuccess: (data, variables, context) => {
       console.log("success");
       console.log(variables);
-      sessionStorage.setItem("signature", variables.signature);
-      sessionStorage.setItem("address", variables.address);
+      let obj = {
+        signature: variables.signature,
+        address: variables.address
+      }
+      setAccountData(obj);
       setSigned(true);
 
     },
@@ -34,6 +39,7 @@ const Header: React.FC<Props> = () => {
       // I will fire first
       console.log("failed verification");
       setSigned(false);
+      setAccountData(null);
       deactivate();
     }
   })
@@ -42,12 +48,12 @@ const Header: React.FC<Props> = () => {
 
 
   const handleSignature = async () => {
-    console.log("using account ", account);
+    //console.log("using account ", account);
     let signer = library.getSigner();
-    console.log("signer ", signer);
+    //console.log("signer ", signer);
     try {
       const signature = await signer.signMessage(account);
-      console.log("signature ", signature);
+      //console.log("signature ", signature);
       let body = {
         address: account,
         signature
@@ -65,29 +71,24 @@ const Header: React.FC<Props> = () => {
 
   useEffect(() => {
     if (active) {
-      console.log("running active")
-      if ((!signed || !sessionStorage.getItem("signature")) || (account !== sessionStorage.getItem("address"))) {
+      //console.log("running active")
+      //console.log(accountData)
+      //console.log(signed)
+      let condition = !signed || !accountData || (account !== accountData?.address);
+      //console.log("Condition : ", condition)
+      if (condition) {
         setSigned(false);
         handleSignature();
       }
+    } else {
+      //console.log("run reset")
+      setAccountData(null);
+      setSigned(false);
     }
 
   }, [active, account])
 
-  /* useEffect(() => {
-    // reset sign state
-    if (active) {
-      if (account !== sessionStorage.getItem("address") && signed) {
-        console.log("running account")
-        setSigned(false);
-        sessionStorage.removeItem("signature");
-        sessionStorage.removeItem("address")
-        handleSignature();
-      }
-    }
 
-
-  }, [account]) */
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -127,11 +128,14 @@ const Header: React.FC<Props> = () => {
                 Testmonies
               </Link>
             </li>
-            <li>
-              <Link className="hover:text-headerColor text-[20px] barlow" href="/contact" passHref>
-                Contact
-              </Link>
-            </li>
+            {
+              active && <li>
+                <Link className="hover:text-headerColor text-[20px] barlow" href="/upload" passHref>
+                  Upload
+                </Link>
+              </li>
+            }
+
             {
               active && <li>
                 <Link className="hover:text-headerColor text-[20px] barlow" href="/dashboard" passHref>
