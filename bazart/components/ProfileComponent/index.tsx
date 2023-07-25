@@ -9,7 +9,6 @@ import ETH from '../../assets/ProfileImages/ETH.png';
 import { SignContext } from "../../contexts/SignContext"
 import { formatEtherscanLink, shortenHex } from "../../util"
 import useENSName from "../../hooks/useENSName"
-import axios from 'axios';
 import { useMutation } from 'react-query';
 import { getUser, updateUser } from '../../api/user';
 
@@ -28,13 +27,10 @@ const ProfileComponent: React.FC = () => {
     onSuccess: (data, variables, context) => {
       console.log("success");
       setUserData(data.data);
-
-
     },
     onError: (error, variables, context) => {
       // I will fire first
       console.log("failed fetching user");
-
     }
   })
 

@@ -7,6 +7,18 @@ type Props = {}
 function FormFields({ }: Props) {
 
     const [checked, setChecked] = useState(false);
+    const [productData, setProductData] = useState({
+        title: '',
+        description: '',
+        tags: '',
+        shippingCost: '',
+        shippingFrom: '',
+        estimatedDeliveryTime1: '',
+        estimatedDeliveryTime2: '',
+        startingPrice: '',
+        enableAuction: false,
+        quantity: '',
+    });
 
 
     return <>
@@ -17,6 +29,7 @@ function FormFields({ }: Props) {
                 required={true}
                 type={"text"}
                 placeholder={"eg: Moroccan dress"}
+                value={productData.title}
             />
 
             <InputField
@@ -24,6 +37,8 @@ function FormFields({ }: Props) {
                 label={"Description"}
                 required={true}
                 placeholder={"eg: Moroccan dress"}
+                value={productData.description}
+
             />
 
             <InputField
@@ -33,6 +48,8 @@ function FormFields({ }: Props) {
                 type={"text"}
                 placeholder={"eg: Dress,fashion..."}
                 sublabel='tags to describe your product'
+                value={productData.tags}
+
             />
 
             <div className="flex flex-col my-2">
@@ -46,6 +63,7 @@ function FormFields({ }: Props) {
                         required={true}
                         type={"number"}
                         placeholder={"eg: 0.01 ETH"}
+                        value={productData.shippingCost}
                     />
                     <InputField
                         inputType={InputTypeEnum.input}
@@ -53,18 +71,39 @@ function FormFields({ }: Props) {
                         required={true}
                         type={"text"}
                         placeholder={"eg: Morocco"}
+                        value={productData.shippingFrom}
                     />
 
                 </div>
             </div>
 
-            <InputField
-                inputType={InputTypeEnum.input}
-                label={"Estimated delivery time"}
-                required={true}
-                type={"number"}
-                placeholder={"eg: 10 days"}
-            />
+
+
+
+
+            <div className="flex flex-col my-2">
+                
+                <div className="flex items-center gap-4">
+                    <InputField
+                        inputType={InputTypeEnum.input}
+                        label={"Estimated delivery time"}
+                        required={true}
+                        type={"text"}
+                        placeholder={"eg: 5 Days"}
+                        value={productData.estimatedDeliveryTime1}
+
+                    />
+                    <InputField
+                        inputType={InputTypeEnum.input}
+                        label={"Estimated delivery time"}
+                        required={true}
+                        type={"text"}
+                        placeholder={"eg: 2 weeks"}
+                        value={productData.estimatedDeliveryTime2}
+                    />
+                </div>
+            </div>
+
 
             <div className="flex flex-col my-2">
                 <h1 className="text-2xl text-white font-semibold">
@@ -77,6 +116,8 @@ function FormFields({ }: Props) {
                         required={true}
                         type={"number"}
                         placeholder={"eg: 0.01 ETH"}
+                        value={productData.startingPrice}
+
                     />
                     <InputField
                         inputType={InputTypeEnum.switch}
@@ -85,7 +126,6 @@ function FormFields({ }: Props) {
                         switchLabel={checked ? "Enabled" : "Disabled"}
                         checked={checked}
                         setChecked={setChecked}
-
                     />
 
                 </div>
@@ -98,7 +138,9 @@ function FormFields({ }: Props) {
                 required={true}
                 type={"number"}
                 placeholder={"eg: 100"}
-                sublabel='Enter the quantity of the product available for sale.                '
+                sublabel='Enter the quantity of the product available for sale.'
+                value={productData.title}
+
             />
 
 

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { injected } from "../../../connectors";
 import useMetaMaskOnboarding from "../../../hooks/useMetaMaskOnboarding";
 import { AbstractConnector } from '@web3-react/abstract-connector';
+import logo from '../../../assets/General/metalogo.png';
+
 
 type AccountProps = {
   triedToEagerConnect: boolean;
@@ -52,24 +54,33 @@ const CustomAccount = ({ triedToEagerConnect, connector, isMetamask, walletName,
     return (
       <div>
         {isWeb3Available ? (
-          <button
-            className="p-4 bg-mainDark text-white rounded-[10px]"
-            disabled={connecting}
-            onClick={() => {
-              setConnecting(true);
-              close()
-              activate(connector, undefined, true).catch((error) => {
-                // ignore the error if it's a user rejected request
-                if (error instanceof UserRejectedRequestError) {
-                  setConnecting(false);
-                } else {
-                  setError(error);
-                }
-              });
-            }}
-          >
-            {isMetaMaskInstalled && isMetamask ? "Connect to MetaMask" : `Connect to ${walletName}`}
-          </button>
+          <>
+          <div className="flex justify-center items-center">
+            <img src={logo.src} alt="meta" className="h-9" />
+
+            <button
+              className="p-4 bg-mainDark text-white rounded-[10px]"
+              disabled={connecting}
+              onClick={() => {
+                setConnecting(true);
+                close()
+                activate(connector, undefined, true).catch((error) => {
+                  // ignore the error if it's a user rejected request
+                  if (error instanceof UserRejectedRequestError) {
+                    setConnecting(false);
+                  } else {
+                    setError(error);
+                  }
+                });
+              }}
+            >
+              {isMetaMaskInstalled && isMetamask ? "Connect to MetaMask" : `Connect to ${walletName}`}
+            </button>
+
+          </div>
+            
+          </>
+         
         ) : (
           <>
             {

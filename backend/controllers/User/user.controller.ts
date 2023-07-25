@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router } from 'express';
 import { ServerRequestException } from '~~/utils/exceptions'
 import { db } from '~/index';
 import { UserModel } from '@prisma/client';
