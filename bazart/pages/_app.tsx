@@ -6,6 +6,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { SignProvider } from "../contexts/SignContext";
 import Reminder from "../components/Utils/Reminder";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AccountProvider } from "../contexts/AccountContext";
 
 function NextWeb3App({ Component, pageProps }: AppProps) {
 
@@ -15,10 +16,12 @@ function NextWeb3App({ Component, pageProps }: AppProps) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <QueryClientProvider client={queryClient}>
-        <SignProvider>
-          <Reminder />
-          <Component {...pageProps} />
-        </SignProvider>
+        <AccountProvider>
+          <SignProvider>
+            <Reminder />
+            <Component {...pageProps} />
+          </SignProvider>
+        </AccountProvider>
       </QueryClientProvider>
     </Web3ReactProvider>
   );
