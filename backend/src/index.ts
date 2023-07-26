@@ -6,6 +6,7 @@ import { PrismaClient } from '@prisma/client';
 import { ExceptionsHandler } from '~~/middlewares/exceptions.handler';
 import { UserController } from '~~/controllers/User/user.controller';
 import { VerificationController } from '~~/controllers/Verification/Verification.controller';
+import { ProductController } from '~~/controllers/Product/Product.controller';
 
 
 
@@ -38,7 +39,20 @@ app.use("/tests", TestController)
 app.use("/verify", VerificationController)
 
 
+/**
+ * Product Controller
+ * - upload / create product
+ * 
+ */
+app.use("/product", ProductController)
 
+
+
+
+/**
+ * serving static images
+ */
+app.use('/images', express.static('uploads'))
 
 
 /**

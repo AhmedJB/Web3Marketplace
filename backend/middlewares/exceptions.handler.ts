@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { MulterError } from 'multer'
 
 /**
  * Middleware de gestion globale des erreurs
@@ -11,6 +12,7 @@ import { NextFunction, Request, Response } from 'express'
  * @see https://expressjs.com/en/guide/error-handling.html
  */
 export const ExceptionsHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
+
     /**
      * Voir "The default error handler" dans la doc officielle indiquée plus haut
      */
@@ -25,6 +27,29 @@ export const ExceptionsHandler = (err: any, req: Request, res: Response, next: N
         return res
             .status(err.status)
             .json({ error: err.error })
+    }
+
+    /**
+     * mutler error handling
+     */
+    if (err instanceof MulterError) {
+        let err_ = err as MulterError;
+        console.log("Error code")
+        console.log(err_.code)
+        if (err_.code === "LIMIT_FILE_SIZE") {
+            return res
+                .status(500)
+                .json({
+                    error: "File size exceeds limit"
+                })
+
+        } else if (err_.code === "LIMIT_UNEXPECTED_FILE") {
+            return res
+                .status(500)
+                .json({
+                    error: "File type must be (JPG, PNG, GIF, WEBP)"
+                })
+        }
     }
 
     /**

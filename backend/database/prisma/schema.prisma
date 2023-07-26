@@ -21,11 +21,43 @@ model TestModel {
 }
 
 model UserModel {
-  id        Int     @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   //signature ?
-  address   String  @unique @default("")
-  firstName String  @default("")
-  lastName  String  @default("")
-  country   String? @default("")
-  city      String? @default("")
+  address   String    @unique @default("")
+  firstName String    @default("")
+  lastName  String    @default("")
+  country   String?   @default("")
+  city      String?   @default("")
+  // relations
+  products  Product[]
+}
+
+model Product {
+  id                  Int             @id @default(autoincrement())
+  title               String
+  description         String
+  tags                String
+  shippingCost        Float
+  shippingFrom        String
+  minimumDeliveryTime Int
+  maximumDeliveryTime Int
+  isAuction           Boolean         @default(false)
+  Price               Decimal
+  quantity            BigInt
+  created             DateTime        @default(now())
+  // relations
+  images              ProductImages[]
+  user                UserModel       @relation(fields: [userId], references: [id])
+  userId              Int
+}
+
+model ProductImages {
+  id           Int      @id @default(autoincrement())
+  filename     String
+  physicalPath String
+  fileUrl      String
+  created      DateTime @default(now())
+  // relations
+  product      Product  @relation(fields: [productId], references: [id])
+  productId    Int
 }
