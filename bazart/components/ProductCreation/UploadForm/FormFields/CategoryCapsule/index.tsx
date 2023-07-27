@@ -8,6 +8,7 @@ interface CategoryCapsuleProps {
 }
 
 const CategoryCapsule: React.FC<CategoryCapsuleProps> = ({ title, imageUrl, active, setCategory }) => {
+  
     return (
         <div
             onClick={() => setCategory(title)}

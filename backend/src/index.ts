@@ -7,6 +7,7 @@ import { ExceptionsHandler } from '~~/middlewares/exceptions.handler';
 import { UserController } from '~~/controllers/User/user.controller';
 import { VerificationController } from '~~/controllers/Verification/Verification.controller';
 import { ProductController } from '~~/controllers/Product/Product.controller';
+import { CategoryController } from '~~/controllers/Category/Category.controller';
 
 
 
@@ -44,7 +45,18 @@ app.use("/verify", VerificationController)
  * - upload / create product
  * 
  */
+
 app.use("/product", ProductController)
+
+
+
+/**
+ * Category Controller
+ * - 
+ * 
+ */
+app.use("/category", CategoryController)
+
 
 
 

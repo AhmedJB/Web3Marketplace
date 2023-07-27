@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import InputField from '../../../General/InputField'
 import { InputTypeEnum } from '../../../../types/enums'
 import { categories } from '../../../../constants/categories'
 import CategoryCapsule from './CategoryCapsule'
+import axios from 'axios'
 
 type Props = {
     product: ProductFormT,
@@ -12,11 +13,9 @@ type Props = {
     category: string;
     setCategory: (c: string) => void
 }
-
 function FormFields({ product, setProduct, checked, setChecked, category, setCategory }: Props) {
-
-
-
+    
+    const [fetchedCategories, setFetchedCategories] = useState([]); 
 
     const handleFormChange = (v: ChangeEvent) => {
         let t = v.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
@@ -30,9 +29,19 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
         setProduct(temp);
     }
 
+    function fetchCategories() {
+        axios.get('http://localhost:5000/category/categories')
+        .then((response) => {
+            setFetchedCategories(response.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching categories:', error);
+          });
+      }
 
-
-
+      useEffect(() => {
+        fetchCategories();
+      }, []);
 
     return <>
         <div className="flex flex-col p-7 mx-4">
@@ -159,8 +168,6 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
 
                 </div>
             </div>
-
-
             <InputField
                 inputType={InputTypeEnum.input}
                 label={"Quantity"}
@@ -173,33 +180,37 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
                 value={product.quantity.toString()}
 
             />
-            <div className="flex flex-col my-2">
-                <label className="text-white font-semibold text-lg"> CATEGORIZATION
-                    <sup className="text-red">*</sup>
 
-                </label>
+<div className="flex flex-col my-2">
+        <label className="text-white font-semibold text-lg">
+          CATEGORIZATION <sup className="text-red">*</sup>
+        </label>
+        <p className="text-subgray opacity-80 text-md font-normal">
+          Select a main category that describes your product
+        </p>
+        <div className="flex flex-wrap gap-4 my-3">
+          {fetchedCategories.map((category_, index) => (
+            <CategoryCapsule
+              active={category === category_.title}
+              setCategory={setCategory}
+              key={index}
+              title={category_.title}
+              imageUrl={category_.imageUrl}
+            />
+          ))}
+        </div>
+      </div>
 
-
-
-                <p className="text-subgray opacity-80 text-md font-normal">
-                    Select a main category that describes your product
-                </p>
-
-
-                <div className="flex flex-wrap  gap-4 my-3">
+                {/* <div className="flex flex-wrap  gap-4 my-3">
                     {categories.map((category_, index) => (
                         <CategoryCapsule active={category === category_.title} setCategory={setCategory} key={index} title={category_.title} imageUrl={category_.imageUrl} />
                     ))}
-                </div>
-            </div>
+                </div> */}
 
+               
 
 
             <button className="self-end gradient-bg w-[250px] p-1 cursor-pointer transition-transform hover:scale-105 text-white font-semibold rounded-md">Publish</button>
-
-
-
-
         </div>
     </>
 
