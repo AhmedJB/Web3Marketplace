@@ -11,6 +11,7 @@ import { formatEtherscanLink, shortenHex } from "../../util"
 import useENSName from "../../hooks/useENSName"
 import { useMutation } from 'react-query';
 import { getUser, updateUser } from '../../api/user';
+import { AccountContext } from '../../contexts/AccountContext';
 
 
 
@@ -19,6 +20,7 @@ const ProfileComponent: React.FC = () => {
   const [backgroundImage, setBackgroundImage] = useState('./background.jpg');
   const [profileImage, setProfileImage] = useState('./avatar.jpg');
   const { active, account, deactivate, chainId } = useWeb3React();
+  const { accountData, setAccountData } = useContext(AccountContext);
   const [signed, setSigned] = useContext(SignContext);
   const ENSName = useENSName(account);
 
@@ -75,7 +77,7 @@ const ProfileComponent: React.FC = () => {
     console.log(`Captured inputs: `, userData);
     userUpdateMutation.mutate({
       address: account,
-      signature: sessionStorage.getItem("signature"),
+      signature: accountData.signature,
       data: userData
     })
   };
@@ -84,7 +86,7 @@ const ProfileComponent: React.FC = () => {
     if (signed) {
       userFetchMutation.mutate({
         address: account,
-        signature: sessionStorage.getItem("signature")
+        signature: accountData.signature
       })
     }
 
@@ -159,7 +161,7 @@ const ProfileComponent: React.FC = () => {
                       setUserData(temp);
 
                     }}
-                    defaultValue={userData.country}
+                    value={userData.country}
                     inputType={InputTypeEnum.select} options={countries.map((e) => ({ name: e, value: e }))} />
                 </div>
 

@@ -4,18 +4,23 @@ import { InputTypeEnum } from '../../../../types/enums'
 import { categories } from '../../../../constants/categories'
 import CategoryCapsule from './CategoryCapsule'
 import axios from 'axios'
+import { formatEndPoint, getBaseURL } from '../../../../utils'
+import { useQuery } from 'react-query'
+import { fetchCategories } from '../../../../api/categories'
 
 type Props = {
     product: ProductFormT,
     setProduct: (c: ProductFormT) => void,
     checked: boolean,
     setChecked: (c: boolean) => void,
-    category: string;
-    setCategory: (c: string) => void
+    category: number;
+    setCategory: (c: number) => void,
+    submit: any
 }
-function FormFields({ product, setProduct, checked, setChecked, category, setCategory }: Props) {
-    
-    const [fetchedCategories, setFetchedCategories] = useState([]); 
+function FormFields({ product, setProduct, checked, setChecked, category, setCategory, submit }: Props) {
+
+
+    const { isLoading, isError, data: fetchedCategories, error } = useQuery<CategoryT[], any>('todos', fetchCategories)
 
     const handleFormChange = (v: ChangeEvent) => {
         let t = v.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
@@ -29,19 +34,9 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
         setProduct(temp);
     }
 
-    function fetchCategories() {
-        axios.get('http://localhost:5000/category/categories')
-        .then((response) => {
-            setFetchedCategories(response.data);
-          })
-          .catch((error) => {
-            console.error('Error fetching categories:', error);
-          });
-      }
 
-      useEffect(() => {
-        fetchCategories();
-      }, []);
+
+
 
     return <>
         <div className="flex flex-col p-7 mx-4">
@@ -151,10 +146,10 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
                         label={"Starting Price"}
                         required={true}
                         type={"number"}
-                        name={"startingPrice"}
+                        name={"Price"}
                         changeFunc={handleFormChange}
                         placeholder={"eg: 0.01 ETH"}
-                        value={product.startingPrice}
+                        value={product.Price}
 
                     />
                     <InputField
@@ -181,36 +176,37 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
 
             />
 
-<div className="flex flex-col my-2">
-        <label className="text-white font-semibold text-lg">
-          CATEGORIZATION <sup className="text-red">*</sup>
-        </label>
-        <p className="text-subgray opacity-80 text-md font-normal">
-          Select a main category that describes your product
-        </p>
-        <div className="flex flex-wrap gap-4 my-3">
-          {fetchedCategories.map((category_, index) => (
-            <CategoryCapsule
-              active={category === category_.title}
-              setCategory={setCategory}
-              key={index}
-              title={category_.title}
-              imageUrl={category_.imageUrl}
-            />
-          ))}
-        </div>
-      </div>
+            <div className="flex flex-col my-2">
+                <label className="text-white font-semibold text-lg">
+                    CATEGORIZATION <sup className="text-red">*</sup>
+                </label>
+                <p className="text-subgray opacity-80 text-md font-normal">
+                    Select a main category that describes your product
+                </p>
+                <div className="flex flex-wrap gap-4 my-3">
+                    {!isLoading && !isError && fetchedCategories.map((category_, index) => (
+                        <CategoryCapsule
+                            id={category_.id}
+                            active={category === category_.id}
+                            setCategory={setCategory}
+                            key={index}
+                            title={category_.title}
+                            imageUrl={category_.imageUrl}
+                        />
+                    ))}
+                </div>
+            </div>
 
-                {/* <div className="flex flex-wrap  gap-4 my-3">
+            {/* <div className="flex flex-wrap  gap-4 my-3">
                     {categories.map((category_, index) => (
                         <CategoryCapsule active={category === category_.title} setCategory={setCategory} key={index} title={category_.title} imageUrl={category_.imageUrl} />
                     ))}
                 </div> */}
 
-               
 
 
-            <button className="self-end gradient-bg w-[250px] p-1 cursor-pointer transition-transform hover:scale-105 text-white font-semibold rounded-md">Publish</button>
+
+            <button onClick={submit} className="self-end gradient-bg w-[250px] p-1 cursor-pointer transition-transform hover:scale-105 text-white font-semibold rounded-md">Publish</button>
         </div>
     </>
 

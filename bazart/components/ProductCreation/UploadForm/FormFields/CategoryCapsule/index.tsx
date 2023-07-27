@@ -1,17 +1,18 @@
 import React from 'react';
 
 interface CategoryCapsuleProps {
+    id: number;
     title: string;
     imageUrl: string;
     active?: boolean;
-    setCategory: (c: string) => void
+    setCategory: (c: number) => void
 }
 
-const CategoryCapsule: React.FC<CategoryCapsuleProps> = ({ title, imageUrl, active, setCategory }) => {
-  
+const CategoryCapsule: React.FC<CategoryCapsuleProps> = ({ id, title, imageUrl, active, setCategory }) => {
+
     return (
         <div
-            onClick={() => setCategory(title)}
+            onClick={() => setCategory(id)}
             className={`relative w-[150px] h-[190px] rounded-lg overflow-hidden cursor-pointer
             ${active ? " border-4 border-white" : ""}
             `}

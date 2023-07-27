@@ -25,7 +25,7 @@ ProductController.post("/create/:address", upload.array("image", 4), async (req,
         console.log("address ", add)
         let body: { signature: string } = req.body
         let res_sig = verifySignature(add, body.signature);
-        if (!res_sig) {
+        if (res_sig) {
             let files = req.files as Express.Multer.File[];
             console.log(files)
             let body = req.body as ProductT;
@@ -71,6 +71,7 @@ ProductController.post("/create/:address", upload.array("image", 4), async (req,
                             create: [
                                 {
                                     ...newBody,
+                                    catgId: Number(category),
                                     images: {
                                         create: im_array
                                     }
