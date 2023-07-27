@@ -5,8 +5,8 @@ import { AiOutlineClose } from "react-icons/ai"
 
 
 type Props = {
-    images: FileList[] | [];
-    setImages: Dispatch<SetStateAction<FileList[] | []>>
+    images: File[] | [];
+    setImages: Dispatch<SetStateAction<File[] | []>>
 }
 
 function ImageUpload({ images, setImages }: Props) {
@@ -69,7 +69,7 @@ function ImageUpload({ images, setImages }: Props) {
             <div className="flex items-center justify-between p-3">
                 {
                     images.map((e, i) => (
-                        <div className="relative w-[150px] h-[150px] cursor-pointer transition-transform hover:scale-105 " onClick={() => removeImage(i)}>
+                        <div key={`uploaded-image-${i}`} className="relative w-[150px] h-[150px] cursor-pointer transition-transform hover:scale-105 " onClick={() => removeImage(i)}>
                             <Image src={URL.createObjectURL(e)} alt="uploaded image" key={`Image-${i}`} fill={true} className="rounded-lg" />
                             <div className="absolute h-full w-full bg-mainDark transition-opacity opacity-0 hover:opacity-50 z-[2] grid place-items-center" ><AiOutlineClose className='text-white text-5xl' /></div>
                         </div>

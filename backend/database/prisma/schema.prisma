@@ -43,14 +43,14 @@ model Product {
   maximumDeliveryTime Int
   isAuction           Boolean         @default(false)
   Price               Decimal
-  quantity            BigInt
+  quantity            Int
   created             DateTime        @default(now())
   // relations
   images              ProductImages[]
   user                UserModel       @relation(fields: [userId], references: [id])
   userId              Int
-  categories Category[]
-
+  category            Category        @relation(fields: [catgId], references: [id])
+  catgId              Int
 }
 
 model ProductImages {
@@ -64,12 +64,10 @@ model ProductImages {
   productId    Int
 }
 
-
 model Category {
-  id        Int      @id @default(autoincrement())
-  title     String   @unique
-  imageUrl  String
+  id       Int       @id @default(autoincrement())
+  title    String    @unique
+  imageUrl String
   // relations
-  products  Product[]
+  products Product[]
 }
-

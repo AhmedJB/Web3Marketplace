@@ -9,8 +9,8 @@ export type ProductT = {
     maximumDeliveryTime: number;
     isAuction: boolean;
     Price: number;
-    quantity: bigint;
-    category: string;
+    quantity: number;
+    category: number;
     signature: string;
 }
 
