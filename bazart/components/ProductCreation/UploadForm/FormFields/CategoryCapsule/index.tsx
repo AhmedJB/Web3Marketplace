@@ -19,7 +19,7 @@ const CategoryCapsule: React.FC<CategoryCapsuleProps> = ({ id, title, imageUrl, 
             style={{ backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover' }}
         >
             <div className="absolute inset-0 bg-black opacity-60 flex items-center justify-center transition-opacity duration-300 hover:opacity-80">
-                <h2 className="text-white text-center font-semibold text-xl">{title}</h2>
+                <h2 className="text-white text-center font-bold text-xl">{title}</h2>
             </div>
         </div>
     );

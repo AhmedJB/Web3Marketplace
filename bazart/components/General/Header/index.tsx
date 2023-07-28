@@ -105,7 +105,7 @@ const Header: React.FC<Props> = () => {
     </Modal>
 
     <header className="container mx-auto my-3">
-      <nav className="flex items-center justify-between h-16 px-4 sm:px-8">
+      <nav className="flex items-center justify-between h-16 px-2 sm:px-2">
         <div className="flex items-center">
           <Link className="flex items-center  text-headerColor font-bold text-lg " href="/home" passHref>
             <img src={logo.src} alt="BazArt212" className="h-9 mr-2 text-[20px]" />
@@ -147,7 +147,7 @@ const Header: React.FC<Props> = () => {
           </ul>
         </div>
 
-        <div className="hidden sm:block relative">
+        <div className="hidden sm:block relative ">
           <ConnectButton toggleDropdown={toggleDropdown} toggleModal={() => setOpenModal(true)} />
 
           {isDropdownOpen && (

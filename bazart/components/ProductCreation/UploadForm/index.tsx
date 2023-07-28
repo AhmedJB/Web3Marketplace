@@ -8,6 +8,8 @@ import { formatEndPoint } from '../../../utils';
 import { useMutation } from 'react-query';
 import { uploadProduct } from '../../../api/products';
 
+
+
 type Props = {}
 
 function UploadForm({ }: Props) {
@@ -26,7 +28,7 @@ function UploadForm({ }: Props) {
         quantity: 0,
     });
     const [checked, setChecked] = useState(false);
-    const [category, setCategory] = useState(-1);
+    const [category, setCategory] = useState(0);
 
 
     const productUploadMutation = useMutation(uploadProduct, {

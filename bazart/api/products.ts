@@ -24,6 +24,4 @@ export const uploadProduct = async ({ images, body, address }: uploadParams) => 
     let url = formatEndPoint(`product/create/${address}`)
     console.log(url);
     return axios.post(url, form_data);
-
-
 }
