@@ -22,12 +22,21 @@ const Slider = () => {
   const handleSlideChange = (swiper: Swipertype) => {
     setActiveSlideIndex(swiper.activeIndex);
   };
+  const getImageName = (src: string) => {
+  if (src) {
+    const parts = src.split("/");
+    const filename = parts[parts.length - 1].split(".")[0];
+    return <span style={{ color: '#D3CBB8' }}>{filename.toUpperCase()}</span>;
+  }
+  return "";
+};
 
   return (
     <div className={styles.container}>
       <Swiper
         onSlideChange={handleSlideChange}
-        rewind={true}
+        rewind={false}
+        loop= {true}
         slidesPerView={3}
         spaceBetween={30}
         keyboard={{
@@ -38,46 +47,45 @@ const Slider = () => {
         }}
         navigation={true}
         modules={[Keyboard, Pagination, Navigation]}
+        
+        //centeredSlides={true}
       >
+       
         <SwiperSlide>
-          
+          <div className={activeSlideIndex === 0 ? styles.img_centered : ""}>
+            <div>{activeSlideIndex === 0 && getImageName("./APPAREL.jpg")}</div>
+            <img src="./APPAREL.jpg" className={activeSlideIndex === 0 ? styles.img_centered : styles.img_normal} />
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            className={activeSlideIndex === 0 ? styles.img_centered : styles.img_normal}
-            src="https://i.pinimg.com/564x/ba/70/64/ba7064c9507c3450022d90b49965a623.jpg"
-          />
+          <div className={activeSlideIndex === 1 ? styles.img_centered : ""}>
+            <div>{activeSlideIndex === 1 && getImageName("./CRAFTSMAN.jpg")}</div>
+            <img src="./CRAFTSMAN.jpg" className={activeSlideIndex === 1 ? styles.img_centered : styles.img_normal} />
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            className={activeSlideIndex === 1 ? styles.img_centered : styles.img_normal}
-            src="https://i.pinimg.com/564x/be/bc/44/bebc44e6f004c291928959fc8e6a4cbe.jpg"
-          />
+          <div className={activeSlideIndex === 2 ? styles.img_centered : ""}>
+          <div>{activeSlideIndex === 2 ? getImageName("./ACCESSORIES.jpg") : null}</div>
+
+            <img src="./ACCESSORIES.jpg" className={activeSlideIndex === 2 ? styles.img_centered : styles.img_normal} />
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-        <img
-            className={activeSlideIndex === 2 ? styles.img_centered : styles.img_normal}
-            src="./ACCESSORIES.jpg"
-          />
+          <div className={activeSlideIndex === 3 ? styles.img_centered : ""}>
+            <div>{activeSlideIndex === 3 && getImageName("./HOMEWARE.jpg")}</div>
+            <img src="./HOMEWARE.jpg" className={activeSlideIndex === 3 ? styles.img_centered : styles.img_normal} />
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-        <img
-            className={activeSlideIndex === 3 ? styles.img_centered : styles.img_normal}
-            src="https://i.pinimg.com/564x/4e/37/4a/4e374a629c4d9a2f1b021aedc2553acf.jpg"
-          />
+          <div className={activeSlideIndex === 4 ? styles.img_centered : ""}>
+            <div>{activeSlideIndex === 4 && getImageName("./COSMETICS.jpg")}</div>
+            <img src="./COSMETICS.jpg" className={activeSlideIndex === 4 ? styles.img_centered : styles.img_normal} />
+          </div>
         </SwiperSlide>
-        <SwiperSlide>
-        <img
-            className={activeSlideIndex === 4 ? styles.img_centered : styles.img_normal}
-            src="https://i.pinimg.com/564x/d7/15/07/d715073e1b1deb79c42d6cfa3bc5f1f4.jpg"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-        </SwiperSlide>
+        <SwiperSlide></SwiperSlide>
       </Swiper>
     </div>
   );
 };
 
 export default Slider;
-
