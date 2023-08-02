@@ -6,6 +6,6 @@ interface ProductFormT {
     shippingFrom: string;
     minimumDeliveryTime: string;
     maximumDeliveryTime: string;
-    startingPrice: string;
+    Price: string;
     quantity: number;
 }
