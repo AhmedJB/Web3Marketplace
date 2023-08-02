@@ -8,7 +8,7 @@ type Props = {}
 
 function BuyerDashboard({ }: Props) {
     return <>
-        <div className="w-full">
+        <div className="w-full pb-52">
             <DataTable title="Transactions History" headers={transactionsHeader} transactions={demoTransactions} />
         </div>
 
