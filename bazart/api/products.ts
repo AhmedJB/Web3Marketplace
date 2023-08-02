@@ -25,3 +25,13 @@ export const uploadProduct = async ({ images, body, address }: uploadParams) => 
     console.log(url);
     return axios.post(url, form_data);
 }
+
+
+export async function fetchProducts() {
+  try {
+    let response = await axios.get(formatEndPoint('product/list'));
+    return response.data as ProductT[]; // Assuming ProductT is the interface for your product data
+  } catch (e) {
+    throw new Error("Failed fetching products");
+  }
+}

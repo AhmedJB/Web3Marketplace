@@ -102,10 +102,14 @@ ProductController.post("/create/:address", upload.array("image", 4), async (req,
 })
 
 
-
-
-
-
-
+ProductController.get("/list", async (req, res, next) => {
+    try {
+      const products = await db.product.findMany(); 
+      return res.status(200).json(products);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  });
 
 export { ProductController }

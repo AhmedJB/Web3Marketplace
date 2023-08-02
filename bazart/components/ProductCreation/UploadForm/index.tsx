@@ -3,16 +3,19 @@ import ImageUpload from './ImageUpload'
 import FormFields from './FormFields'
 import Validator from '../../HOC/Validator';
 import { AccountContext } from '../../../contexts/AccountContext';
-import axios from 'axios';
 import { formatEndPoint } from '../../../utils';
 import { useMutation } from 'react-query';
 import { uploadProduct } from '../../../api/products';
+import { useRouter } from 'next/router';
 
 
 
 type Props = {}
 
 function UploadForm({ }: Props) {
+
+    const router = useRouter();
+
 
     const [selectedImages, setSelectedImages]: [File[] | [], Dispatch<SetStateAction<File[] | []>>] = useState([]);
     const { accountData, setAccountData } = useContext(AccountContext);
@@ -28,13 +31,11 @@ function UploadForm({ }: Props) {
         quantity: 0,
     });
     const [checked, setChecked] = useState(false);
-    const [category, setCategory] = useState(0);
-
-
+    const [category, setCategory] = useState(1);
     const productUploadMutation = useMutation(uploadProduct, {
         onSuccess: (data, variables, context) => {
             console.log("success upload");
-
+            router.push('/productlist');
         },
         onError: (error, variables, context) => {
             // I will fire first
@@ -42,8 +43,6 @@ function UploadForm({ }: Props) {
             console.log(error);
         }
     })
-
-
     const submitData = async () => {
         console.log("uploading product")
         let body = {
@@ -58,10 +57,6 @@ function UploadForm({ }: Props) {
         }
         productUploadMutation.mutate(params);
     }
-
-
-
-
     return <>
         <div className="flex flex-col lg:grid lg:grid-cols-2 p-5">
             <ImageUpload

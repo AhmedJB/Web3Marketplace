@@ -7,6 +7,8 @@ import axios from 'axios'
 import { formatEndPoint, getBaseURL } from '../../../../utils'
 import { useQuery } from 'react-query'
 import { fetchCategories } from '../../../../api/categories'
+import { useRouter } from 'next/router';
+
 
 type Props = {
     product: ProductFormT,
@@ -33,9 +35,6 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
         temp[t.name] = t.value;
         setProduct(temp);
     }
-
-
-
 
 
     return <>
