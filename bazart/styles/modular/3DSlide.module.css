@@ -1,0 +1,21 @@
+
+.container {
+width: 60%;
+margin-left: 20%;
+}	
+
+/* Slider.css */
+.img_normal {
+  border-radius: 20px;
+  transform: scale(0.7); /* Normal size */
+  transition: transform 0.3s ease;
+  background-color: black;
+}
+
+.img_centered {
+  border-radius: 20px;
+  transform: scale(1); /* Centered and bigger size */
+  transition: transform 0.3s ease;
+
+}
+
