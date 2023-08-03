@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import InputField from '../../../General/InputField'
 import { InputTypeEnum } from '../../../../types/enums'
 import { categories } from '../../../../constants/categories'
@@ -14,7 +14,7 @@ type Props = {
     product: ProductFormT,
     setProduct: (c: ProductFormT) => void,
     checked: boolean,
-    setChecked: (c: boolean) => void,
+    setChecked: Dispatch<SetStateAction<boolean>>,
     category: number;
     setCategory: (c: number) => void,
     submit: any
@@ -24,15 +24,20 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
 
     const { isLoading, isError, data: fetchedCategories, error } = useQuery<CategoryT[], any>('todos', fetchCategories)
 
+
+
     const handleFormChange = (v: ChangeEvent) => {
         let t = v.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-        let temp = { ...product }
+        let temp: ProductFormT = { ...product }
         //console.log(`Updating Field ${t.name} with value ${t.value}`)
+        let numeric_fields = ["quantity", "minimumDeliveryTime", "maximumDeliveryTime", "Price", "shippingCost"]
         let val: string | number | null = t.value;
-        if (t.name === "quantity") {
+
+        if (numeric_fields.includes(t.name)) {
             val = Number(val);
         }
-        temp[t.name] = t.value;
+        let k: keyof ProductFormT = t.name as keyof ProductFormT;
+        (temp[k] as (string | number)) = val as ProductFormT[typeof k];
         setProduct(temp);
     }
 
@@ -87,7 +92,7 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
                         required={true}
                         type={"number"}
                         placeholder={"eg: 0.01 ETH"}
-                        value={product.shippingCost}
+                        value={String(product.shippingCost)}
                     />
                     <InputField
                         inputType={InputTypeEnum.input}
@@ -118,7 +123,7 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
                         name={"minimumDeliveryTime"}
                         changeFunc={handleFormChange}
                         placeholder={"eg: 5 Days"}
-                        value={product.minimumDeliveryTime}
+                        value={String(product.minimumDeliveryTime)}
 
                     />
                     <InputField
@@ -129,7 +134,7 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
                         name={"maximumDeliveryTime"}
                         changeFunc={handleFormChange}
                         placeholder={"eg: 2 weeks"}
-                        value={product.maximumDeliveryTime}
+                        value={String(product.maximumDeliveryTime)}
                     />
                 </div>
             </div>
@@ -148,7 +153,7 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
                         name={"Price"}
                         changeFunc={handleFormChange}
                         placeholder={"eg: 0.01 ETH"}
-                        value={product.Price}
+                        value={String(product.Price)}
 
                     />
                     <InputField
@@ -183,7 +188,7 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
                     Select a main category that describes your product
                 </p>
                 <div className="flex flex-wrap gap-4 my-3">
-                    {!isLoading && !isError && fetchedCategories.map((category_, index) => (
+                    {!isLoading && !isError && fetchedCategories?.map((category_, index) => (
                         <CategoryCapsule
                             id={category_.id}
                             active={category === category_.id}

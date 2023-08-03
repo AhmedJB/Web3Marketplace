@@ -2,10 +2,10 @@ interface ProductFormT {
     title: string;
     description: string;
     tags: string;
-    shippingCost: string;
+    shippingCost: number;
     shippingFrom: string;
-    minimumDeliveryTime: string;
-    maximumDeliveryTime: string;
-    Price: string;
+    minimumDeliveryTime: number;
+    maximumDeliveryTime: number;
+    Price: number;
     quantity: number;
 }
