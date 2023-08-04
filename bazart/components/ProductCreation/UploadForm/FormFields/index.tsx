@@ -30,12 +30,12 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
         let t = v.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
         let temp: ProductFormT = { ...product }
         //console.log(`Updating Field ${t.name} with value ${t.value}`)
-        let numeric_fields = ["quantity", "minimumDeliveryTime", "maximumDeliveryTime", "Price", "shippingCost"]
+
         let val: string | number | null = t.value;
 
-        if (numeric_fields.includes(t.name)) {
+        /* if (numeric_fields.includes(t.name)) {
             val = Number(val);
-        }
+        } */
         let k: keyof ProductFormT = t.name as keyof ProductFormT;
         (temp[k] as (string | number)) = val as ProductFormT[typeof k];
         setProduct(temp);

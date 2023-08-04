@@ -9,5 +9,5 @@ contracts/node_modules
 
 # backend
 backend/node_modules
-backend/database/dev.db
+backend/database/prisma/dev.db
 

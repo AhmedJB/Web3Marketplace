@@ -16,7 +16,7 @@ import { FaCartPlus } from "react-icons/fa";
 import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import { GiReturnArrow } from 'react-icons/gi';
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import QuantityInput from "./QuantityInput";
 import StarReview from "./StarReview";
 import HeartCheckboxComponent from "../Utils/HeartCheckboxComponent";
@@ -55,11 +55,12 @@ type Props = {};
 const ProductDetails = ({ }: Props) => {
 
   const router = useRouter();
-  const productId = router.query.id;
-  const { isLoading, isError, data: prod, error } = useQuery<ProductDetT, any>(
-    ['product', productId],
-    () => fetchProduct(productId),
-    { enabled: !!productId }
+  const queryClient = useQueryClient()
+  const [prodId, setProdId] = useState("");
+  const { isLoading, isError, data: prod, error } = useQuery<ProductT, any>(
+    ['productDetails', prodId],
+    () => fetchProduct(prodId as string),
+    { enabled: !!prodId }
   );
 
   if (isLoading) {
@@ -70,24 +71,37 @@ const ProductDetails = ({ }: Props) => {
     return <div>Error: {error?.message}</div>;
   }
 
-  
- /*  const [productdetails, setProductDetails]: [ProductDetailsT, any] = useState({
-    id: 1,
-    title: "Turkish Moroccan Mosaic Table Lamp, 3 Globes Bohemian Bedside lamp",
-    src: ["./Picture.png", "./Pic1.jpg", "./Pic2.webp", "./Pic3.webp"],
-    description: "this is a product description",
-    price: 45.5,
-    rating: 4.3,
-    colors: ["red", "black", "crimson", "teal"],
-    minDays: 5,
-    maxDays: 10,
-  }); */
-// Update the state when the data is available
-/* useEffect(() => {
-  if (prod) {
-    setProductDetails(prod);
-  }
-}, [prod]); */
+  useEffect(() => {
+    if (router.isReady) {
+      setProdId(router.query.id as string)
+    }
+
+  }, [router.isReady])
+
+  useEffect(() => {
+    if (prodId.length > 0) {
+      queryClient.invalidateQueries("productDetails")
+    }
+  }, [prodId])
+
+
+  /*  const [productdetails, setProductDetails]: [ProductDetailsT, any] = useState({
+     id: 1,
+     title: "Turkish Moroccan Mosaic Table Lamp, 3 Globes Bohemian Bedside lamp",
+     src: ["./Picture.png", "./Pic1.jpg", "./Pic2.webp", "./Pic3.webp"],
+     description: "this is a product description",
+     price: 45.5,
+     rating: 4.3,
+     colors: ["red", "black", "crimson", "teal"],
+     minDays: 5,
+     maxDays: 10,
+   }); */
+  // Update the state when the data is available
+  /* useEffect(() => {
+    if (prod) {
+      setProductDetails(prod);
+    }
+  }, [prod]); */
 
 
   const [quantity, setQuantity] = useState(1);
@@ -115,8 +129,13 @@ const ProductDetails = ({ }: Props) => {
     }
   };
 
-  const formatDelivery = (minDays: number, maxDays: number) => {
-    return `${minDays} - ${maxDays} business days`;
+  const formatDelivery = (minDays: number | undefined, maxDays: number | undefined) => {
+    if (minDays && maxDays) {
+      return `${minDays} - ${maxDays} business days`;
+    } else {
+      `-- business days`
+    }
+
   };
 
   const handleStep = (step: number) => {
@@ -137,23 +156,23 @@ const ProductDetails = ({ }: Props) => {
   }
 
 
-/*   const [product, setProduct] = useState<ProductDetT>(prod);
- */
+  /*   const [product, setProduct] = useState<ProductDetT>(prod);
+   */
 
   return (
     <>
       <Container>
         <div className={`mx-auto ${styles.app} max-w-[1100px] my-16`}>
           <div className={"flex gap-11 "}>
-            <div className={"flex flex-col items-center ml-4"} key={prod.id}>
+            <div className={"flex flex-col items-center ml-4"} key={prod?.id}>
               <div className={styles["big-img"] + " relative"}>
-                <img src={prod.src[index]} alt="" />
+                <img src={prod?.src[index]} alt="" />
                 <div className="absolute top-3 right-3 rounded-full p-1 bg-white">
                   <HeartCheckboxComponent size="text-sm" />
                 </div>
               </div>
               <DetailsThumb
-                images={prod.src}
+                images={prod?.src}
                 tab={handleTab}
                 myRef={myRef}
               />
@@ -161,11 +180,11 @@ const ProductDetails = ({ }: Props) => {
             <div className={"flex flex-col gap-3 pt-12"}>
               <div className="">
                 <h2 className="text-2xl font-semibold text-white mt-3 inter">
-                  {prod.title}
+                  {prod?.title}
                 </h2>
-                <StarReview rating={prod.rating} />
+                <StarReview rating={3} />
                 <p className="text-white text-3xl font-semibold p-2 my-4">
-                  {prod.Price} ETH
+                  {prod?.Price} ETH
                 </p>
               </div>
 
@@ -195,7 +214,7 @@ const ProductDetails = ({ }: Props) => {
               </button>
               {openDescription && (
                 <p className="text-white md:w-[550px] w-full mx-2 text-sm font-normal p-1 opacity-80 mb-5 max-h-[200px] overflow-y-auto">
-                  {prod.description} Pourquoi l'utiliser?
+                  {prod?.description} Pourquoi l'utiliser?
                   On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).
 
 
@@ -209,7 +228,7 @@ const ProductDetails = ({ }: Props) => {
                 <TbTruckDelivery className="text-5xl text-white " />
                 <p className="text-lg text-white font-medium mx-2 w-[300px]">Delivery </p>
                 <span className={"text-lg font-medium text-orange"}>
-                  {formatDelivery(prod.minimumDeliveryTime, prod.maximumDeliveryTime)}
+                  {formatDelivery(prod?.minimumDeliveryTime, prod?.maximumDeliveryTime)}
                 </span>
               </div>
               <div className={"flex items-center mb-4"}>

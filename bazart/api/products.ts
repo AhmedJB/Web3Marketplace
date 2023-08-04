@@ -31,21 +31,21 @@ export const uploadProduct = async ({ images, body, address }: uploadParams) => 
 export async function fetchProducts() {
   try {
     let response = await axios.get(formatEndPoint('product/list'));
-    return response.data as ProductT[]; 
+    return response.data as ProductT[];
   } catch (e) {
     throw new Error("Failed fetching products");
   }
 }
 
 
-export async function fetchProduct(productId) {
-  if (!productId) {
+export async function fetchProduct(productId: string) {
+  if (!productId || productId.length === 0) {
     throw new Error("Product ID is missing.");
   }
 
   try {
     let response = await axios.get(formatEndPoint(`product/${productId}`));
-    return response.data as ProductDetT[];
+    return response.data as ProductT;
   } catch (e) {
     throw new Error("Failed fetching product details");
   }

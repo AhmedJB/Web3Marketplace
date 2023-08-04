@@ -7,8 +7,8 @@ export const uploadSchema = z.object({
     tags: z.string().nonempty(),
     shippingCost: z.number().nonnegative(),
     shippingFrom: z.string().nonempty(),
-    minimumDeliveryTime: z.number().nonnegative(),
-    maximumDeliveryTime: z.number().nonnegative(),
+    minimumDeliveryTime: z.number().nonnegative().gte(1).int(),
+    maximumDeliveryTime: z.number().nonnegative().gte(1).int(),
     Price: z.number().nonnegative(),
-    quantity: z.number().nonnegative(),
+    quantity: z.number().nonnegative().gte(1).int(),
 })
