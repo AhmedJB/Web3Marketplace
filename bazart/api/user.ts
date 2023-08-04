@@ -19,3 +19,15 @@ export const updateUser = async (body: UserUpdateT) => {
     return axios.patch(baseUrl + `api/user/${body.address}`, temp);
 
 }
+
+
+/* export async function fetchUser(userId) {
+    try {
+        const response = await axios.get(`/api/user/${userId}`);
+        return response.data as UserModelT;
+  } catch (e) {
+    throw new Error("Failed fetching user");
+    return undefined;
+
+  }
+} */

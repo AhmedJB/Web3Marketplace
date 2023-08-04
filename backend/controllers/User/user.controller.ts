@@ -111,4 +111,29 @@ UserController.patch('/:address', async (req, res, next) => {
   }
 });
 
+
+UserController.get('/:address', async (req, res, next) => {
+  try {
+    const add = req.params.address;
+    const userData = await db.userModel.findUnique({
+      where: { address: add }
+    }).catch(
+      (err: PrismaClientValidationError) => {
+        throw new ServerRequestException(handleCreateMissingError(err.message))
+      }
+    );
+    if (!userData) {
+      console.log("User not found");
+      res.status(404).json({ message: "User not found" });
+    } else {
+      console.log("User Found");
+      res.json(userData);
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    next(error);
+  }
+});
+
+
 export { UserController }
