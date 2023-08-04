@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 
 
 export const verifySignature = (address: string, signature: string) => {
+    console.log(`Verifying signature ${signature}`)
     const signerAddr = ethers.verifyMessage(address, signature);
     if (signerAddr !== address) {
         return false

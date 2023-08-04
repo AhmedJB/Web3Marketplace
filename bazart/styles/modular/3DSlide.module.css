@@ -1,21 +1,26 @@
-
 .container {
-width: 60%;
-margin-left: 20%;
-}	
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
 
 /* Slider.css */
 .img_normal {
   border-radius: 20px;
-  transform: scale(0.7); /* Normal size */
+  transform: scale(0.7);
+  /* Normal size */
   transition: transform 0.3s ease;
+  width: 400px;
+  aspect-ratio: 3/5;
   background-color: black;
 }
 
 .img_centered {
   border-radius: 20px;
-  transform: scale(1); /* Centered and bigger size */
+  transform: scale(1);
+  /* Centered and bigger size */
+  width: 400px;
+  aspect-ratio: 3/5;
   transition: transform 0.3s ease;
 
 }
-

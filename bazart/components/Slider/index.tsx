@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -13,32 +13,37 @@ import styles from '../../styles/modular/3DSlide.module.css';
 
 
 interface Swipertype extends SwiperClass<SwiperEvents> {
-    activeIndex: number;
+  activeIndex: number;
 }
 const Slider = () => {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(-1);
 
   // Explicitly type the swiper parameter using the Swiper type
   const handleSlideChange = (swiper: Swipertype) => {
-    setActiveSlideIndex(swiper.activeIndex);
+    console.log("Changing ", swiper.activeIndex)
+    //setActiveSlideIndex(swiper.activeIndex);
   };
   const getImageName = (src: string) => {
-  if (src) {
-    const parts = src.split("/");
-    const filename = parts[parts.length - 1].split(".")[0];
-    return <span style={{ color: '#D3CBB8' }}>{filename.toUpperCase()}</span>;
-  }
-  return "";
-};
+    if (src) {
+      const parts = src.split("/");
+      const filename = parts[parts.length - 1].split(".")[0];
+      return <span style={{ color: '#D3CBB8' }}>{filename.toUpperCase()}</span>;
+    }
+    return "";
+  };
+
+  useEffect(() => {
+    console.log("Current slide ", activeSlideIndex)
+  }, [activeSlideIndex])
 
   return (
     <div className={styles.container}>
       <Swiper
         onSlideChange={handleSlideChange}
         rewind={false}
-        loop= {true}
-        slidesPerView={3}
-        spaceBetween={30}
+        loop={false}
+        slidesPerView={1}
+        spaceBetween={5}
         keyboard={{
           enabled: true,
         }}
@@ -47,10 +52,10 @@ const Slider = () => {
         }}
         navigation={true}
         modules={[Keyboard, Pagination, Navigation]}
-        
-        //centeredSlides={true}
+
+        centeredSlides={false}
       >
-       
+
         <SwiperSlide>
           <div className={activeSlideIndex === 0 ? styles.img_centered : ""}>
             <div>{activeSlideIndex === 0 && getImageName("./APPAREL.jpg")}</div>
@@ -65,7 +70,7 @@ const Slider = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div className={activeSlideIndex === 2 ? styles.img_centered : ""}>
-          <div>{activeSlideIndex === 2 ? getImageName("./ACCESSORIES.jpg") : null}</div>
+            <div>{activeSlideIndex === 2 ? getImageName("./ACCESSORIES.jpg") : null}</div>
 
             <img src="./ACCESSORIES.jpg" className={activeSlideIndex === 2 ? styles.img_centered : styles.img_normal} />
           </div>
@@ -82,7 +87,7 @@ const Slider = () => {
             <img src="./COSMETICS.jpg" className={activeSlideIndex === 4 ? styles.img_centered : styles.img_normal} />
           </div>
         </SwiperSlide>
-        <SwiperSlide></SwiperSlide>
+
       </Swiper>
     </div>
   );
