@@ -14,26 +14,62 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "Escrow",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Escrow__factory>;
+    getContractFactory(
       name: "Lock",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Lock__factory>;
+    getContractFactory(
+      name: "Marketplace",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Marketplace__factory>;
 
+    getContractAt(
+      name: "Escrow",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Escrow>;
     getContractAt(
       name: "Lock",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.Lock>;
+    getContractAt(
+      name: "Marketplace",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Marketplace>;
 
+    deployContract(
+      name: "Escrow",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Escrow>;
     deployContract(
       name: "Lock",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Lock>;
+    deployContract(
+      name: "Marketplace",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Marketplace>;
 
+    deployContract(
+      name: "Escrow",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Escrow>;
     deployContract(
       name: "Lock",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Lock>;
+    deployContract(
+      name: "Marketplace",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Marketplace>;
 
     // default types
     getContractFactory(

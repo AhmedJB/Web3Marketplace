@@ -51,8 +51,13 @@ function UploadForm({ }: Props) {
             console.log("Must upload at least 1 image")
         } else {
             console.log("uploading product")
+            let numeric_fields = ["quantity", "minimumDeliveryTime", "maximumDeliveryTime", "Price", "shippingCost"]
+            let temp = { ...productData }
+            for (let key of numeric_fields) {
+                (temp[key as keyof typeof temp] as (string | number)) = Number(temp[key as keyof typeof temp])
+            }
             let body = {
-                ...productData,
+                ...temp,
                 category,
                 signature: accountData?.signature ? accountData.signature : ""
             }

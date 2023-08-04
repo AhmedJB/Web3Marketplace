@@ -1,18 +1,21 @@
 interface ProductT {
   id: number;
   title: string;
-  firstName: string; 
-  lastName: string;
-  user?:UserModelT;
+  description: string;
+  tags: string;
+  shippingCost: number;
   shippingFrom: string;
-  productImagee: string;
+  minimumDeliveryTime: number;
+  maximumDeliveryTime: number;
   Price: number;
+  quantity: number;
+  user?: UserModelT;
   images?: ProductImage[];
 }
 interface ProductImage {
-  id:number,
-  fileUrl:string,
-  filename:string,
+  id: number,
+  fileUrl: string,
+  filename: string,
 }
 
 interface ProductDetT {
@@ -23,9 +26,9 @@ interface ProductDetT {
   shippingFrom: string;
   minimumDeliveryTime: number;
   maximumDeliveryTime: number;
-  quantity:number;
+  quantity: number;
 /*   productImage: string;
- */  Price: number; 
+ */  Price: number;
 /*   images: ProductImage[]; // Assuming ProductImage is a custom type defined somewhere
  */  minDays: number;
   maxDays: number;
@@ -33,8 +36,8 @@ interface ProductDetT {
 
 
 
-interface UserModelT{
-  id : number;
-  firstName : string;
-  lastName:string;
+interface UserModelT {
+  id: number;
+  firstName: string;
+  lastName: string;
 }
