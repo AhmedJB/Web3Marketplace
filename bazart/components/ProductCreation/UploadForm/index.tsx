@@ -54,16 +54,18 @@ function UploadForm({ }: Props) {
             let body = {
                 ...productData,
                 category,
-                signature: accountData?.signature
+                signature: accountData?.signature ? accountData.signature : ""
             }
-            let params = {
-                address: accountData?.address,
-                body,
-                images: selectedImages
-            }
+
             console.log(body)
             try {
                 let res = uploadSchema.parse(body);
+                let params = {
+                    address: accountData?.address ? accountData.address : "",
+                    body,
+                    images: selectedImages
+                }
+                productUploadMutation.mutate(params);
             } catch (e) {
                 let err = e as ZodError
                 let msgs = formatZodError(err.errors)
@@ -72,7 +74,7 @@ function UploadForm({ }: Props) {
         }
 
 
-        //productUploadMutation.mutate(params);
+        //
     }
     return <>
         <div className="flex flex-col lg:grid lg:grid-cols-2 p-5">
