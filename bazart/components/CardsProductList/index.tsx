@@ -1,45 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import styles from "../../styles/modular/Carousel.module.css"
 import CardProduct from '../General/CardProduct';
-import { productlistData } from '../../demoData/productlist';
-import axios from 'axios'; 
 
 import { useQuery } from 'react-query';
 import { fetchProducts } from '../../api/products'; // Adjust the path accordingly
-
-interface ProductT {
-  id: number;
-  title: string;
-  creatorName: string;
-  creatorImage: string;
-  productImage: string;
-  price: number;
-  // ... other properties
-}
+import Link from 'next/link';
+/* import { fetchUser } from '../../api/user';
+ */
 type Props = {};
-
 function CardsProductList({ }: Props) {
-
-
-
   const { isLoading, isError, data: fetchedProducts, error } = useQuery<ProductT[], any>('products', fetchProducts);
-
-  //const limitedProductData = productlistData.slice(0, 24); // Limit to maximum of 30 items
-
-/*   const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios.get('/api/product/list')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []); */
-
+ /*  const { isLoading, isError, data: fetchedProducts, error } = useQuery<ProductT[], any>('products', fetchProducts, {
+    onSuccess: (data) => {
+      // Optional: Clear the cache after a successful data fetch
+      queryClient.setQueryData('products', data);
+    },
+  });
+ */
+/* const { isLoading: isLoadingProducts, isError: isErrorProducts, data: fetchedProducts, error: errorProducts } = useQuery<ProductT[], any>('products', fetchProducts);
+ *//* const { isLoading: isLoadingUser, isError: isErrorUser, data: userData, error: errorUser } = useQuery<UserModelT[], any>('user', fetchUser);
+ */
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -47,29 +27,33 @@ function CardsProductList({ }: Props) {
   if (isError) {
     return <div>Error: {error?.message}</div>;
   }
+/*   if (isLoadingProducts || isLoadingUser) {
+    return <div>Loading...</div>;
+  }
 
+  if (isErrorProducts || isErrorUser) {
+    return <div>Error: {errorProducts?.message || errorUser?.message}</div>;
+  } */
   return (
-    <>
-      <div className='container mx-auto'>
-        <div className={`flex flex-wrap  gap-7 my-4`}>
-          {/* {limitedProductData.map((product, index) => (
-            <CardProduct key={index} {...product} />
-          ))} */}
-
-      {fetchedProducts.map((product) => (
-        <CardProduct
-          key={product.id} // Make sure each product has a unique identifier (e.g., "id" field)
-          title={product.title}
-          creatorName={product.creatorName}
-          creatorImage={product.creatorImage}
-          productImage={product.productImage}
-          price={product.Price}
-        />
-      ))}
-
-        </div>
+    <div className='container mx-auto'>
+      <div className={`flex flex-wrap  gap-7 my-4`}>
+        {fetchedProducts.map((product) => (
+          <Link key={product.id} href={`/details?id=${product.id}`}>
+            <CardProduct
+              key={product.id} //unique identifier
+              title={product.title}
+              shippingFrom={product.shippingFrom}
+              firstName={product.user.firstName}
+              lastName={product.user.lastName}
+              productImage={product?.images[0]?.fileUrl}
+              price={product.Price} 
+/*               images={product.productImagee} 
+ */            />
+          </Link>
+        ))}
+      
       </div>
-    </>
+    </div>
   );
 }
 

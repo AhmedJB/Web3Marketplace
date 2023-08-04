@@ -30,8 +30,22 @@ export const uploadProduct = async ({ images, body, address }: uploadParams) => 
 export async function fetchProducts() {
   try {
     let response = await axios.get(formatEndPoint('product/list'));
-    return response.data as ProductT[]; // Assuming ProductT is the interface for your product data
+    return response.data as ProductT[]; 
   } catch (e) {
     throw new Error("Failed fetching products");
+  }
+}
+
+
+export async function fetchProduct(productId) {
+  if (!productId) {
+    throw new Error("Product ID is missing.");
+  }
+
+  try {
+    let response = await axios.get(formatEndPoint(`product/${productId}`));
+    return response.data as ProductDetT[];
+  } catch (e) {
+    throw new Error("Failed fetching product details");
   }
 }

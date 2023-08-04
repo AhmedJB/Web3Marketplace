@@ -31,7 +31,7 @@ function UploadForm({ }: Props) {
         quantity: 0,
     });
     const [checked, setChecked] = useState(false);
-    const [category, setCategory] = useState(1);
+    const [category, setCategory] = useState(0);
     const productUploadMutation = useMutation(uploadProduct, {
         onSuccess: (data, variables, context) => {
             console.log("success upload");
