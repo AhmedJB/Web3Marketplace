@@ -9,7 +9,6 @@ import CarouselComponent from '../components/General/CarouselComponent';
 
 import Footer from '../components/General/Footer';
 import Hero from '../components/HomePage/Hero';
-import Slider from '../components/Slider';
 import CustomSlider from '../components/CustomSlider';
 
 
