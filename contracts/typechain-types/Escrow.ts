@@ -3,8 +3,12 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BigNumberish,
+  BytesLike,
   FunctionFragment,
+  Result,
   Interface,
+  AddressLike,
   ContractRunner,
   ContractMethod,
   Listener,
@@ -14,9 +18,94 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
+  TypedContractMethod,
 } from "./common";
 
-export interface EscrowInterface extends Interface {}
+export declare namespace Escrow {
+  export type OrderStruct = {
+    seller: AddressLike;
+    buyer: AddressLike;
+    productId: BigNumberish;
+    value: BigNumberish;
+    timestamp: BigNumberish;
+    orderId: BigNumberish;
+  };
+
+  export type OrderStructOutput = [
+    seller: string,
+    buyer: string,
+    productId: bigint,
+    value: bigint,
+    timestamp: bigint,
+    orderId: bigint
+  ] & {
+    seller: string;
+    buyer: string;
+    productId: bigint;
+    value: bigint;
+    timestamp: bigint;
+    orderId: bigint;
+  };
+}
+
+export interface EscrowInterface extends Interface {
+  getFunction(
+    nameOrSignature:
+      | "createEscrow"
+      | "getBuyerOrders"
+      | "getMarketplaceAddress"
+      | "getOrderById"
+      | "getSellerOrders"
+      | "refund"
+      | "release"
+  ): FunctionFragment;
+
+  encodeFunctionData(
+    functionFragment: "createEscrow",
+    values: [AddressLike, AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getBuyerOrders",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getMarketplaceAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getOrderById",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getSellerOrders",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "refund", values?: undefined): string;
+  encodeFunctionData(functionFragment: "release", values?: undefined): string;
+
+  decodeFunctionResult(
+    functionFragment: "createEscrow",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getBuyerOrders",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getMarketplaceAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getOrderById",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getSellerOrders",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "refund", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "release", data: BytesLike): Result;
+}
 
 export interface Escrow extends BaseContract {
   connect(runner?: ContractRunner | null): Escrow;
@@ -61,9 +150,65 @@ export interface Escrow extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  createEscrow: TypedContractMethod<
+    [_seller: AddressLike, _buyer: AddressLike, _productId: BigNumberish],
+    [bigint],
+    "payable"
+  >;
+
+  getBuyerOrders: TypedContractMethod<[], [Escrow.OrderStructOutput[]], "view">;
+
+  getMarketplaceAddress: TypedContractMethod<[], [string], "view">;
+
+  getOrderById: TypedContractMethod<
+    [_orderId: BigNumberish],
+    [Escrow.OrderStructOutput],
+    "view"
+  >;
+
+  getSellerOrders: TypedContractMethod<
+    [],
+    [Escrow.OrderStructOutput[]],
+    "view"
+  >;
+
+  refund: TypedContractMethod<[], [void], "nonpayable">;
+
+  release: TypedContractMethod<[], [void], "nonpayable">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
+
+  getFunction(
+    nameOrSignature: "createEscrow"
+  ): TypedContractMethod<
+    [_seller: AddressLike, _buyer: AddressLike, _productId: BigNumberish],
+    [bigint],
+    "payable"
+  >;
+  getFunction(
+    nameOrSignature: "getBuyerOrders"
+  ): TypedContractMethod<[], [Escrow.OrderStructOutput[]], "view">;
+  getFunction(
+    nameOrSignature: "getMarketplaceAddress"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "getOrderById"
+  ): TypedContractMethod<
+    [_orderId: BigNumberish],
+    [Escrow.OrderStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getSellerOrders"
+  ): TypedContractMethod<[], [Escrow.OrderStructOutput[]], "view">;
+  getFunction(
+    nameOrSignature: "refund"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "release"
+  ): TypedContractMethod<[], [void], "nonpayable">;
 
   filters: {};
 }
