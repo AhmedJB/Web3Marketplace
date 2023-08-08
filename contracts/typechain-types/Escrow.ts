@@ -8,6 +8,7 @@ import type {
   FunctionFragment,
   Result,
   Interface,
+  EventFragment,
   AddressLike,
   ContractRunner,
   ContractMethod,
@@ -17,6 +18,7 @@ import type {
   TypedContractEvent,
   TypedDeferredTopicFilter,
   TypedEventLog,
+  TypedLogDescription,
   TypedListener,
   TypedContractMethod,
 } from "./common";
@@ -29,6 +31,7 @@ export declare namespace Escrow {
     value: BigNumberish;
     timestamp: BigNumberish;
     orderId: BigNumberish;
+    state: BigNumberish;
   };
 
   export type OrderStructOutput = [
@@ -37,7 +40,8 @@ export declare namespace Escrow {
     productId: bigint,
     value: bigint,
     timestamp: bigint,
-    orderId: bigint
+    orderId: bigint,
+    state: bigint
   ] & {
     seller: string;
     buyer: string;
@@ -45,6 +49,7 @@ export declare namespace Escrow {
     value: bigint;
     timestamp: bigint;
     orderId: bigint;
+    state: bigint;
   };
 }
 
@@ -55,10 +60,16 @@ export interface EscrowInterface extends Interface {
       | "getBuyerOrders"
       | "getMarketplaceAddress"
       | "getOrderById"
+      | "getOwner"
       | "getSellerOrders"
       | "refund"
       | "release"
+      | "startDispute"
   ): FunctionFragment;
+
+  getEvent(
+    nameOrSignatureOrTopic: "DisputedOrder" | "RefundedFunds" | "ReleasedFunds"
+  ): EventFragment;
 
   encodeFunctionData(
     functionFragment: "createEscrow",
@@ -76,12 +87,23 @@ export interface EscrowInterface extends Interface {
     functionFragment: "getOrderById",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "getOwner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getSellerOrders",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "refund", values?: undefined): string;
-  encodeFunctionData(functionFragment: "release", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "refund",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "release",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "startDispute",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "createEscrow",
@@ -99,12 +121,53 @@ export interface EscrowInterface extends Interface {
     functionFragment: "getOrderById",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getSellerOrders",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "refund", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "release", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "startDispute",
+    data: BytesLike
+  ): Result;
+}
+
+export namespace DisputedOrderEvent {
+  export type InputTuple = [_orderId: BigNumberish];
+  export type OutputTuple = [_orderId: bigint];
+  export interface OutputObject {
+    _orderId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RefundedFundsEvent {
+  export type InputTuple = [_orderId: BigNumberish];
+  export type OutputTuple = [_orderId: bigint];
+  export interface OutputObject {
+    _orderId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace ReleasedFundsEvent {
+  export type InputTuple = [_orderId: BigNumberish];
+  export type OutputTuple = [_orderId: bigint];
+  export interface OutputObject {
+    _orderId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export interface Escrow extends BaseContract {
@@ -166,15 +229,23 @@ export interface Escrow extends BaseContract {
     "view"
   >;
 
+  getOwner: TypedContractMethod<[], [string], "view">;
+
   getSellerOrders: TypedContractMethod<
     [],
     [Escrow.OrderStructOutput[]],
     "view"
   >;
 
-  refund: TypedContractMethod<[], [void], "nonpayable">;
+  refund: TypedContractMethod<[_orderId: BigNumberish], [void], "nonpayable">;
 
-  release: TypedContractMethod<[], [void], "nonpayable">;
+  release: TypedContractMethod<[_orderId: BigNumberish], [void], "nonpayable">;
+
+  startDispute: TypedContractMethod<
+    [_orderId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
@@ -201,14 +272,75 @@ export interface Escrow extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "getOwner"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
     nameOrSignature: "getSellerOrders"
   ): TypedContractMethod<[], [Escrow.OrderStructOutput[]], "view">;
   getFunction(
     nameOrSignature: "refund"
-  ): TypedContractMethod<[], [void], "nonpayable">;
+  ): TypedContractMethod<[_orderId: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "release"
-  ): TypedContractMethod<[], [void], "nonpayable">;
+  ): TypedContractMethod<[_orderId: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "startDispute"
+  ): TypedContractMethod<[_orderId: BigNumberish], [void], "nonpayable">;
 
-  filters: {};
+  getEvent(
+    key: "DisputedOrder"
+  ): TypedContractEvent<
+    DisputedOrderEvent.InputTuple,
+    DisputedOrderEvent.OutputTuple,
+    DisputedOrderEvent.OutputObject
+  >;
+  getEvent(
+    key: "RefundedFunds"
+  ): TypedContractEvent<
+    RefundedFundsEvent.InputTuple,
+    RefundedFundsEvent.OutputTuple,
+    RefundedFundsEvent.OutputObject
+  >;
+  getEvent(
+    key: "ReleasedFunds"
+  ): TypedContractEvent<
+    ReleasedFundsEvent.InputTuple,
+    ReleasedFundsEvent.OutputTuple,
+    ReleasedFundsEvent.OutputObject
+  >;
+
+  filters: {
+    "DisputedOrder(uint256)": TypedContractEvent<
+      DisputedOrderEvent.InputTuple,
+      DisputedOrderEvent.OutputTuple,
+      DisputedOrderEvent.OutputObject
+    >;
+    DisputedOrder: TypedContractEvent<
+      DisputedOrderEvent.InputTuple,
+      DisputedOrderEvent.OutputTuple,
+      DisputedOrderEvent.OutputObject
+    >;
+
+    "RefundedFunds(uint256)": TypedContractEvent<
+      RefundedFundsEvent.InputTuple,
+      RefundedFundsEvent.OutputTuple,
+      RefundedFundsEvent.OutputObject
+    >;
+    RefundedFunds: TypedContractEvent<
+      RefundedFundsEvent.InputTuple,
+      RefundedFundsEvent.OutputTuple,
+      RefundedFundsEvent.OutputObject
+    >;
+
+    "ReleasedFunds(uint256)": TypedContractEvent<
+      ReleasedFundsEvent.InputTuple,
+      ReleasedFundsEvent.OutputTuple,
+      ReleasedFundsEvent.OutputObject
+    >;
+    ReleasedFunds: TypedContractEvent<
+      ReleasedFundsEvent.InputTuple,
+      ReleasedFundsEvent.OutputTuple,
+      ReleasedFundsEvent.OutputObject
+    >;
+  };
 }

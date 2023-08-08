@@ -58,7 +58,7 @@ contract Marketplace {
     event CreatedOrder(uint indexed orderId);
 
     constructor() {
-        escrowContract = new Escrow(address(this));
+        escrowContract = new Escrow(address(this), msg.sender);
         i_owner = msg.sender;
     }
 
@@ -115,6 +115,8 @@ contract Marketplace {
         }
         emit CreatedOrder(orderId);
     }
+
+    /** Fallback / receive */
 
     /** getters */
 

@@ -3,6 +3,7 @@
 pragma solidity ^0.8.18;
 
 import {Marketplace} from "./Marketplace.sol";
+import {console} from "hardhat/console.sol";
 
 /**
  * @title Managing Escrow transactions
@@ -18,12 +19,20 @@ contract Escrow {
     error ESCROW_NOTBUYER();
     error ESCROW_NOT_FROM_MARKETPLACE();
     error ESCROW_ORDER_NOT_FOUND();
+    error ESCROW_HOLD_TIME();
+    error ESCROW_ALREADY_DISPUTED();
+    error ESCROW_NOT_DISPUTED();
+    error ESCROW_NOT_OPEN();
+    error ESCROW_NOT_OPEN_OR_DISPUTED();
+    error ESCROW_NOT_SELLER_OR_BUYER();
+    error ESCROW_FAILED_TRANSFER();
 
     /** UDT */
     enum EscrowState {
-        Opened,
+        Opened, // 0
         Finished,
-        Refunded
+        Refunded,
+        Disputed
     }
 
     struct Order {
@@ -33,6 +42,7 @@ contract Escrow {
         uint256 value;
         uint256 timestamp;
         uint256 orderId;
+        EscrowState state;
     }
     struct Product {
         address owner;
@@ -43,7 +53,7 @@ contract Escrow {
 
     /** state */
     address owner;
-    uint256 constant MIN_HOLD_DURATION = 30 * 24 * 60 * 60; // 30 days in secs
+    uint256 constant MIN_HOLD_DURATION = 30 days; // 30 days in secs
     Marketplace immutable i_marketplace;
     uint256 counter = 1;
 
@@ -53,14 +63,70 @@ contract Escrow {
     mapping(uint256 => Order) s_OrderIdToOrder;
 
     /** events */
+    event DisputedOrder(uint256 indexed _orderId);
+    event ReleasedFunds(uint256 indexed _orderId);
+    event RefundedFunds(uint256 indexed _orderId);
 
     /** modifiers */
-    modifier onlySeller() {
+    modifier onlySellerOrDisputed(uint256 _orderId) {
+        Order memory order = s_OrderIdToOrder[_orderId];
+        if (msg.sender == owner && order.state != EscrowState.Disputed) {
+            revert ESCROW_NOT_DISPUTED();
+        } else if (order.seller != msg.sender && msg.sender != owner) {
+            revert ESCROW_NOTSELLER();
+        } else if (
+            msg.sender == order.seller && order.state == EscrowState.Disputed
+        ) {
+            revert ESCROW_ALREADY_DISPUTED();
+        }
         _;
     }
-    modifier onlyBuyerOrTime() {
+
+    modifier orderOpenOrDisputed(uint256 _orderId) {
+        Order memory order = s_OrderIdToOrder[_orderId];
+        //console.log("order state ", uint(order.state));
+        if (
+            order.state != EscrowState.Opened &&
+            order.state != EscrowState.Disputed
+        ) {
+            revert ESCROW_NOT_OPEN_OR_DISPUTED();
+        }
         _;
     }
+
+    /**
+     * @dev
+     * check if the function called by the order Buyer
+     * or order hold duration completed
+     * steps:
+     * 1.
+     */
+    modifier onlyBuyerOrTimeOrDisputed(uint256 _orderId) {
+        Order memory order = s_OrderIdToOrder[_orderId];
+        if (msg.sender == owner && order.state != EscrowState.Disputed) {
+            revert ESCROW_NOT_DISPUTED();
+        } else if (order.seller == msg.sender) {
+            if ((block.timestamp - order.timestamp) < MIN_HOLD_DURATION) {
+                revert ESCROW_HOLD_TIME();
+            }
+        } else if (order.buyer != msg.sender && msg.sender != owner) {
+            revert ESCROW_NOTBUYER();
+        } else if (
+            msg.sender == order.buyer && order.state == EscrowState.Disputed
+        ) {
+            revert ESCROW_ALREADY_DISPUTED();
+        }
+        _;
+    }
+
+    modifier onlySellerOrBuyer(uint256 _orderId) {
+        Order memory order = s_OrderIdToOrder[_orderId];
+        if (msg.sender != order.seller && msg.sender != order.buyer) {
+            revert ESCROW_NOT_SELLER_OR_BUYER();
+        }
+        _;
+    }
+
     modifier onlyOwner() {
         if (msg.sender != owner) {
             revert ESCROW_NOTOWNER();
@@ -75,8 +141,8 @@ contract Escrow {
         _;
     }
 
-    constructor(address _marketplace) {
-        owner = msg.sender;
+    constructor(address _marketplace, address _owner) {
+        owner = _owner;
         i_marketplace = Marketplace(_marketplace);
     }
 
@@ -95,7 +161,8 @@ contract Escrow {
             productId: _productId,
             value: msg.value,
             timestamp: block.timestamp,
-            orderId: counter
+            orderId: counter,
+            state: EscrowState.Opened
         });
         s_buyerToOrders[_buyer].push(order);
         s_sellerToOrders[_seller].push(order);
@@ -106,17 +173,60 @@ contract Escrow {
 
     /**
      * @dev
+     * start dispute
+     * modifying the order state requires the storage keyword
+     * to persist changes
+     */
+    function startDispute(uint256 _orderId) public onlySellerOrBuyer(_orderId) {
+        Order storage order = s_OrderIdToOrder[_orderId];
+        if (order.state != EscrowState.Opened) {
+            revert ESCROW_NOT_OPEN();
+        }
+        order.state = EscrowState.Disputed;
+        emit DisputedOrder(_orderId);
+    }
+
+    /**
+     * @dev
      * release the funds to seller
      * only executed by buyer or validator Entity
      */
-    function release() public onlyBuyerOrTime {}
+    function release(
+        uint256 _orderId
+    ) public orderOpenOrDisputed(_orderId) onlyBuyerOrTimeOrDisputed(_orderId) {
+        Order storage order = s_OrderIdToOrder[_orderId];
+        // checks
+        // effects
+        order.state = EscrowState.Finished;
+        // interactions
+        (bool success, ) = order.seller.call{value: order.value}("");
+        if (!success) {
+            revert ESCROW_FAILED_TRANSFER();
+        }
+        emit ReleasedFunds(_orderId);
+    }
 
     /**
      * @dev
      * release the funds back to buyer
-     * only executed by seller or validator Entity
+     * only executed by seller or validator Entity (owner) when disputed
      */
-    function refund() public onlySeller {}
+    function refund(
+        uint256 _orderId
+    ) public orderOpenOrDisputed(_orderId) onlySellerOrDisputed(_orderId) {
+        Order storage order = s_OrderIdToOrder[_orderId];
+        // checks
+        // effects
+        order.state = EscrowState.Refunded;
+        // interactions
+        (bool success, ) = order.buyer.call{value: order.value}("");
+        if (!success) {
+            revert ESCROW_FAILED_TRANSFER();
+        }
+        emit RefundedFunds(_orderId);
+    }
+
+    /** Fallback / receive */
 
     /** getters */
 
@@ -139,5 +249,9 @@ contract Escrow {
 
     function getMarketplaceAddress() external view returns (address) {
         return address(i_marketplace);
+    }
+
+    function getOwner() external view returns (address) {
+        return owner;
     }
 }

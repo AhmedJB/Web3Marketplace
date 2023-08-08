@@ -4,7 +4,7 @@ import { expect } from "chai"
 import { ethers } from "hardhat"
 import { deployMarketplace } from "../../scripts/deployMarketplace"
 import { Escrow, Marketplace } from "../../typechain-types";
-import { getContractWithSignerIndex } from "../../scripts/utils";
+import { calculate_tx_gas, create_order, create_product, getAccounts, getContractWithSignerIndex } from "../../scripts/utils";
 import BigNumber from "bignumber.js";
 
 
@@ -17,12 +17,8 @@ const BUY_QUANTITY = 2;
 
 
 describe("Testing Marketplace Contract", () => {
-    const create_product = async  (marketplaceContract : Marketplace,quantity = QUANTITY) => {
-        //console.log(`using quantity ${quantity}`)
-        let  tx = await marketplaceContract.createProduct(PRODUCT_ID,PRODUCT_URI,PRICE,quantity);
-        await tx.wait(1);
-        return tx
-    }
+    
+
     describe("init values test", () => {
         it("Should have an owner on creation", async () => {
             let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
@@ -37,16 +33,17 @@ describe("Testing Marketplace Contract", () => {
         })
         it("Should create a product", async () => {
             let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
+            let {owner,seller,buyer} = await getAccounts();
             await create_product(marketplaceContract);
-            let _arr = await marketplaceContract.getOwnerProducts();
+            let _arr = await marketplaceContract.connect(seller).getOwnerProducts();
             expect(_arr.length).to.be.equal(1);
         })
         it("should be the same owner for product",async () => {
             let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
             await create_product(marketplaceContract);
             let product = await marketplaceContract.getProductById(PRODUCT_ID);
-            let signers = await ethers.getSigners();
-            expect(product.owner).to.be.equal(signers[0].address);
+            let {owner,seller,buyer} = await getAccounts();
+            expect(product.owner).to.be.equal(seller.address);
         })
         it("Should emit a creation event", async () => {
             let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
@@ -80,19 +77,14 @@ describe("Testing Marketplace Contract", () => {
         it("Should refund back the money", async () => {
             let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
             let signers = await ethers.getSigners();
-            let user = signers[1];
+            let user = signers[2];
             let original_balance = await ethers.provider.getBalance(user.address)
                 
             let tx = await create_product(marketplaceContract,10);
-            let escrowContract2 : Escrow = (await getContractWithSignerIndex("Escrow",escrowContract.target as string,1)) as Escrow;
-            let marketplaceContract2 : Marketplace = (await getContractWithSignerIndex("Marketplace",marketplaceContract.target as string,1)) as Marketplace;
-            let tx2 = await marketplaceContract2.buyProduct(PRODUCT_ID,2,{
-                value : ethers.parseEther((BUY_QUANTITY * ETHER_PRICE *  2).toString())
-            });
-            await tx2.wait(1);
-
+            
+            let tx2 = await create_order(escrowContract,marketplaceContract);
             // calculate the gas consumed by the transaction
-            let tr_obj  = await tx2.getTransaction();
+            /* let tr_obj  = await tx2.getTransaction();
             let gas_used_with_price = BigInt(0);
             if (tr_obj){
                 let tr = await ethers.provider.getTransactionReceipt(tr_obj?.hash);
@@ -101,9 +93,9 @@ describe("Testing Marketplace Contract", () => {
                     console.log(`Price of gas ${tr.gasPrice}`)
                     gas_used_with_price = tr?.gasUsed * tr.gasPrice;
                     console.log("Total gas : ",gas_used_with_price)
-                }
-                
-            } 
+                }    
+            }  */
+            let gas_used_with_price = await calculate_tx_gas(tx2);
 
             let converted_ether_price = ethers.parseEther(ETHER_PRICE.toString());
             let orderPrice = BigInt(BUY_QUANTITY)  * converted_ether_price;
@@ -112,6 +104,14 @@ describe("Testing Marketplace Contract", () => {
             // test if new balance + gas used === balance - cost     
             expect(newUserBalance + gas_used_with_price).to.be.equal(expectedBalance);
         })
-        
+        it("Should emit a created event", async ()  => {
+            let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
+            let signers = await ethers.getSigners();
+            let user = signers[1];
+            let original_balance = await ethers.provider.getBalance(user.address)        
+            let tx = await create_product(marketplaceContract,10);   
+            let tx2 = await create_order(escrowContract,marketplaceContract);
+            expect(tx2).to.emit(marketplaceContract,"CreatedOrder").withArgs(1);
+        })
     })
 })
