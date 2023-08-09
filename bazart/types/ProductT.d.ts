@@ -26,15 +26,13 @@ interface ProductDetT {
   shippingFrom: string;
   minimumDeliveryTime: number;
   maximumDeliveryTime: number;
+  Price: number;
   quantity: number;
-/*   productImage: string;
- */  Price: number;
-/*   images: ProductImage[]; // Assuming ProductImage is a custom type defined somewhere
- */  minDays: number;
+  user?: UserModelT;
+  images?: ProductImage[];
+  minDays: number;
   maxDays: number;
 }
-
-
 
 interface UserModelT {
   id: number;

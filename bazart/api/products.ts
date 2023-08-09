@@ -27,7 +27,7 @@ export const uploadProduct = async ({ images, body, address }: uploadParams) => 
   return axios.post(url, form_data);
 }
 
-
+//listing 
 export async function fetchProducts() {
   try {
     let response = await axios.get(formatEndPoint('product/list'));
@@ -37,7 +37,7 @@ export async function fetchProducts() {
   }
 }
 
-
+//details prod
 export async function fetchProduct(productId: string) {
   if (!productId || productId.length === 0) {
     throw new Error("Product ID is missing.");
@@ -45,7 +45,7 @@ export async function fetchProduct(productId: string) {
 
   try {
     let response = await axios.get(formatEndPoint(`product/${productId}`));
-    return response.data as ProductT;
+    return response.data as ProductDetT;
   } catch (e) {
     throw new Error("Failed fetching product details");
   }
