@@ -1,14 +1,14 @@
-.container {
+/*.container {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-}
+}*/
 
-/* Slider.css */
+/*
 .img_normal {
   border-radius: 20px;
   transform: scale(0.7);
-  /* Normal size */
+
   transition: transform 0.3s ease;
   width: 400px;
   aspect-ratio: 3/5;
@@ -18,9 +18,47 @@
 .img_centered {
   border-radius: 20px;
   transform: scale(1);
-  /* Centered and bigger size */
+ 
   width: 400px;
   aspect-ratio: 3/5;
   transition: transform 0.3s ease;
 
+}*/
+#app { height: 100% }
+.slider-container {
+  text-align: center; 
+  width: 60%;
+}
+
+.slider-title{
+  color:#F0D697
+  
+}
+.swiper {
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 100PX;
+  height: 300PX;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100PX;
+  height: 300PX;
+  
+}
+
+.swiper-slide-active .image-name {
+  display: block;  /* show image name only on active slide */
+  color: #F0D697;
+}
+
+ .image-name {
+  
+  color: #F0D697;  /* Set a default color for all slide texts */
 }

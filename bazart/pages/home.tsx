@@ -6,7 +6,7 @@ import TopSellersHome from '../components/HomePage/TopSellersHome';
 import Steps from '../components/HomePage/Steps';
 import SubscribeComponent from '../components/HomePage/SubscribeComponent';
 import CarouselComponent from '../components/General/CarouselComponent';
-
+import Slider from '../components/General/Slider';
 import Footer from '../components/General/Footer';
 import Hero from '../components/HomePage/Hero';
 import CustomSlider from '../components/CustomSlider';
@@ -20,8 +20,8 @@ function home({ }: Props) {
     <Header />
     <Hero />
     <CarouselComponent />
-    {/* <Slider /> */}
-    <CustomSlider />
+     <Slider />
+    {/*<CustomSlider />*/}
     <TopSellersHome />
     <Steps />
     <SubscribeComponent />
