@@ -101,7 +101,6 @@ ProductController.post("/create/:address", upload.array("image", 4), async (req,
 
 })
 //list product with user info
-
 ProductController.get("/list", async (req, res, next) => {
     try {
         const products = await db.product.findMany({
@@ -134,7 +133,18 @@ ProductController.get("/list", async (req, res, next) => {
   ProductController.get("/:id", async (req, res, next) => {
     try {
       const productId = parseInt(req.params.id);
-      const product = await db.product.findUnique({ where: { id: productId } });
+      const product = await db.product.findUnique({ 
+        where: { id: productId }, 
+        include: {
+            images:{
+              select:{
+                  id:true,
+                  fileUrl:true,
+                  filename:true,
+              }
+            }
+          },
+    });
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }

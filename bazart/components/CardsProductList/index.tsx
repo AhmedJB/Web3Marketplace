@@ -11,16 +11,7 @@ import { baseUrl } from '../../constants/apiSettings';
 type Props = {};
 function CardsProductList({ }: Props) {
   const { isLoading, isError, data: fetchedProducts, error } = useQuery<ProductT[], any>('products', fetchProducts);
-  /*  const { isLoading, isError, data: fetchedProducts, error } = useQuery<ProductT[], any>('products', fetchProducts, {
-     onSuccess: (data) => {
-       // Optional: Clear the cache after a successful data fetch
-       queryClient.setQueryData('products', data);
-     },
-   });
-  */
-  /* const { isLoading: isLoadingProducts, isError: isErrorProducts, data: fetchedProducts, error: errorProducts } = useQuery<ProductT[], any>('products', fetchProducts);
-   *//* const { isLoading: isLoadingUser, isError: isErrorUser, data: userData, error: errorUser } = useQuery<UserModelT[], any>('user', fetchUser);
- */
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -28,13 +19,6 @@ function CardsProductList({ }: Props) {
   if (isError) {
     return <div>Error: {error?.message}</div>;
   }
-  /*   if (isLoadingProducts || isLoadingUser) {
-      return <div>Loading...</div>;
-    }
-  
-    if (isErrorProducts || isErrorUser) {
-      return <div>Error: {errorProducts?.message || errorUser?.message}</div>;
-    } */
   return (
     <div className='container mx-auto'>
       <div className={`flex flex-wrap  gap-7 my-4`}>
@@ -49,8 +33,7 @@ function CardsProductList({ }: Props) {
                 lastName={product?.user?.lastName}
                 productImage={baseUrl + product?.images[0]?.fileUrl.slice(1)}
                 price={product.Price}
-/*               images={product.productImagee} 
- */            />
+         />
             </Link>
           } else {
             return <></>

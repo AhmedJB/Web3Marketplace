@@ -57,7 +57,7 @@ const ProductDetails = ({ }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient()
   const [prodId, setProdId] = useState("");
-  const { isLoading, isError, data: prod, error } = useQuery<ProductT, any>(
+  const { isLoading, isError, data: prod, error } = useQuery<ProductDetT, any>(
     ['productDetails', prodId],
     () => fetchProduct(prodId as string),
     { enabled: !!prodId }
@@ -102,8 +102,6 @@ const ProductDetails = ({ }: Props) => {
       setProductDetails(prod);
     }
   }, [prod]); */
-
-
   const [quantity, setQuantity] = useState(1);
 
   const [index, setIndex] = useState(0);
@@ -111,7 +109,7 @@ const ProductDetails = ({ }: Props) => {
   const myRef = useRef(null);
   const [openDescription, setOpenDescription] = useState(false);
 
-  useEffect(() => {
+/*   useEffect(() => {
     const images = myRef.current?.children;
     if (images) {
       images[index].className = "active";
@@ -128,12 +126,12 @@ const ProductDetails = ({ }: Props) => {
       images[index_].className = "active";
     }
   };
-
+ */
   const formatDelivery = (minDays: number | undefined, maxDays: number | undefined) => {
     if (minDays && maxDays) {
       return `${minDays} - ${maxDays} business days`;
     } else {
-      `-- business days`
+      return '-- business days'; 
     }
 
   };
@@ -154,17 +152,14 @@ const ProductDetails = ({ }: Props) => {
       }
     }
   }
-
-
   /*   const [product, setProduct] = useState<ProductDetT>(prod);
    */
-
   return (
     <>
       <Container>
         <div className={`mx-auto ${styles.app} max-w-[1100px] my-16`}>
           <div className={"flex gap-11 "}>
-            <div className={"flex flex-col items-center ml-4"} key={prod?.id}>
+           {/*  <div className={"flex flex-col items-center ml-4"} key={prod?.id}>
               <div className={styles["big-img"] + " relative"}>
                 <img src={prod?.src[index]} alt="" />
                 <div className="absolute top-3 right-3 rounded-full p-1 bg-white">
@@ -176,7 +171,7 @@ const ProductDetails = ({ }: Props) => {
                 tab={handleTab}
                 myRef={myRef}
               />
-            </div>
+            </div> */}
             <div className={"flex flex-col gap-3 pt-12"}>
               <div className="">
                 <h2 className="text-2xl font-semibold text-white mt-3 inter">
@@ -217,10 +212,6 @@ const ProductDetails = ({ }: Props) => {
                   {prod?.description} Pourquoi l'utiliser?
                   On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).
 
-
-
-
-
                 </p>
               )}
 
@@ -247,56 +238,4 @@ const ProductDetails = ({ }: Props) => {
   );
 };
 
-/* class App extends Component<{}, AppState> {
-  private myRef = createRef<HTMLDivElement>();
-
-  state: AppState = {
-    products: [
-      {
-        _id: "1",
-        title: "Moroccan Vintage Caftan AMAZIGH style",
-        src: [
-
-          "./Picture.png",
-          "./Pic1.jpg",
-          "./Pic2.webp",
-          "./Pic3.webp",
-        ],
-        description: "Description",
-        price: "45.50 ETH",
-        colors: ["red", "black", "crimson", "teal"],
-        count: 1,
-        delivery: "5 - 15 working days"
-      }
-    ],
-    index: 0
-  };
-
-  handleTab = (index: number) => {
-    this.setState({ index });
-    const images = this.myRef.current?.children;
-    if (images) {
-      for (let i = 0; i < images.length; i++) {
-        images[i].className = images[i].className.replace("active", "");
-      }
-      images[index].className = "active";
-    }
-  };
-
-  componentDidMount() {
-    const { index } = this.state;
-    const images = this.myRef.current?.children;
-    if (images) {
-      images[index].className = "active";
-    }
-  }
-
-  render() {
-    const { products, index } = this.state;
-    return (
-      
-    );
-  }
-}
- */
 export default ProductDetails;
