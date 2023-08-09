@@ -69,7 +69,7 @@ const ProductDetails = ({ }: Props) => {
 
   const [index, setIndex] = useState(0);
 
-  const myRef = useRef(null);
+  const myRef = useRef<HTMLDivElement | null>(null);
   const [openDescription, setOpenDescription] = useState(false);
 
   useEffect(() => {
@@ -87,10 +87,13 @@ const ProductDetails = ({ }: Props) => {
 
   useEffect(() => {
     const images = myRef.current?.children;
-    if (images) {
-      images[index].className = "active";
+    if (images && index >= 0 && index < images.length) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].classList.remove("active");
+      }
+      images[index].classList.add("active");
     }
-  }, [myRef]);
+  }, [index, myRef]);
 
   const handleTab = (index_: number) => {
     setIndex(index_);
@@ -161,19 +164,18 @@ const ProductDetails = ({ }: Props) => {
       <Container>
         <div className={`mx-auto ${styles.app} max-w-[1100px] my-16`}>
           <div className={"flex gap-11 "}>
-            <div className={"flex flex-col items-center ml-4"} key={prod?.id}>
+           <div className={"flex flex-col items-center ml-4"} key={prod?.id}>
               <div className={styles["big-img"] + " relative"}>
-                <img src={prod?.src[index]} alt="" />
+                <img src={prod?.images[index]?.fileUrl} alt="test" />
                 <div className="absolute top-3 right-3 rounded-full p-1 bg-white">
                   <HeartCheckboxComponent size="text-sm" />
                 </div>
               </div>
               <DetailsThumb
-                
-              images={prod?.images?.map(e => baseUrl  + e.fileUrl.slice(1))}
+                images={prod?.images?.map(e => baseUrl + e.fileUrl.slice(1))}
                 tab={handleTab}
-                myRef={myRef}
-              />
+                forwardedRef={myRef} 
+                />
             </div>
             <div className={"flex flex-col gap-3 pt-12"}>
               <div className="">
