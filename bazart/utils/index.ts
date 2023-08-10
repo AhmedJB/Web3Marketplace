@@ -1,3 +1,4 @@
+import { ethers } from "ethers"
 import { ZodIssue } from "zod"
 
 
@@ -33,4 +34,10 @@ export const formatZodError = (errors: ZodIssue[]) => {
         msgs.push(msg)
     }
     return msgs
+}
+
+
+export const convertToBigInt = (number : number) => {
+    const converted  = ethers.utils.parseUnits(number.toString(),"ether");
+    return converted;
 }

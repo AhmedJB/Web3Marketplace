@@ -26,7 +26,7 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
 
     const [signed, setSigned] = useContext(SignContext);
 
-    const ENSName = useENSName(account);
+    const ENSName = useENSName(account as string);
     const [showDropdown, setShowDropdown] = useState(false);
 
 

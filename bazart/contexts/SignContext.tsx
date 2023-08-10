@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useState } from "react";
 
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
 }
 
 
-export const SignContext = createContext(null);
+export const SignContext = createContext<(boolean | Dispatch<SetStateAction<boolean>>)[]>([false]);
 
 
 export const SignProvider = ({ children }: Props) => {

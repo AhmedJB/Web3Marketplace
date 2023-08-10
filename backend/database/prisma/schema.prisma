@@ -47,9 +47,9 @@ model Product {
   created             DateTime        @default(now())
   // relations
   images              ProductImages[]
-  user                UserModel       @relation(fields: [userId], references: [id])
+  user                UserModel       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              Int
-  category            Category        @relation(fields: [catgId], references: [id])
+  category            Category        @relation(fields: [catgId], references: [id], onDelete: Cascade)
   catgId              Int
 }
 
@@ -60,7 +60,7 @@ model ProductImages {
   fileUrl      String
   created      DateTime @default(now())
   // relations
-  product      Product  @relation(fields: [productId], references: [id])
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId    Int
 }
 
