@@ -56,7 +56,6 @@ type Props = {};
 
 
 const ProductDetails = ({ }: Props) => {
-
   const router = useRouter();
   const queryClient = useQueryClient()
   const [prodId, setProdId] = useState("");
