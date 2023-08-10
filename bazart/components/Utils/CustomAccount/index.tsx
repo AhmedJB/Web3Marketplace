@@ -84,7 +84,7 @@ const CustomAccount = ({ triedToEagerConnect, connector, isMetamask, walletName,
         ) : (
           <>
             {
-              isMetamask && <button onClick={startOnboarding}>Install Metamask</button>
+              isMetamask && <button className="p-4 bg-mainDark text-white rounded-[10px]" onClick={startOnboarding}>Install Metamask</button>
             }
           </>
         )}

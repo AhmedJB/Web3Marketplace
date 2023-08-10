@@ -22,6 +22,7 @@ import StarReview from "./StarReview";
 import HeartCheckboxComponent from "../Utils/HeartCheckboxComponent";
 import { fetchProduct } from "../../api/products";
 import { baseUrl } from "../../constants/apiSettings";
+import { useWeb3React } from "@web3-react/core";
 
 
 interface Product {
@@ -71,6 +72,7 @@ const ProductDetails = ({ }: Props) => {
 
   const myRef = useRef<HTMLDivElement | null>(null);
   const [openDescription, setOpenDescription] = useState(false);
+  const {active} = useWeb3React();
 
   useEffect(() => {
     if (router.isReady) {
@@ -85,25 +87,10 @@ const ProductDetails = ({ }: Props) => {
     }
   }, [prodId])
 
-  useEffect(() => {
-    const images = myRef.current?.children;
-    if (images && index >= 0 && index < images.length) {
-      for (let i = 0; i < images.length; i++) {
-        images[i].classList.remove("active");
-      }
-      images[index].classList.add("active");
-    }
-  }, [index, myRef]);
+
 
   const handleTab = (index_: number) => {
     setIndex(index_);
-    const images = myRef.current?.children;
-    if (images) {
-      for (let i = 0; i < images.length; i++) {
-        images[i].className = images[i].className.replace("active", "");
-      }
-      images[index_].className = "active";
-    }
   };
 
 
@@ -166,7 +153,7 @@ const ProductDetails = ({ }: Props) => {
           <div className={"flex gap-11 "}>
            <div className={"flex flex-col items-center ml-4"} key={prod?.id}>
               <div className={styles["big-img"] + " relative"}>
-                <img src={prod?.images[index]?.fileUrl} alt="test" />
+                <img src={prod?.images ? baseUrl + prod?.images[index]?.fileUrl.slice(1) : ""} alt="test" />
                 <div className="absolute top-3 right-3 rounded-full p-1 bg-white">
                   <HeartCheckboxComponent size="text-sm" />
                 </div>
@@ -174,7 +161,7 @@ const ProductDetails = ({ }: Props) => {
               <DetailsThumb
                 images={prod?.images?.map(e => baseUrl + e.fileUrl.slice(1))}
                 tab={handleTab}
-                forwardedRef={myRef} 
+                activeIndex={index}
                 />
             </div>
             <div className={"flex flex-col gap-3 pt-12"}>
@@ -191,13 +178,16 @@ const ProductDetails = ({ }: Props) => {
               <QuantityInput quantity={quantity} updateQuantity={handleStep} />
 
               <div className="flex items-center gap-3">
-                <button
+                {
+                  active &&<button
                   className={
                     "w-[250px] bg-orange py-3 px-8 text-white font-semibold rounded-md"
                   }
                 >
                   BUY NOW
                 </button>
+                }
+                
 {/*                 <FaCartPlus className="text-4xl text-white cursor-pointer transition-all hover:text-orange hover:scale-105" />
  */}              </div>
 

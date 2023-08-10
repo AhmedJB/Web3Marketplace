@@ -12,7 +12,8 @@ const deployMarketplace = async () => {
     marketplaceContract.waitForDeployment();
     let  add_ = await marketplaceContract.getEscrowAddress();
     let escrowContract = await ethers.getContractAt("Escrow",add_);
-    console.log(`contract deployed at ${marketplaceContract.target}`)
+    console.log(`contract Marketplace deployed at ${marketplaceContract.target}`)
+    console.log(`contract Escrow deployed at ${add_}`)
     return { marketplaceContract, escrowContract }
 }
 

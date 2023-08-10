@@ -7,17 +7,18 @@ import styles from "../../../styles/modular/ProductDetails.module.css"
 interface DetailsThumbProps {
   images: string[] | undefined;
   tab: (index: number) => void;
-  forwardedRef: RefObject<HTMLDivElement>;
+  activeIndex : number
 }
 
-const DetailsThumb = ({ images, tab, forwardedRef }: DetailsThumbProps) => {
+const DetailsThumb = ({ images, tab,activeIndex }: DetailsThumbProps) => {
   return (
-    <div className={styles.thumb} ref={forwardedRef}>
+    <div className={styles.thumb} >
       {images && images.map((img, index) => (
         <img
           src={img}
           alt=""
           key={index}
+          className={`${activeIndex === index ? "border-4 border-white" :  ""} `}
           onClick={() => tab(index)}
         />
       ))}

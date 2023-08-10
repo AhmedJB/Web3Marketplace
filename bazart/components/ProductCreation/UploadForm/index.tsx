@@ -3,12 +3,17 @@ import ImageUpload from './ImageUpload'
 import FormFields from './FormFields'
 import Validator from '../../HOC/Validator';
 import { AccountContext } from '../../../contexts/AccountContext';
-import { formatEndPoint, formatZodError } from '../../../utils';
+import { convertToBigInt, formatEndPoint, formatZodError } from '../../../utils';
 import { useMutation } from 'react-query';
-import { uploadProduct } from '../../../api/products';
+import { deleteProduct, uploadProduct } from '../../../api/products';
 import { useRouter } from 'next/router';
 import { uploadSchema } from '../../../utils/validator';
 import { ZodError } from 'zod';
+import { useWeb3React } from '@web3-react/core';
+import useContract from '../../../hooks/useContract';
+import { marketPlaceAddress, marketplace_abi } from '../../../constants/contracts';
+import { Marketplace } from '../../../contracts/types';
+import {  ethers } from 'ethers';
 
 
 
@@ -21,7 +26,9 @@ function UploadForm({ }: Props) {
 
     const [selectedImages, setSelectedImages]: [File[] | [], Dispatch<SetStateAction<File[] | []>>] = useState([] as File[]);
     const { accountData, setAccountData } = useContext(AccountContext);
-    const [productData, setProductData] = useState({
+    const {active,library} = useWeb3React();
+    const marketplace : Marketplace = useContract(marketPlaceAddress,marketplace_abi) as (Marketplace);
+    /* const [productData, setProductData] = useState({
         title: '',
         description: '',
         tags: '',
@@ -31,13 +38,41 @@ function UploadForm({ }: Props) {
         maximumDeliveryTime: 0,
         Price: 0,
         quantity: 0,
-    });
+    }); */
+
+    const hanldeContractSync = async (pid : number,uri : string,price : number , quantity : number  ) => {
+        
+        try{
+            let  tx = await marketplace.createProduct(pid,uri,convertToBigInt(price),convertToBigInt(quantity)) ;
+	        tx.wait(1)
+            return true
+        }catch (e){
+            console.log("failed")
+            return false
+        }        
+   }
     const [checked, setChecked] = useState(false);
     const [category, setCategory] = useState(0);
+    const deleteProductMutation = useMutation(deleteProduct,{
+        onSuccess : (data, variables, context) => {
+            console.log("deleted")
+        },
+        onError: (error, variables, context) => {
+            // I will fire first
+            console.log("failed deleting product");
+            console.log(error);
+        }
+    })
     const productUploadMutation = useMutation(uploadProduct, {
-        onSuccess: (data, variables, context) => {
+        onSuccess: async (data, variables, context) => {
             console.log("success upload");
-            router.push('/productlist');
+            let res = await hanldeContractSync(data.data.pid,"test",variables.body.Price,variables.body.quantity);
+            if (res){
+                router.push('/productlist');
+            }else{
+                console.log("delete product")
+                deleteProductMutation.mutate({id : data.data.pid,address : accountData?.address,signature : accountData?.signature});
+            }
         },
         onError: (error, variables, context) => {
             // I will fire first
@@ -45,7 +80,7 @@ function UploadForm({ }: Props) {
             console.log(error);
         }
     })
-    const submitData = async () => {
+    const submitData = async (productData : ProductFormT) => {
         console.log(selectedImages.length)
         if (selectedImages.length === 0) {
             console.log("Must upload at least 1 image")
@@ -87,8 +122,8 @@ function UploadForm({ }: Props) {
                 images={selectedImages}
                 setImages={setSelectedImages}
             />
-            <FormFields product={productData}
-                setProduct={setProductData}
+            <FormFields /* product={productData}
+                setProduct={setProductData} */
                 checked={checked}
                 setChecked={setChecked}
                 category={category}

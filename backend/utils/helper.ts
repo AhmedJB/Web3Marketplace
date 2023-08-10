@@ -1,4 +1,6 @@
 import { ethers } from 'ethers';
+import fs from 'fs'
+import path from 'path';
 
 
 export const verifySignature = (address: string, signature: string) => {
@@ -10,3 +12,14 @@ export const verifySignature = (address: string, signature: string) => {
         return true
     }
 }
+
+export function deleteFile(path_ : string) {
+    const filePath = path.resolve(path_);
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(`Error deleting file ${filePath}: ${err}`);
+      } else {
+        console.log(`File ${filePath} has been deleted.`);
+      }
+    });
+  }

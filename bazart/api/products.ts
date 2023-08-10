@@ -27,6 +27,12 @@ export const uploadProduct = async ({ images, body, address }: uploadParams) => 
   return axios.post(url, form_data);
 }
 
+export const deleteProduct = async ({id,address,signature } : {id :number, address : string,signature : string}) => {
+  let url =  formatEndPoint(`product/delete/${id}/${address}/${signature}`)
+  console.log("deleting ", url)
+  return axios.delete(url,)
+}
+ 
 //listing 
 export async function fetchProducts() {
   try {

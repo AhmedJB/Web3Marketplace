@@ -11,19 +11,29 @@ import { useRouter } from 'next/router';
 
 
 type Props = {
-    product: ProductFormT,
-    setProduct: (c: ProductFormT) => void,
+    product ?: ProductFormT,
+    setProduct ?: (c: ProductFormT) => void,
     checked: boolean,
     setChecked: Dispatch<SetStateAction<boolean>>,
     category: number;
     setCategory: (c: number) => void,
     submit: any
 }
-function FormFields({ product, setProduct, checked, setChecked, category, setCategory, submit }: Props) {
+function FormFields({  checked, setChecked, category, setCategory, submit }: Props) {
 
 
     const { isLoading, isError, data: fetchedCategories, error } = useQuery<CategoryT[], any>('todos', fetchCategories)
-
+    const [product, setProduct] = useState({
+        title: '',
+        description: '',
+        tags: '',
+        shippingCost: 0,
+        shippingFrom: '',
+        minimumDeliveryTime: 0,
+        maximumDeliveryTime: 0,
+        Price: 0,
+        quantity: 0,
+    });
 
 
     const handleFormChange = (v: ChangeEvent) => {
@@ -210,7 +220,7 @@ function FormFields({ product, setProduct, checked, setChecked, category, setCat
 
 
 
-            <button onClick={submit} className="self-end gradient-bg w-[250px] p-1 cursor-pointer transition-transform hover:scale-105 text-white font-semibold rounded-md">Publish</button>
+            <button onClick={() => submit(product)} className="self-end gradient-bg w-[250px] p-1 cursor-pointer transition-transform hover:scale-105 text-white font-semibold rounded-md">Publish</button>
         </div>
     </>
 
