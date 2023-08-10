@@ -38,7 +38,6 @@ function CardsProductList({ }: Props) {
           } else {
             return <></>
           }
-
         })}
 
       </div>

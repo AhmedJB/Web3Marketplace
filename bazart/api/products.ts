@@ -56,3 +56,13 @@ export async function fetchProduct(productId: string) {
     throw new Error("Failed fetching product details");
   }
 }
+
+//myproduct 
+export async function fetchMyProducts() {
+  try {
+    const response = await axios.get('/api/product/list'); // Adjust the API endpoint
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed fetching products");
+  }
+}
