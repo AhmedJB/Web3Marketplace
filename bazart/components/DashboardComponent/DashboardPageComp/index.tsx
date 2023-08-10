@@ -6,6 +6,7 @@ import Header from '../../General/Header';
 import MenuLayout from '../../Utils/MenuLayout';
 import Footer from '../../General/Footer';
 import Validator from '../../HOC/Validator';
+import MyProductsComponent from '../../MyProductsComponent';
 
 type Props = {}
 
@@ -24,6 +25,8 @@ function DashboardPageComp({ }: Props) {
                 return <FavoritesComponent />;
             case 'dashboard':
                 return <DashboardComponent />;
+            case 'myproducts':
+                return <MyProductsComponent />;
             default:
                 return null;
         }

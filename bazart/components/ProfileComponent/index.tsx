@@ -205,8 +205,6 @@ const ProfileComponent: React.FC = () => {
             </form>
           </>
         }
-
-
       </div>
     }
   </>

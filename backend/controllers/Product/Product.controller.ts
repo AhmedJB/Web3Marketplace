@@ -129,7 +129,6 @@ ProductController.get("/list", async (req, res, next) => {
       next(err);
     }
   });
-
   ProductController.get("/:id", async (req, res, next) => {
     try {
       const productId = parseInt(req.params.id);
@@ -155,6 +154,38 @@ ProductController.get("/list", async (req, res, next) => {
       next(err);
     }
   });
+
+
+
+  ProductController.get("/myproduct/:address", async (req, res, next) => {
+    try {
+      const { address } = req.params;
+  
+      const userData = await db.userModel.findUnique({
+        where: { address },
+        include: {
+          products: {
+            include: {
+              images: true,
+              category: true,
+            },
+          },
+        },
+      });
+  
+      if (!userData) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      console.log(`Fetched products for user at address ${address}:`, userData.products);
+  
+      return res.status(200).json(userData.products);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  });
+
   
   
 export { ProductController }
