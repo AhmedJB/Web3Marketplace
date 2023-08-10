@@ -9,7 +9,10 @@ import CarouselComponent from '../components/General/CarouselComponent';
 
 import Footer from '../components/General/Footer';
 import Hero from '../components/HomePage/Hero';
-import CustomSlider from '../components/CustomSlider';
+/* import CustomSlider from '../components/CustomSlider';
+ */
+import CheckoutComponent from '../components/CheckoutComponent';
+import OrderStatusComponent from '../components/OrderStatusComponent';
 
 
 type Props = {}
@@ -20,9 +23,12 @@ function home({ }: Props) {
     <Header />
     <Hero />
     <CarouselComponent />
+    <CheckoutComponent/>
+
+    <OrderStatusComponent/>
     {/* <Slider /> */}
-    <CustomSlider />
-    <TopSellersHome />
+{/*     <CustomSlider />
+ */}    <TopSellersHome />
     <Steps />
     <SubscribeComponent />
     <Testimonies />
