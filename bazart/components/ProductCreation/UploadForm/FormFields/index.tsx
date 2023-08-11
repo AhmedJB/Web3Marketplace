@@ -20,8 +20,6 @@ type Props = {
     submit: any
 }
 function FormFields({  checked, setChecked, category, setCategory, submit }: Props) {
-
-
     const { isLoading, isError, data: fetchedCategories, error } = useQuery<CategoryT[], any>('todos', fetchCategories)
     const [product, setProduct] = useState({
         title: '',
@@ -34,8 +32,6 @@ function FormFields({  checked, setChecked, category, setCategory, submit }: Pro
         Price: 0,
         quantity: 0,
     });
-
-
     const handleFormChange = (v: ChangeEvent) => {
         let t = v.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
         let temp: ProductFormT = { ...product }

@@ -11,12 +11,22 @@ interface ProductT {
   quantity: number;
   user?: UserModelT;
   images?: ProductImage[];
+  catgId :number;
+
 }
 interface ProductImage {
   id: number,
   fileUrl: string,
   filename: string,
 }
+
+interface UserProductT {
+  id: number;
+  firstName: string;
+  lastName: string;
+  product ?:ProductT;
+}
+
 
 interface ProductDetT {
   id: number;
@@ -39,3 +49,4 @@ interface UserModelT {
   firstName: string;
   lastName: string;
 }
+

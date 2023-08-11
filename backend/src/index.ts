@@ -8,6 +8,7 @@ import { UserController } from '~~/controllers/User/user.controller';
 import { VerificationController } from '~~/controllers/Verification/Verification.controller';
 import { ProductController } from '~~/controllers/Product/Product.controller';
 import { CategoryController } from '~~/controllers/Category/Category.controller';
+import { OrderController } from '~~/controllers/Order/OrderController';
 
 
 
@@ -56,6 +57,14 @@ app.use("/product", ProductController)
  * 
  */
 app.use("/category", CategoryController)
+
+
+/**
+ * Category Controller
+ * - 
+ * 
+ */
+app.use("/order", OrderController)
 
 
 

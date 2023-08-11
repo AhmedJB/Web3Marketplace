@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+/* import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence, useAnimate } from "framer-motion"
 
 type Props = {}
@@ -124,4 +124,4 @@ function CustomSlider({ }: Props) {
 
 }
 
-export default CustomSlider
+export default CustomSlider */

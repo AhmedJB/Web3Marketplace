@@ -73,12 +73,10 @@ const ProductDetails = ({ }: Props) => {
   const myRef = useRef<HTMLDivElement | null>(null);
   const [openDescription, setOpenDescription] = useState(false);
   const {active} = useWeb3React();
-
   useEffect(() => {
     if (router.isReady) {
       setProdId(router.query.id as string)
     }
-
   }, [router.isReady])
 
   useEffect(() => {
@@ -86,9 +84,6 @@ const ProductDetails = ({ }: Props) => {
       queryClient.invalidateQueries("productDetails")
     }
   }, [prodId])
-
-
-
   const handleTab = (index_: number) => {
     setIndex(index_);
   };
@@ -101,26 +96,6 @@ const ProductDetails = ({ }: Props) => {
   if (isError) {
     return <div>Error: {error?.message}</div>;
   }
-
-  /*  const [productdetails, setProductDetails]: [ProductDetailsT, any] = useState({
-     id: 1,
-     title: "Turkish Moroccan Mosaic Table Lamp, 3 Globes Bohemian Bedside lamp",
-     src: ["./Picture.png", "./Pic1.jpg", "./Pic2.webp", "./Pic3.webp"],
-     description: "this is a product description",
-     price: 45.5,
-     rating: 4.3,
-     colors: ["red", "black", "crimson", "teal"],
-     minDays: 5,
-     maxDays: 10,
-   }); */
-  // Update the state when the data is available
-  /* useEffect(() => {
-    if (prod) {
-      setProductDetails(prod);
-    }
-  }, [prod]); */
- 
-
 
   const formatDelivery = (minDays: number | undefined, maxDays: number | undefined) => {
     if (minDays && maxDays) {
@@ -145,7 +120,6 @@ const ProductDetails = ({ }: Props) => {
       }
     }
   }
-  /*   const [product, setProduct] = useState<ProductDetT>(prod); */
   return (
     <>
       <Container>
@@ -179,7 +153,7 @@ const ProductDetails = ({ }: Props) => {
 
               <div className="flex items-center gap-3">
                 {
-                  active &&<button
+                  <button
                   className={
                     "w-[250px] bg-orange py-3 px-8 text-white font-semibold rounded-md"
                   }
@@ -187,9 +161,7 @@ const ProductDetails = ({ }: Props) => {
                   BUY NOW
                 </button>
                 }
-                
-{/*                 <FaCartPlus className="text-4xl text-white cursor-pointer transition-all hover:text-orange hover:scale-105" />
- */}              </div>
+              </div>
 
               <button
                 onClick={() => setOpenDescription(!openDescription)}

@@ -9,7 +9,11 @@ import { baseUrl } from '../../constants/apiSettings';
 /* import { fetchUser } from '../../api/user';
  */
 type Props = {};
-function CardsProductList({ }: Props) {
+interface CardsProductListProps {
+  selectedCategory: number | null;
+}
+
+function CardsProductList({ selectedCategory }: CardsProductListProps) {
   const { isLoading, isError, data: fetchedProducts, error } = useQuery<ProductT[], any>('products', fetchProducts);
 
   if (isLoading) {
@@ -19,30 +23,41 @@ function CardsProductList({ }: Props) {
   if (isError) {
     return <div>Error: {error?.message}</div>;
   }
+
+  
   return (
     <div className='container mx-auto'>
-      <div className={`flex flex-wrap  gap-7 my-4`}>
-        {fetchedProducts?.map((product) => {
+       <div className={`flex flex-wrap gap-7 my-4 mb-96`}>
+      {fetchedProducts?.map((product) => {
+        if (
+          product.catgId === selectedCategory || // Correct property name: catgId
+          selectedCategory === null
+        ) {
           if (product.images && product.images.length > 0) {
-            return <Link key={product.id} href={`/details?id=${product.id}`}>
-              <CardProduct
-                key={product.id} //unique identifier
-                title={product.title}
-                shippingFrom={product.shippingFrom}
-                firstName={product?.user?.firstName}
-                lastName={product?.user?.lastName}
-                productImage={baseUrl + product?.images[0]?.fileUrl.slice(1)}
-                price={product.Price}
-         />
-            </Link>
+            return (
+              <Link key={product.id} href={`/details?id=${product.id}`}>
+                <CardProduct
+                  key={product.id}
+                  title={product.title}
+                  shippingFrom={product.shippingFrom}
+                  firstName={product?.user?.firstName}
+                  lastName={product?.user?.lastName}
+                  productImage={baseUrl + product?.images[0]?.fileUrl.slice(1)}
+                  price={product.Price}
+                />
+              </Link>
+            );
           } else {
-            return <></>
+            return <>            
+            </>;
           }
-        })}
-
-      </div>
+        }
+      })}
+    </div>
     </div>
   );
 }
 
 export default CardsProductList;
+
+

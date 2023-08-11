@@ -1,14 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { HiOutlineChevronDown, HiOutlineChevronUp } from 'react-icons/hi';
 import PriceRangePicker from './PriceRangePicker';
+import { useQuery } from 'react-query';
+import { fetchCategories } from '../../../api/categories';
 
-const ProductFiltersComponent = () => {
+interface ProductFiltersProps {
+  setCategory: (category: number) => void; // Use the correct type for setCategory
+}
+
+const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({ setCategory }) => {
+
+  const { isLoading, isError, data: fetchedCategories, error } = useQuery<CategoryT[], any>('todos', fetchCategories)
+  const [selectedCategory, setSelectedCategory] = useState(0); 
+
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
   const dropdownRef1 = useRef(null);
   const dropdownRef2 = useRef(null);
   const dropdownRef3 = useRef(null);
+  const handleCategoryClick = (categoryId: number) => {
+    setCategory(categoryId);
+    setIsOpen2(false); // Close the category dropdown
+  };
+  
   /* To close the dropdown when clicking outside the component */
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -77,31 +92,39 @@ const ProductFiltersComponent = () => {
                 )}
             </div>
 
-
             {/* Categories DropDown */}
             <div className="relative" ref={dropdownRef2}>
                 <button
-                onClick={toggleDropdown2}
-                className="flex items-center justify-between px-5 py-3 w-[400px] bg-black border rounded-t-xl focus:outline-none"
+                    onClick={toggleDropdown2}
+                    className="flex items-center justify-between px-5 py-3 w-[400px] bg-black border rounded-t-xl focus:outline-none"
                 >
-                <span className='text-white text-[20px] '>Categories</span>
-                {isOpen2 ? (
-                    <HiOutlineChevronUp className='text-white' size={18} />
-                ) : (
-                    <HiOutlineChevronDown className='text-white' size={18} />
-                )}
+                    <span className='text-white text-[20px] '>Categories</span>
+                    {isOpen2 ? (
+                        <HiOutlineChevronUp className='text-white' size={18} />
+                    ) : (
+                        <HiOutlineChevronDown className='text-white' size={18} />
+                    )}
                 </button>
                 {isOpen2 && (
-                <ul className="absolute z-10 w-full mt-2 bg-black border  rounded-md">
-                    <li className="py-3 px-5 text-white text-[18px]  hover:text-black hover:bg-yellow hover:font-semibold">Categ 1</li>
-                    <li className="py-3 px-5 text-white text-[18px]  hover:text-black hover:bg-yellow hover:font-semibold">Categ 2</li>
-                    <li className="py-3 px-5 text-white text-[18px]  hover:text-black hover:bg-yellow hover:font-semibold">Categ 3</li>
-                </ul>
+                  <ul className="absolute z-10 w-full  mt-2 bg-black border rounded-md">
+                    {!isLoading && !isError && fetchedCategories?.map((category_, index) => (
+                      <li
+                        key={index}
+                        className={`py-3 px-5 text-white text-[18px]  hover:bg-yellow hover:font-semibold hover:text-black focus:text-black  active:text-black${
+                          selectedCategory === category_.id ? 'bg-yellow text-black font-semibold ' : ''
+                        }`}
+                        onClick={() => handleCategoryClick(category_.id)}
+                        >
+                        {category_.title}
+                      </li>
+                    ))}
+  </ul>
                 )}
             </div>
 
-            {/* Special Offers DropDown */}
 
+
+            {/* Special Offers DropDown */}
             <div className="relative" ref={dropdownRef3}>
                 <button
                 onClick={toggleDropdown3}
@@ -121,12 +144,9 @@ const ProductFiltersComponent = () => {
                 </ul>
                 )}
             </div>
+            
         </div>
-
-
-
     </div>
-    
   );
 };
 
