@@ -11,6 +11,8 @@ interface ProductT {
   quantity: number;
   user?: UserModelT;
   images?: ProductImage[];
+  catgId :number;
+
 }
 interface ProductImage {
   id: number,
