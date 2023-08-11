@@ -20,6 +20,14 @@ interface ProductImage {
   filename: string,
 }
 
+interface UserProductT {
+  id: number;
+  firstName: string;
+  lastName: string;
+  product ?:ProductT;
+}
+
+
 interface ProductDetT {
   id: number;
   title: string;
@@ -41,3 +49,4 @@ interface UserModelT {
   firstName: string;
   lastName: string;
 }
+

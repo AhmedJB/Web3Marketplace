@@ -183,6 +183,8 @@ ProductController.get("/list", async (req, res, next) => {
       next(err);
     }
   });
+
+  
   ProductController.get("/:id", async (req, res, next) => {
     try {
       const productId = parseInt(req.params.id);

@@ -30,6 +30,22 @@ model UserModel {
   city      String?   @default("")
   // relations
   products  Product[]
+  selling   Order[]   @relation("SellerOrder")
+  buying    Order[]   @relation("BuyerOrder")
+}
+
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  orderId       Int      //mn blockchain
+  orderedAt     DateTime @default(now())
+  // relations
+  seller     UserModel @relation("SellerOrder", fields: [sellerId], references: [id])
+  sellerId   Int
+  buyer      UserModel @relation("BuyerOrder", fields: [buyerId], references: [id])
+  buyerId    Int
+  product    Product   @relation(fields: [productId], references: [id])
+  productId  Int
 }
 
 model Product {
@@ -51,6 +67,8 @@ model Product {
   userId              Int
   category            Category        @relation(fields: [catgId], references: [id], onDelete: Cascade)
   catgId              Int
+  orders               Order[]
+
 }
 
 model ProductImages {
@@ -71,3 +89,5 @@ model Category {
   // relations
   products Product[]
 }
+
+
