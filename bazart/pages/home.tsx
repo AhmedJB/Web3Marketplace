@@ -12,7 +12,7 @@ import Hero from '../components/HomePage/Hero';
 /* import CustomSlider from '../components/CustomSlider';
  */
 import CheckoutComponent from '../components/CheckoutComponent';
-import OrderStatusComponent from '../components/OrderStatusComponent';
+import OrderStatusComponent from '../components/OrderComponent/OrderStatusComponent';
 
 
 type Props = {}

@@ -33,11 +33,13 @@ contract Marketplace {
     error Marketplace__NotEnoughFunds();
     error Marketplace__NotEnoughQuantity();
     error Marketplace__TransferFailed();
+    error Marketplace__Seller_Cant_Buy();
 
     struct Product {
         address owner;
         uint256 productId; //  productid
         uint256 price;
+        uint256 shipping;
         uint256 quantity;
         string uri; // localhost:3000/uri/productid
     }
@@ -71,8 +73,9 @@ contract Marketplace {
      */
     function createProduct(
         uint256 _productId,
-        string memory uri,
+        string memory uri, // uri/2
         uint256 _price,
+        uint256 _shipping,
         uint256 _quantity
     ) public {
         Product memory _product = Product({
@@ -80,6 +83,7 @@ contract Marketplace {
             productId: _productId,
             price: _price,
             quantity: _quantity,
+            shipping: _shipping,
             uri: uri
         });
         productIdToProduct[_productId] = _product;
@@ -95,18 +99,26 @@ contract Marketplace {
      * 2. deposit funds to escrow and create order
      * 3. emit creation event
      */
-    function buyProduct(uint256 _productId, uint256 _quantity) public payable {
+    function buyProduct(
+        uint256 _productId,
+        uint256 _quantity,
+        uint256 _orderId
+    ) public payable {
         Product memory product = getProductById(_productId);
+        if (product.owner == msg.sender) {
+            revert Marketplace__Seller_Cant_Buy();
+        }
         if (_quantity > product.quantity) {
             revert Marketplace__NotEnoughQuantity();
         }
-        if (msg.value < product.price * _quantity) {
+        if (msg.value < (product.price * _quantity) + product.shipping) {
             revert Marketplace__NotEnoughFunds();
         }
         uint256 orderId = escrowContract.createEscrow{
-            value: product.price * _quantity
-        }(product.owner, msg.sender, product.productId);
-        uint256 remaining = msg.value - product.price * _quantity;
+            value: (product.price * _quantity) + product.shipping
+        }(product.owner, msg.sender, product.productId, _orderId, _quantity);
+        uint256 remaining = msg.value -
+            ((product.price * _quantity) + product.shipping);
         if (remaining > 0) {
             (bool success, ) = payable(msg.sender).call{value: remaining}("");
             if (!success) {

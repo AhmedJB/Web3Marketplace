@@ -28,6 +28,7 @@ export declare namespace Marketplace {
     owner: AddressLike;
     productId: BigNumberish;
     price: BigNumberish;
+    shipping: BigNumberish;
     quantity: BigNumberish;
     uri: string;
   };
@@ -36,12 +37,14 @@ export declare namespace Marketplace {
     owner: string,
     productId: bigint,
     price: bigint,
+    shipping: bigint,
     quantity: bigint,
     uri: string
   ] & {
     owner: string;
     productId: bigint;
     price: bigint;
+    shipping: bigint;
     quantity: bigint;
     uri: string;
   };
@@ -64,11 +67,11 @@ export interface MarketplaceInterface extends Interface {
 
   encodeFunctionData(
     functionFragment: "buyProduct",
-    values: [BigNumberish, BigNumberish]
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "createProduct",
-    values: [BigNumberish, string, BigNumberish, BigNumberish]
+    values: [BigNumberish, string, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getEscrowAddress",
@@ -185,7 +188,7 @@ export interface Marketplace extends BaseContract {
   ): Promise<this>;
 
   buyProduct: TypedContractMethod<
-    [_productId: BigNumberish, _quantity: BigNumberish],
+    [_productId: BigNumberish, _quantity: BigNumberish, _orderId: BigNumberish],
     [void],
     "payable"
   >;
@@ -195,6 +198,7 @@ export interface Marketplace extends BaseContract {
       _productId: BigNumberish,
       uri: string,
       _price: BigNumberish,
+      _shipping: BigNumberish,
       _quantity: BigNumberish
     ],
     [void],
@@ -224,7 +228,7 @@ export interface Marketplace extends BaseContract {
   getFunction(
     nameOrSignature: "buyProduct"
   ): TypedContractMethod<
-    [_productId: BigNumberish, _quantity: BigNumberish],
+    [_productId: BigNumberish, _quantity: BigNumberish, _orderId: BigNumberish],
     [void],
     "payable"
   >;
@@ -235,6 +239,7 @@ export interface Marketplace extends BaseContract {
       _productId: BigNumberish,
       uri: string,
       _price: BigNumberish,
+      _shipping: BigNumberish,
       _quantity: BigNumberish
     ],
     [void],

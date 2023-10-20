@@ -29,6 +29,11 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "Marketplace__Seller_Cant_Buy",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "Marketplace__TransferFailed",
     type: "error",
   },
@@ -88,6 +93,11 @@ const _abi = [
         name: "_quantity",
         type: "uint256",
       },
+      {
+        internalType: "uint256",
+        name: "_orderId",
+        type: "uint256",
+      },
     ],
     name: "buyProduct",
     outputs: [],
@@ -109,6 +119,11 @@ const _abi = [
       {
         internalType: "uint256",
         name: "_price",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_shipping",
         type: "uint256",
       },
       {
@@ -171,6 +186,11 @@ const _abi = [
           },
           {
             internalType: "uint256",
+            name: "shipping",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
             name: "quantity",
             type: "uint256",
           },
@@ -213,6 +233,11 @@ const _abi = [
           {
             internalType: "uint256",
             name: "price",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "shipping",
             type: "uint256",
           },
           {

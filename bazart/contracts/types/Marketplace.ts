@@ -33,6 +33,7 @@ export declare namespace Marketplace {
     owner: PromiseOrValue<string>;
     productId: PromiseOrValue<BigNumberish>;
     price: PromiseOrValue<BigNumberish>;
+    shipping: PromiseOrValue<BigNumberish>;
     quantity: PromiseOrValue<BigNumberish>;
     uri: PromiseOrValue<string>;
   };
@@ -42,11 +43,13 @@ export declare namespace Marketplace {
     BigNumber,
     BigNumber,
     BigNumber,
+    BigNumber,
     string
   ] & {
     owner: string;
     productId: BigNumber;
     price: BigNumber;
+    shipping: BigNumber;
     quantity: BigNumber;
     uri: string;
   };
@@ -54,8 +57,8 @@ export declare namespace Marketplace {
 
 export interface MarketplaceInterface extends utils.Interface {
   functions: {
-    "buyProduct(uint256,uint256)": FunctionFragment;
-    "createProduct(uint256,string,uint256,uint256)": FunctionFragment;
+    "buyProduct(uint256,uint256,uint256)": FunctionFragment;
+    "createProduct(uint256,string,uint256,uint256,uint256)": FunctionFragment;
     "getEscrowAddress()": FunctionFragment;
     "getOwner()": FunctionFragment;
     "getOwnerProducts()": FunctionFragment;
@@ -74,13 +77,18 @@ export interface MarketplaceInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "buyProduct",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "createProduct",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
@@ -180,6 +188,7 @@ export interface Marketplace extends BaseContract {
     buyProduct(
       _productId: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -187,6 +196,7 @@ export interface Marketplace extends BaseContract {
       _productId: PromiseOrValue<BigNumberish>,
       uri: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _shipping: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -208,6 +218,7 @@ export interface Marketplace extends BaseContract {
   buyProduct(
     _productId: PromiseOrValue<BigNumberish>,
     _quantity: PromiseOrValue<BigNumberish>,
+    _orderId: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -215,6 +226,7 @@ export interface Marketplace extends BaseContract {
     _productId: PromiseOrValue<BigNumberish>,
     uri: PromiseOrValue<string>,
     _price: PromiseOrValue<BigNumberish>,
+    _shipping: PromiseOrValue<BigNumberish>,
     _quantity: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -236,6 +248,7 @@ export interface Marketplace extends BaseContract {
     buyProduct(
       _productId: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -243,6 +256,7 @@ export interface Marketplace extends BaseContract {
       _productId: PromiseOrValue<BigNumberish>,
       uri: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _shipping: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -287,6 +301,7 @@ export interface Marketplace extends BaseContract {
     buyProduct(
       _productId: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -294,6 +309,7 @@ export interface Marketplace extends BaseContract {
       _productId: PromiseOrValue<BigNumberish>,
       uri: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _shipping: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -314,6 +330,7 @@ export interface Marketplace extends BaseContract {
     buyProduct(
       _productId: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -321,6 +338,7 @@ export interface Marketplace extends BaseContract {
       _productId: PromiseOrValue<BigNumberish>,
       uri: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _shipping: PromiseOrValue<BigNumberish>,
       _quantity: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

@@ -43,19 +43,20 @@ contract Escrow {
         uint256 timestamp;
         uint256 orderId;
         EscrowState state;
+        uint256 quantity;
     }
     struct Product {
         address owner;
         uint256 productId; //  productid
         uint256 price;
-        string uri; // localhost:3000/uri/productid
+        string uri; // /uri/productid
     }
 
     /** state */
     address owner;
     uint256 constant MIN_HOLD_DURATION = 30 days; // 30 days in secs
     Marketplace immutable i_marketplace;
-    uint256 counter = 1;
+    //uint256 counter = 1;
 
     /** mappings */
     mapping(address => Order[]) s_buyerToOrders;
@@ -98,8 +99,7 @@ contract Escrow {
      * @dev
      * check if the function called by the order Buyer
      * or order hold duration completed
-     * steps:
-     * 1.
+     * if order disputed admin can execute the function
      */
     modifier onlyBuyerOrTimeOrDisputed(uint256 _orderId) {
         Order memory order = s_OrderIdToOrder[_orderId];
@@ -153,7 +153,9 @@ contract Escrow {
     function createEscrow(
         address _seller,
         address _buyer,
-        uint256 _productId
+        uint256 _productId,
+        uint256 _orderId,
+        uint256 _quantity
     ) external payable onlyMarketplace returns (uint256) {
         Order memory order = Order({
             seller: _seller,
@@ -161,13 +163,13 @@ contract Escrow {
             productId: _productId,
             value: msg.value,
             timestamp: block.timestamp,
-            orderId: counter,
-            state: EscrowState.Opened
+            orderId: _orderId,
+            state: EscrowState.Opened,
+            quantity: _quantity
         });
         s_buyerToOrders[_buyer].push(order);
         s_sellerToOrders[_seller].push(order);
-        s_OrderIdToOrder[counter] = order;
-        counter++;
+        s_OrderIdToOrder[_orderId] = order;
         return order.orderId;
     }
 
@@ -189,7 +191,7 @@ contract Escrow {
     /**
      * @dev
      * release the funds to seller
-     * only executed by buyer or validator Entity
+     * only executed by buyer or validator Entity (owner) when disputed
      */
     function release(
         uint256 _orderId

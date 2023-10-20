@@ -7,13 +7,14 @@ import MenuLayout from '../../Utils/MenuLayout';
 import Footer from '../../General/Footer';
 import Validator from '../../HOC/Validator';
 import MyProductsComponent from '../../MyProductsComponent';
+import OrderComponent from '../../OrderComponent';
 
 type Props = {}
 
 function DashboardPageComp({ }: Props) {
     const [activeMenuItem, setActiveMenuItem] = useState('profile');
 
-    const handleMenuClick = (menuItem) => {
+    const handleMenuClick = (menuItem : string) => {
         setActiveMenuItem(menuItem);
     };
 
@@ -27,6 +28,8 @@ function DashboardPageComp({ }: Props) {
                 return <DashboardComponent />;
             case 'myproducts':
                 return <MyProductsComponent />;
+            case 'myorders':
+                return <OrderComponent />
             default:
                 return null;
         }

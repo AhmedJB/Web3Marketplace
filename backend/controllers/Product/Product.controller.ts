@@ -157,6 +157,7 @@ ProductController.delete("/delete/:id/:address/:signature", async (req, res, nex
 //list product with user info
 ProductController.get("/list", async (req, res, next) => {
     try {
+      
         const products = await db.product.findMany({
             include: {
               user: {
@@ -213,29 +214,35 @@ ProductController.get("/list", async (req, res, next) => {
 
 
 
-  ProductController.get("/myproduct/:address", async (req, res, next) => {
+  ProductController.get("/myproduct/:address/:signature", async (req, res, next) => {
     try {
-      const { address } = req.params;
-  
-      const userData = await db.userModel.findUnique({
-        where: { address },
-        include: {
-          products: {
-            include: {
-              images: true,
-              category: true,
+      const { address,signature } = req.params;
+      let res_sig = verifySignature(address, signature);
+      if (res_sig){
+        const userData = await db.userModel.findUnique({
+          where: { address },
+          include: {
+            products: {
+              include: {
+                images: true,
+                category: false,
+              },
             },
           },
-        },
-      });
-  
-      if (!userData) {
-        return res.status(404).json({ message: "User not found" });
-      }
-  
-      console.log(`Fetched products for user at address ${address}:`, userData.products);
-  
-      return res.status(200).json(userData.products);
+        });
+    
+        if (!userData) {
+          return res.status(404).json({ message: "User not found" });
+        }
+    
+        console.log(`Fetched products for user at address ${address}:`, userData.products);
+    
+        return res.status(200).json(userData.products);
+
+      }else {
+        throw new ServerRequestException("Signature Verification Failed");
+    }
+      
     } catch (err) {
       console.log(err);
       next(err);

@@ -14,6 +14,7 @@ const ETHER_PRICE = 0.1;
 const PRICE  = ethers.parseUnits(ETHER_PRICE.toString(),"ether");
 const QUANTITY = 0;
 const BUY_QUANTITY = 2;
+const ORDER_ID = 1;
 
 
 describe("Testing Marketplace Contract", () => {
@@ -62,16 +63,16 @@ describe("Testing Marketplace Contract", () => {
             let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
             let tx = await create_product(marketplaceContract);
             let escrowContract2 : Escrow = (await getContractWithSignerIndex("Escrow",escrowContract.target as string,1)) as Escrow;
-            let marketplaceContract2 : Marketplace = (await getContractWithSignerIndex("Marketplace",marketplaceContract.target as string,1)) as Marketplace;
-            let tx2 = marketplaceContract2.buyProduct(PRODUCT_ID,2);
+            let marketplaceContract2 : Marketplace = (await getContractWithSignerIndex("Marketplace",marketplaceContract.target as string,2)) as Marketplace;
+            let tx2 = marketplaceContract2.buyProduct(PRODUCT_ID,2,ORDER_ID);
             await expect(tx2).to.be.revertedWithCustomError(marketplaceContract2,"Marketplace__NotEnoughQuantity");
         })
         it("Should revert for value", async () => {
             let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
             let tx = await create_product(marketplaceContract,10);
             let escrowContract2 : Escrow = (await getContractWithSignerIndex("Escrow",escrowContract.target as string,1)) as Escrow;
-            let marketplaceContract2 : Marketplace = (await getContractWithSignerIndex("Marketplace",marketplaceContract.target as string,1)) as Marketplace;
-            let tx2 = marketplaceContract2.buyProduct(PRODUCT_ID,2);
+            let marketplaceContract2 : Marketplace = (await getContractWithSignerIndex("Marketplace",marketplaceContract.target as string,2)) as Marketplace;
+            let tx2 = marketplaceContract2.buyProduct(PRODUCT_ID,2,ORDER_ID);
             await expect(tx2).to.be.revertedWithCustomError(marketplaceContract2,"Marketplace__NotEnoughFunds");
         })
         it("Should refund back the money", async () => {
@@ -98,7 +99,8 @@ describe("Testing Marketplace Contract", () => {
             let gas_used_with_price = await calculate_tx_gas(tx2);
 
             let converted_ether_price = ethers.parseEther(ETHER_PRICE.toString());
-            let orderPrice = BigInt(BUY_QUANTITY)  * converted_ether_price;
+            let converted_ship_price = ethers.parseEther(ETHER_PRICE.toString());
+            let orderPrice = (BigInt(BUY_QUANTITY)  * converted_ether_price) + converted_ship_price ;
             let expectedBalance = original_balance - orderPrice;
             let newUserBalance = await ethers.provider.getBalance(user.address) 
             // test if new balance + gas used === balance - cost     

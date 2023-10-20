@@ -22,12 +22,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>18/18</span>
+        <span class='fraction'>19/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">80% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>8/10</span>
+        <span class='fraction'>9/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>7/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96% </span>
+        <span class="strong">92.59% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>24/25</span>
+        <span class='fraction'>25/27</span>
       </div>
     </div>
   </div>
@@ -187,7 +187,21 @@
 142
 143
 144
-145</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -264,16 +278,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
 <span class="cline-any cline-yes">32×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">32×</span>
-<span class="cline-any cline-yes">32×</span>
-<span class="cline-any cline-yes">32×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -286,6 +306,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -296,6 +319,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27×</span>
 <span class="cline-any cline-yes">27×</span>
 <span class="cline-any cline-yes">27×</span>
@@ -366,11 +390,13 @@ contract Marketplace {
     error Marketplace__NotEnoughFunds();
     error Marketplace__NotEnoughQuantity();
     error Marketplace__TransferFailed();
+    error Marketplace__Seller_Cant_Buy();
 &nbsp;
     struct Product {
         address owner;
         uint256 productId; //  productid
         uint256 price;
+        uint256 shipping;
         uint256 quantity;
         string uri; // localhost:3000/uri/productid
     }
@@ -404,8 +430,9 @@ contract Marketplace {
      */
     function createProduct(
         uint256 _productId,
-        string memory uri,
+        string memory uri, // uri/2
         uint256 _price,
+        uint256 _shipping,
         uint256 _quantity
     ) public {
         Product memory _product = Product({
@@ -413,6 +440,7 @@ contract Marketplace {
             productId: _productId,
             price: _price,
             quantity: _quantity,
+            shipping: _shipping,
             uri: uri
         });
         productIdToProduct[_productId] = _product;
@@ -428,18 +456,26 @@ contract Marketplace {
      * 2. deposit funds to escrow and create order
      * 3. emit creation event
      */
-    function buyProduct(uint256 _productId, uint256 _quantity) public payable {
+    function buyProduct(
+        uint256 _productId,
+        uint256 _quantity,
+        uint256 _orderId
+    ) public payable {
         Product memory product = getProductById(_productId);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (product.owner == msg.sender) {
+            revert Marketplace__Seller_Cant_Buy();
+        }
         if (_quantity &gt; product.quantity) {
             revert Marketplace__NotEnoughQuantity();
         }
-        if (msg.value &lt; product.price * _quantity) {
+        if (msg.value &lt; (product.price * _quantity) + product.shipping) {
             revert Marketplace__NotEnoughFunds();
         }
         uint256 orderId = escrowContract.createEscrow{
-            value: product.price * _quantity
-        }(product.owner, msg.sender, product.productId);
-        uint256 remaining = msg.value - product.price * _quantity;
+            value: (product.price * _quantity) + product.shipping
+        }(product.owner, msg.sender, product.productId, _orderId, _quantity);
+        uint256 remaining = msg.value -
+            ((product.price * _quantity) + product.shipping);
         <span class="missing-if-branch" title="else path not taken" >E</span>if (remaining &gt; 0) {
             (bool success, ) = payable(msg.sender).call{value: remaining}("");
             <span class="missing-if-branch" title="if path not taken" >I</span>if (!success) {
@@ -481,7 +517,7 @@ contract Marketplace {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Aug 09 2023 14:41:23 GMT+0100 (GMT+01:00)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Aug 11 2023 16:41:30 GMT+0100 (GMT+01:00)
 </div>
 </div>
 <script src="../prettify.js"></script>

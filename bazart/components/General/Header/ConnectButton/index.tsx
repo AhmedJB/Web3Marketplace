@@ -62,7 +62,7 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
           {showDropdown && (
             <div className="absolute top-3 -left-6 right-0  mt-12 header-gradient bg-white rounded-lg shadow-lg z-40">
             <ul className="py-2 px-4">
-               <li className="flex items-center gap-3 py-3 cursor-pointer ">
+               <li onClick={() => setShowDropdown(false)} className="flex items-center gap-3 py-3 cursor-pointer ">
                <BsPerson size={27}  className="text-white hover:text-[#a28787] " />
                  <Link
                    href="/dashboard"   className="  pt-2 font-semibold  block   text-white hover:text-[#e6dede]  "
@@ -70,7 +70,7 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
                    Profile
                  </Link>
                </li>
-               <li className="flex items-center gap-3 py-3 cursor-pointer">
+               <li onClick={() => setShowDropdown(false)} className="flex items-center gap-3 py-3 cursor-pointer">
                <TbLayoutDashboard size={27} className="text-white hover:text-[#c4bbbb] "/>                 
                 <Link
                    href="/dashboard" className="   pt-2 font-semibold cursor-pointer block   text-white hover:text-[#e6dede]  "
@@ -78,7 +78,7 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
                    Dashboard
                  </Link>
                </li>
-               <li className="flex items-center gap-3 py-3 cursor-pointer  ">
+               <li onClick={() => setShowDropdown(false)} className="flex items-center gap-3 py-3 cursor-pointer  ">
                <MdFavoriteBorder size={27}  className="text-white hover:text-[#e6dede]  " /> 
                 <Link
                    href="/dashboard"  className=" font-semibold cursor-pointer block   text-white hover:text-[#e6dede] "
@@ -88,7 +88,7 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
                </li>
 
 
-               <li className="flex items-center gap-3 py-3 cursor-pointer  ">
+               <li onClick={() => setShowDropdown(false)} className="flex items-center gap-3 py-3 cursor-pointer  ">
                <MdOutlineCreate size={27}  className="text-white hover:text-[#e6dede]  " /> 
                 <Link
                    href="/upload"  className=" font-semibold cursor-pointer block   text-white hover:text-[#e6dede] "
@@ -98,13 +98,14 @@ const ConnectButton = ({ toggleDropdown, toggleModal }: Props) => {
                </li>
 
 
-               <li className="flex items-center gap-3 py-3 cursor-pointer  ">
+               <li onClick={() => setShowDropdown(false)} className="flex items-center gap-3 py-3 cursor-pointer  ">
                <CgLogOut size={28}  className="text-white font-semibold hover:text-[#e6dede]  " /> 
                <button
                     className="font-semibold cursor-pointer block   text-white hover:text-[#e6dede] "
                     onClick={() => {
                         setSigned(false);
                         deactivate();
+                        
                     }}
                 >
                     Log Out

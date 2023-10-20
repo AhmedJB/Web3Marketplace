@@ -40,11 +40,11 @@ function UploadForm({ }: Props) {
         quantity: 0,
     }); */
 
-    const hanldeContractSync = async (pid : number,uri : string,price : number , quantity : number  ) => {
+    const hanldeContractSync = async (pid : number,uri : string,price : number , quantity : number , shipping:number ) => {
         
         try{
-            let  tx = await marketplace.createProduct(pid,uri,convertToBigInt(price),convertToBigInt(quantity)) ;
-	        tx.wait(1)
+            let  tx = await marketplace.createProduct(pid,uri,convertToBigInt(price),convertToBigInt(shipping),convertToBigInt(quantity)) ;
+	        await tx.wait(1)
             return true
         }catch (e){
             console.log("failed")
@@ -66,7 +66,7 @@ function UploadForm({ }: Props) {
     const productUploadMutation = useMutation(uploadProduct, {
         onSuccess: async (data, variables, context) => {
             console.log("success upload");
-            let res = await hanldeContractSync(data.data.pid,"test",variables.body.Price,variables.body.quantity);
+            let res = await hanldeContractSync(data.data.pid,"test",variables.body.Price,variables.body.quantity,variables.body.shippingCost);
             if (res){
                 router.push('/productlist');
             }else{

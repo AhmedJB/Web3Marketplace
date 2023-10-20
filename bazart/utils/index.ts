@@ -41,3 +41,12 @@ export const convertToBigInt = (number : number) => {
     const converted  = ethers.utils.parseUnits(number.toString(),"ether");
     return converted;
 }
+
+export const formatOderStatus = (index : number) => {
+    let states = ['Started','Finished','Refunded','Disputed']
+    if (index >= states.length || index < 0){
+        return "Unknown"
+    }else{
+        return states[index];
+    }
+}

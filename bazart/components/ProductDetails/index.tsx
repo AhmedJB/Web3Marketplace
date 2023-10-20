@@ -3,6 +3,7 @@
 import React, {
   Component,
   createRef,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -16,13 +17,20 @@ import { FaCartPlus } from "react-icons/fa";
 import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import { GiReturnArrow } from 'react-icons/gi';
 import { useRouter } from "next/router";
-import { useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import QuantityInput from "./QuantityInput";
 import StarReview from "./StarReview";
 import HeartCheckboxComponent from "../Utils/HeartCheckboxComponent";
 import { fetchProduct } from "../../api/products";
 import { baseUrl } from "../../constants/apiSettings";
 import { useWeb3React } from "@web3-react/core";
+import { createOrder, deleteOrder } from "../../api/order";
+import { AccountContext } from "../../contexts/AccountContext";
+import useContract from "../../hooks/useContract";
+import { Marketplace } from "../../contracts/types";
+import { marketPlaceAddress, marketplace_abi } from "../../constants/contracts";
+import { convertToBigInt } from "../../utils";
+import { ethers } from "ethers";
 
 
 interface Product {
@@ -61,11 +69,63 @@ const ProductDetails = ({ }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient()
   const [prodId, setProdId] = useState("");
+  const {accountData,setAccountData} = useContext(AccountContext);
   const { isLoading, isError, data: prod, error } = useQuery<ProductDetT, any>(
     ['productDetails', prodId],
     () => fetchProduct(prodId as string),
     { enabled: !!prodId }
   );
+  const marketplace : Marketplace = useContract(marketPlaceAddress,marketplace_abi) as (Marketplace);
+
+  const hanldeContractSync = async (pid : number, quantity : number, price : number,shipping : number,orderId:number  ) => {
+        
+    try{
+        let  tx = await marketplace.buyProduct(pid,BigInt(quantity),orderId,{
+          value : ethers.utils.parseEther(((quantity * price ) + shipping ).toString())
+        }) ;
+        let receipt = await tx.wait(1)
+        let logs =  receipt.logs;
+        console.log("Logs : ",logs)
+        return true
+    }catch (e){
+        console.log("failed")
+        console.log(e)
+        return false
+    }        
+}
+
+  const deleteOrderMutation = useMutation(deleteOrder,{
+    onSuccess : (data, variables, context) => {
+        console.log("deleted")
+    },
+    onError: (error, variables, context) => {
+        // I will fire first
+        console.log("failed deleting product");
+        console.log(error);
+    }
+})
+
+  const orderCrationMutation = useMutation(createOrder,{
+    onSuccess: async (data, variables, context) => {
+      console.log("success creation");
+      console.log("Buying ",variables.body.data.quantity)
+      let res = await hanldeContractSync(variables.body.data.productId,variables.body.data.quantity,variables.body.data.price,variables.body.data.shipping,data.data.oid);
+      if (res){
+          router.push('/productlist');
+      }else{
+          console.log("delete product")
+          deleteOrderMutation.mutate({id : data.data.oid,address : accountData?.address,signature : accountData?.signature});
+      }
+  },
+  onError: (error, variables, context) => {
+      // I will fire first
+      console.log("failed creating order");
+      console.log(error);
+  }
+  })
+
+  
+
   const [quantity, setQuantity] = useState(1);
 
   const [index, setIndex] = useState(0);
@@ -120,6 +180,25 @@ const ProductDetails = ({ }: Props) => {
       }
     }
   }
+
+  const submitOrder = async ()  => {
+    if (prod  && prod.userId && accountData){
+      let data : OrderDataT = {
+        sellerId : prod.userId,
+        buyerAdd : accountData.address,
+        price : prod.Price,
+        quantity,
+        shipping : prod.shippingCost,
+        productId : prod.id
+      }
+      orderCrationMutation.mutate({address:accountData.address,body:{
+        signature : accountData.signature,
+        data
+      }})
+    }
+    
+  }
+
   return (
     <>
       <Container>
@@ -157,6 +236,7 @@ const ProductDetails = ({ }: Props) => {
                   className={
                     "w-[250px] bg-orange py-3 px-8 text-white font-semibold rounded-md"
                   }
+                  onClick={submitOrder}
                 >
                   BUY NOW
                 </button>

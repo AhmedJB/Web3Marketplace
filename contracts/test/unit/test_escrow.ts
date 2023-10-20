@@ -45,7 +45,7 @@ describe("Testing Escrow Contract", () => {
 			let { marketplaceContract, escrowContract } = await loadFixture(deployMarketplace);
 			let escrowContract2 : Escrow = (await getContractWithSignerIndex("Escrow",escrowContract.target as string,1)) as Escrow;
 			let signers = await ethers.getSigners();
-			let tx = escrowContract2.createEscrow(signers[0].address,signers[1].address,PRODUCT_ID);
+			let tx = escrowContract2.createEscrow(signers[0].address,signers[1].address,PRODUCT_ID,ORDER_ID,2);
 			await expect(tx).to.be.revertedWithCustomError(escrowContract,"ESCROW_NOT_FROM_MARKETPLACE")
 		})
 		
@@ -79,7 +79,7 @@ describe("Testing Escrow Contract", () => {
 			let {tx,tx2} = await orderSetup(escrowContract,marketplaceContract);
 			
 			let order = await escrowContract.getOrderById(ORDER_ID);
-			let expected_value = BigInt(BUY_QUANTITY) * VALUE;
+			let expected_value = (BigInt(BUY_QUANTITY) * VALUE) + VALUE;
 			expect(expected_value).to.be.equal(order.value);
 		}) 
 		it("Should be able to start dispute as buyer" , async () => {
