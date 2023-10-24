@@ -17,7 +17,7 @@ function SubscribeComponent({ }: Props) {
     <>
       <div className='container mx-auto py-8'>
         <div className='mx-36 flex flex-col items-center '>
-          <div className='text-yellow text-[32px] barlow font-semibold'>test</div>
+          <div className='text-yellow text-[32px] barlow font-semibold'>Subscribe</div>
 
           <div className='grid grid-cols-2 gap-12 py-8'>
             <div className='flex flex-row justify-end items-center'>

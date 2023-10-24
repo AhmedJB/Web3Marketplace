@@ -4,7 +4,7 @@ interface TestimonyData {
     name: string;
     tag: string;
     text: string;
-    image: StaticImageData;
+    image: StaticImageData | boolean;
     date: Date;
 }
 

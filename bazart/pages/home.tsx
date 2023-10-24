@@ -25,7 +25,7 @@ function home({ }: Props) {
     <CarouselComponent />
     <CheckoutComponent/>
 
-    <OrderStatusComponent/>
+    {/* <OrderStatusComponent/> */}
     {/* <Slider /> */}
 {/*     <CustomSlider />
  */}    <TopSellersHome />

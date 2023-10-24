@@ -12,7 +12,7 @@ type Props = {}
 function Testimonies({ }: Props) {
 
     const [show, setShow] = useState(false)
-    const [splited, setSplited] = useState([[], [], [], []])
+    const [splited, setSplited] = useState<TestimonyData[][]>([[], [], [], []])
     const [lastWindowSize, setLastWindowSize] = useState(0);
     const bigLargeLimit = 1280;
     const largeLimit = 1030;

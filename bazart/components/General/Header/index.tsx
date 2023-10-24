@@ -107,7 +107,7 @@ const Header: React.FC<Props> = () => {
     <header className="container mx-auto my-3">
       <nav className="flex items-center justify-between h-16 px-2 sm:px-2">
         <div className="flex items-center">
-          <Link className="flex items-center  text-headerColor font-bold text-lg " href="/home" passHref>
+          <Link className="flex items-center  text-headerColor font-bold text-lg " href="/" passHref>
             <img src={logo.src} alt="BazArt212" className="h-9 mr-2 text-[20px]" />
           </Link>
         </div>
@@ -124,7 +124,7 @@ const Header: React.FC<Props> = () => {
               </Link>
             </li>
             <li>
-              <Link className="hover:text-headerColor text-[20px] barlow" href="#testmonies" passHref>
+              <Link className="hover:text-headerColor text-[20px] barlow" href="/#testmonies" passHref>
                 Testmonies
               </Link>
             </li>
