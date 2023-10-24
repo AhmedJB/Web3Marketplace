@@ -1,5 +1,10 @@
 import React from 'react'
 import Lamp from "../../../assets/demo/lamp2.jpg"
+import Accessories from "../../../assets/3Dswiper_pics/ACCESSORIES.jpg"
+import Apparel from "../../../assets/3Dswiper_pics/APPAREL.jpg"
+import Artifacts from "../../../assets/3Dswiper_pics/ARTIFACTS.jpg"
+import Cosmetics from "../../../assets/3Dswiper_pics/COSMETICS.jpg"
+import Homeware from "../../../assets/3Dswiper_pics/HOMEWARE.png"
 import ImageCard from './ImageCard'
 import { BsArrowDownCircle } from "react-icons/bs"
 
@@ -14,17 +19,17 @@ function Hero({ }: Props) {
                         <div className="md:container w-full h-full left-1/2 top-1/2 lg:flex -translate-x-1/2 -translate-y-1/2  z-[2] absolute hidden justify-between items-center">
                                 <div className="flex items-center gap-4">
                                         <div className='flex flex-col items-center gap-4'>
-                                                <ImageCard image={Lamp} />
-                                                <ImageCard image={Lamp} />
+                                                <ImageCard image={Accessories} />
+                                                <ImageCard image={Apparel} />
 
                                         </div>
                                         <ImageCard image={Lamp} />
                                 </div>
                                 <div className="flex items-center gap-4">
-                                        <ImageCard image={Lamp} />
+                                        <ImageCard image={Artifacts} />
                                         <div className='flex flex-col items-center gap-4'>
-                                                <ImageCard image={Lamp} />
-                                                <ImageCard image={Lamp} />
+                                                <ImageCard image={Cosmetics} />
+                                                <ImageCard image={Homeware} />
 
                                         </div>
 

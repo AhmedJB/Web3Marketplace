@@ -27,7 +27,7 @@ export const uploadProduct = async ({ images, body, address }: uploadParams) => 
   return axios.post(url, form_data);
 }
 
-export const deleteProduct = async ({id,address,signature } : {id :number, address : string,signature : string}) => {
+export const deleteProduct = async ({id,address,signature } : {id :number, address : string | undefined,signature : string | undefined}) => {
   let url =  formatEndPoint(`product/delete/${id}/${address}/${signature}`)
   console.log("deleting ", url)
   return axios.delete(url,)
@@ -61,10 +61,14 @@ export async function fetchProduct(productId: string) {
 
 
 //myproduct 
-export async function fetchMyProducts() {
+export async function fetchMyProducts({address,signature} : {
+  address : string | undefined,
+  signature : string | undefined
+}) {
   try {
-    const response = await axios.get('/api/user/myproduct/:address'); // Adjust the API endpoint
-    return response.data;
+    let url = formatEndPoint(`product/myproduct/${address}/${signature}`)
+    const response = await axios.get(url); // Adjust the API endpoint
+    return response.data as ProductT[];
   } catch (error) {
     throw new Error("Failed fetching products");
   }

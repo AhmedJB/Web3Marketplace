@@ -37,6 +37,7 @@ export declare namespace Escrow {
     timestamp: PromiseOrValue<BigNumberish>;
     orderId: PromiseOrValue<BigNumberish>;
     state: PromiseOrValue<BigNumberish>;
+    quantity: PromiseOrValue<BigNumberish>;
   };
 
   export type OrderStructOutput = [
@@ -46,7 +47,8 @@ export declare namespace Escrow {
     BigNumber,
     BigNumber,
     BigNumber,
-    number
+    number,
+    BigNumber
   ] & {
     seller: string;
     buyer: string;
@@ -55,12 +57,13 @@ export declare namespace Escrow {
     timestamp: BigNumber;
     orderId: BigNumber;
     state: number;
+    quantity: BigNumber;
   };
 }
 
 export interface EscrowInterface extends utils.Interface {
   functions: {
-    "createEscrow(address,address,uint256)": FunctionFragment;
+    "createEscrow(address,address,uint256,uint256,uint256)": FunctionFragment;
     "getBuyerOrders()": FunctionFragment;
     "getMarketplaceAddress()": FunctionFragment;
     "getOrderById(uint256)": FunctionFragment;
@@ -89,6 +92,8 @@ export interface EscrowInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -222,6 +227,8 @@ export interface Escrow extends BaseContract {
       _seller: PromiseOrValue<string>,
       _buyer: PromiseOrValue<string>,
       _productId: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -262,6 +269,8 @@ export interface Escrow extends BaseContract {
     _seller: PromiseOrValue<string>,
     _buyer: PromiseOrValue<string>,
     _productId: PromiseOrValue<BigNumberish>,
+    _orderId: PromiseOrValue<BigNumberish>,
+    _quantity: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -302,6 +311,8 @@ export interface Escrow extends BaseContract {
       _seller: PromiseOrValue<string>,
       _buyer: PromiseOrValue<string>,
       _productId: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -366,6 +377,8 @@ export interface Escrow extends BaseContract {
       _seller: PromiseOrValue<string>,
       _buyer: PromiseOrValue<string>,
       _productId: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -403,6 +416,8 @@ export interface Escrow extends BaseContract {
       _seller: PromiseOrValue<string>,
       _buyer: PromiseOrValue<string>,
       _productId: PromiseOrValue<BigNumberish>,
+      _orderId: PromiseOrValue<BigNumberish>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

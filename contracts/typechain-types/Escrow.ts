@@ -32,6 +32,7 @@ export declare namespace Escrow {
     timestamp: BigNumberish;
     orderId: BigNumberish;
     state: BigNumberish;
+    quantity: BigNumberish;
   };
 
   export type OrderStructOutput = [
@@ -41,7 +42,8 @@ export declare namespace Escrow {
     value: bigint,
     timestamp: bigint,
     orderId: bigint,
-    state: bigint
+    state: bigint,
+    quantity: bigint
   ] & {
     seller: string;
     buyer: string;
@@ -50,6 +52,7 @@ export declare namespace Escrow {
     timestamp: bigint;
     orderId: bigint;
     state: bigint;
+    quantity: bigint;
   };
 }
 
@@ -73,7 +76,7 @@ export interface EscrowInterface extends Interface {
 
   encodeFunctionData(
     functionFragment: "createEscrow",
-    values: [AddressLike, AddressLike, BigNumberish]
+    values: [AddressLike, AddressLike, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getBuyerOrders",
@@ -214,7 +217,13 @@ export interface Escrow extends BaseContract {
   ): Promise<this>;
 
   createEscrow: TypedContractMethod<
-    [_seller: AddressLike, _buyer: AddressLike, _productId: BigNumberish],
+    [
+      _seller: AddressLike,
+      _buyer: AddressLike,
+      _productId: BigNumberish,
+      _orderId: BigNumberish,
+      _quantity: BigNumberish
+    ],
     [bigint],
     "payable"
   >;
@@ -254,7 +263,13 @@ export interface Escrow extends BaseContract {
   getFunction(
     nameOrSignature: "createEscrow"
   ): TypedContractMethod<
-    [_seller: AddressLike, _buyer: AddressLike, _productId: BigNumberish],
+    [
+      _seller: AddressLike,
+      _buyer: AddressLike,
+      _productId: BigNumberish,
+      _orderId: BigNumberish,
+      _quantity: BigNumberish
+    ],
     [bigint],
     "payable"
   >;

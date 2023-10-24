@@ -130,6 +130,16 @@
         "internalType": "uint256",
         "name": "_productId",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_orderId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_quantity",
+        "type": "uint256"
       }
     ],
     "name": "createEscrow",
@@ -183,6 +193,11 @@
             "internalType": "enum Escrow.EscrowState",
             "name": "state",
             "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quantity",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Escrow.Order[]",
@@ -252,6 +267,11 @@
             "internalType": "enum Escrow.EscrowState",
             "name": "state",
             "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quantity",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Escrow.Order",
@@ -315,6 +335,11 @@
             "internalType": "enum Escrow.EscrowState",
             "name": "state",
             "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quantity",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Escrow.Order[]",

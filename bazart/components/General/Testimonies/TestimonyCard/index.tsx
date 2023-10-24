@@ -5,7 +5,7 @@ type Props = {
   name : string;
   tag : string;
   text : string;
-  image : StaticImageData;
+  image : StaticImageData | boolean;
   date : Date
 };
 
@@ -66,7 +66,10 @@ function TestimonyCard({ name,tag,image,text,date }: Props) {
         <div className="max-w-[350px] h-fit  w-full bg-white rounded-[15px] flex flex-col p-2 ">
             {/* card header ( image , name and tag ) */}
             <div className="flex items-center">
-                <Image src={image} alt="avatar" width={50} height={50} className="rounded-full" />
+              {
+                image && <Image src={image as StaticImageData} alt="avatar" width={50} height={50} className="rounded-full" />
+              }
+                
                 <div className="flex flex-col inter ml-4">
                     <h1 className="text-mainDark font-semibold text-[1rem] ">
                         {name}

@@ -139,6 +139,16 @@ const _abi = [
         name: "_productId",
         type: "uint256",
       },
+      {
+        internalType: "uint256",
+        name: "_orderId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_quantity",
+        type: "uint256",
+      },
     ],
     name: "createEscrow",
     outputs: [
@@ -191,6 +201,11 @@ const _abi = [
             internalType: "enum Escrow.EscrowState",
             name: "state",
             type: "uint8",
+          },
+          {
+            internalType: "uint256",
+            name: "quantity",
+            type: "uint256",
           },
         ],
         internalType: "struct Escrow.Order[]",
@@ -261,6 +276,11 @@ const _abi = [
             name: "state",
             type: "uint8",
           },
+          {
+            internalType: "uint256",
+            name: "quantity",
+            type: "uint256",
+          },
         ],
         internalType: "struct Escrow.Order",
         name: "",
@@ -323,6 +343,11 @@ const _abi = [
             internalType: "enum Escrow.EscrowState",
             name: "state",
             type: "uint8",
+          },
+          {
+            internalType: "uint256",
+            name: "quantity",
+            type: "uint256",
           },
         ],
         internalType: "struct Escrow.Order[]",

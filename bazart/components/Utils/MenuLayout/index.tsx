@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BsPerson } from 'react-icons/bs';
 import { TbLayoutDashboard ,TbBuildingWarehouse} from 'react-icons/tb';
+import {RiLuggageCartFill} from "react-icons/ri"
 import { MdFavoriteBorder } from 'react-icons/md';
 
 type MenuLayoutProps = {
@@ -15,7 +16,7 @@ const MenuLayout: React.FC<MenuLayoutProps> = ({ activeMenuItem, handleMenuClick
             <div className="">
               <ul className="flex flex-col gap-4 ">
                 <li
-                  className={`mr-6 py-4 pl-6 pr-10 flex gap-3 rounded-3xl cursor-pointer ${
+                  className={`mr-6 py-4 pl-6 pr-10 flex gap-3 rounded-3xl cursor-pointer w-[200px] ${
                     activeMenuItem === 'profile' ? 'active bg-yellow' : ''
                   }`}
                   onClick={() => handleMenuClick('profile')}
@@ -30,7 +31,7 @@ const MenuLayout: React.FC<MenuLayoutProps> = ({ activeMenuItem, handleMenuClick
 
 
                 <li
-                  className={`mr-6 py-4 pl-6 pr-10 flex gap-3 rounded-3xl cursor-pointer ${
+                  className={`mr-6 py-4 pl-6 pr-10 flex gap-3 rounded-3xl cursor-pointer w-[200px] ${
                     activeMenuItem === 'favorites' ? 'active bg-yellow' : ''
                   }`}
                   onClick={() => handleMenuClick('favorites')}
@@ -48,7 +49,7 @@ const MenuLayout: React.FC<MenuLayoutProps> = ({ activeMenuItem, handleMenuClick
                 
 
                 <li
-                  className={`mr-6 py-4 pl-6 pr-10 flex items-center gap-3 rounded-3xl cursor-pointer ${
+                  className={`mr-6 py-4 pl-6 pr-10 flex items-center gap-3 rounded-3xl cursor-pointer w-[200px] ${
                     activeMenuItem === 'myproducts' ? 'active bg-yellow' : ''
                   }`}
                   onClick={() => handleMenuClick('myproducts')}
@@ -63,11 +64,27 @@ const MenuLayout: React.FC<MenuLayoutProps> = ({ activeMenuItem, handleMenuClick
                     My products
                   </div>
                 </li>
+                <li
+                  className={`mr-6 py-4 pl-6 pr-10 flex items-center gap-3 rounded-3xl cursor-pointer w-[200px] ${
+                    activeMenuItem === 'myorders' ? 'active bg-yellow' : ''
+                  }`}
+                  onClick={() => handleMenuClick('myorders')}
+                >
+                  <RiLuggageCartFill
+                    size={23}
+                    className={`${activeMenuItem === 'myorders' ? 'text-black ' : 'text-[#7B7B7B]'}`}
+                  />
+                  <div
+                    className={`inter ${activeMenuItem === 'myorders' ? ' font-semibold text-black' : 'font-semibold text-[#7B7B7B]'}`}
+                  >
+                    My Orders
+                  </div>
+                </li>
 
 
 
                 <li
-                  className={`mr-6 py-4 pl-6 pr-10 flex gap-3 rounded-3xl cursor-pointer ${
+                  className={`mr-6 py-4 pl-6 pr-10 flex gap-3 rounded-3xl cursor-pointer w-[200px] ${
                     activeMenuItem === 'dashboard' ? 'active bg-yellow' : ''
                   }`}
                   onClick={() => handleMenuClick('dashboard')}

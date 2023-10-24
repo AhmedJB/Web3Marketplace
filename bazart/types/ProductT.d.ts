@@ -38,7 +38,8 @@ interface ProductDetT {
   maximumDeliveryTime: number;
   Price: number;
   quantity: number;
-  user?: UserModelT;
+  //user?: UserModelT;
+  userId : number;
   images?: ProductImage[];
   minDays: number;
   maxDays: number;

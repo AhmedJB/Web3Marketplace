@@ -4,11 +4,13 @@ import { Contract } from "hardhat/internal/hardhat-network/stack-traces/model";
 
 type contracts = Escrow | Marketplace;
 const ETHER_PRICE = 0.1;
+const SHIPPING_PRICE = ethers.parseUnits(ETHER_PRICE.toString(),"ether");
 const PRICE  = ethers.parseUnits(ETHER_PRICE.toString(),"ether");
 const QUANTITY = 0;
 const PRODUCT_URI = "test";
 const PRODUCT_ID = 2;
 const BUY_QUANTITY = 2;
+const ORDER_ID = 1;
 
 
 
@@ -26,16 +28,17 @@ export const getContractWithSignerIndex  = async (name : "Marketplace" | "Escrow
 export const create_product = async  (marketplaceContract : Marketplace,quantity = QUANTITY) => {
 	//console.log(`using quantity ${quantity}`)
 	let signers = await ethers.getSigners();
-	let  tx = await marketplaceContract.connect(signers[1]).createProduct(PRODUCT_ID,PRODUCT_URI,PRICE,quantity);
+	let  tx = await marketplaceContract.connect(signers[1]).createProduct(PRODUCT_ID,PRODUCT_URI,PRICE,SHIPPING_PRICE,quantity);
 	await tx.wait(1);
 	return tx
 }
 
 export const create_order = async (escrowContract : Escrow, marketplaceContract : Marketplace) => {
 	let escrowContract2 : Escrow = (await getContractWithSignerIndex("Escrow",escrowContract.target as string,2)) as Escrow;
+	let {owner,seller,buyer} = await getAccounts();
 		let marketplaceContract2 : Marketplace = (await getContractWithSignerIndex("Marketplace",marketplaceContract.target as string,2)) as Marketplace;
-		let tx2 = await marketplaceContract2.buyProduct(PRODUCT_ID,2,{
-			value : ethers.parseEther((BUY_QUANTITY * ETHER_PRICE *  2).toString())
+		let tx2 = await marketplaceContract2.buyProduct(PRODUCT_ID,2,ORDER_ID,{
+			value : ethers.parseEther(((BUY_QUANTITY * ETHER_PRICE) + ETHER_PRICE ).toString())
 		});
 		
 		await tx2.wait(1);

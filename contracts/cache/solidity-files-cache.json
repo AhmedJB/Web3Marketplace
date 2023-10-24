@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/mac/Documents/work2/web3marketplace/Web3Marketplace/contracts/contracts/Escrow.sol": {
-      "lastModificationDate": 1691503366450,
-      "contentHash": "b410a1012e4741f37977dca33a867973",
+      "lastModificationDate": 1691766887901,
+      "contentHash": "24d5740c66e501a2e6572c1fae580f73",
       "sourceName": "contracts/Escrow.sol",
       "solcConfig": {
         "version": "0.8.19",
@@ -25,6 +25,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -40,8 +43,8 @@
       ]
     },
     "/Users/mac/Documents/work2/web3marketplace/Web3Marketplace/contracts/contracts/Marketplace.sol": {
-      "lastModificationDate": 1691497722120,
-      "contentHash": "16ed8e93800583728fc870e0e9235687",
+      "lastModificationDate": 1691768444145,
+      "contentHash": "70bfdaf8573e4580a894149eeb8ccf8d",
       "sourceName": "contracts/Marketplace.sol",
       "solcConfig": {
         "version": "0.8.19",
@@ -63,6 +66,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -100,6 +106,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -135,6 +144,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
